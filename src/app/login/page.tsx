@@ -140,10 +140,13 @@ export default function LoginPage() {
 
                 {/* Footer Link */}
                 <div className="text-center mt-8">
-                    <Link href="/" className="text-zinc-400 text-xs hover:text-sky-600 transition-colors flex items-center justify-center gap-2">
+                    <a
+                        href={process.env.NODE_ENV === 'production' ? `https://${process.env.NEXT_PUBLIC_MAIN_DOMAIN}` : "/"}
+                        className="text-zinc-400 text-xs hover:text-sky-600 transition-colors flex items-center justify-center gap-2"
+                    >
                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="m15 18-6-6 6-6" /></svg>
                         Back to Homepage
-                    </Link>
+                    </a>
                 </div>
             </div>
         </main>

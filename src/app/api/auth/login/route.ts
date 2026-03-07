@@ -74,11 +74,16 @@ export async function POST(request: Request) {
         console.log(`[LOGIN] User "${user.username}" authenticated successfully. Setting cookie.`);
 
         const cookieStore = await cookies();
+        const domain = process.env.NODE_ENV === 'production'
+            ? `.${process.env.NEXT_PUBLIC_MAIN_DOMAIN || 'atmospherefurnitureid.com'}`
+            : undefined;
+
         cookieStore.set('token', token, {
             httpOnly: true,
             secure: process.env.NODE_ENV === 'production',
             sameSite: 'lax',
             path: '/',
+            domain,
             maxAge: 60 * 60 * 24 // 1 day
         });
 

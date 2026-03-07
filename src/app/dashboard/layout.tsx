@@ -100,6 +100,15 @@ export default function DashboardLayout({
                                 Wood & Iron Furniture
                             </p>
                         </div>
+                        <a
+                            href={process.env.NODE_ENV === 'production' ? `https://${process.env.NEXT_PUBLIC_MAIN_DOMAIN}` : "/"}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="ml-4 flex items-center gap-1.5 px-3 py-1 bg-gray-100 hover:bg-gray-200 text-gray-600 rounded-full text-xs font-bold transition-colors"
+                        >
+                            View Site
+                            <Play className="h-2.5 w-2.5 rotate-[-45deg]" />
+                        </a>
                     </div>
                 </div>
 

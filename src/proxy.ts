@@ -10,6 +10,13 @@ if (!JWT_SECRET) {
  * Public routes that do NOT require authentication.
  * Add paths here that should be accessible without a token.
  */
+const MAIN_DOMAIN = process.env.NEXT_PUBLIC_MAIN_DOMAIN || "atmospherefurnitureid.com";
+const ADMIN_DOMAIN = process.env.NEXT_PUBLIC_ADMIN_SUBDOMAIN || "admin.atmospherefurnitureid.com";
+
+/**
+ * Public routes that do NOT require authentication.
+ * Add paths here that should be accessible without a token.
+ */
 const PUBLIC_PATHS = [
     "/login",
     "/api/auth/login",
@@ -61,8 +68,62 @@ function isPublicPath(pathname: string, method: string): boolean {
 export async function proxy(request: NextRequest) {
     const { pathname } = request.nextUrl;
     const method = request.method;
+    const host = request.headers.get("host") || "";
+    const isDev = host.includes("localhost") || host.includes("127.0.0.1");
 
-    // Allow all non-dashboard, non-api routes freely (public pages)
+    // Static assets, public files, and Next.js internal routes should never be redirected or restricted
+    if (
+        pathname.startsWith("/_next") ||
+        pathname.startsWith("/public") ||
+        pathname.startsWith("/images") ||
+        pathname.includes(".") // Catch files like favicon.ico, sitemap.xml
+    ) {
+        return NextResponse.next();
+    }
+
+    /**
+     * DOMAIN SEPARATION LOGIC
+     * Only apply on production domains
+     */
+    if (!isDev) {
+        const isMainDomain = host === MAIN_DOMAIN;
+        const isAdminDomain = host === ADMIN_DOMAIN;
+
+        // 1. Redirection from Main Domain (Public) to Admin Subdomain
+        if (isMainDomain) {
+            if (pathname.startsWith("/dashboard") || pathname.startsWith("/login")) {
+                const url = new URL(request.url);
+                url.hostname = ADMIN_DOMAIN;
+                console.log(`[PROXY] Redirecting admin/login from main to admin domain: ${url.hostname}`);
+                return NextResponse.redirect(url);
+            }
+        }
+
+        // 2. Access control on Admin Domain
+        if (isAdminDomain) {
+            // Rewrite / on admin domain to dashboard directly if wanted, or just allow it
+            if (pathname === "/") {
+                return NextResponse.rewrite(new URL("/dashboard", request.url));
+            }
+
+            // Allowed paths on admin subdomain: dashboard, login, api
+            const allowedOnAdmin =
+                pathname.startsWith("/dashboard") ||
+                pathname.startsWith("/login") ||
+                pathname.startsWith("/api");
+
+            if (!allowedOnAdmin) {
+                // If user visits a public page (e.g. /products) on admin subdomain, send them to main domain
+                const url = new URL(request.url);
+                url.hostname = MAIN_DOMAIN;
+                console.log(`[PROXY] Redirecting public page from admin to main domain: ${url.hostname}`);
+                return NextResponse.redirect(url);
+            }
+        }
+    }
+
+    // AUTHENTICATION LOGIC
+    // Allow all non-protected routes freely
     const isDashboard = pathname.startsWith("/dashboard");
     const isApiRoute = pathname.startsWith("/api");
 
