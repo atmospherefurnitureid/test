@@ -1,10 +1,17 @@
 "use client";
 
+import React from "react";
 import Link from "next/link";
 import { useLanguage } from "@/lib/i18n/LanguageContext";
 
 export default function Footer() {
     const { t } = useLanguage();
+    const [isMounted, setIsMounted] = React.useState(false);
+
+    React.useEffect(() => {
+        setIsMounted(true);
+    }, []);
+
     return (
         <footer className="mx-auto w-full max-w-7xl px-6 py-12 border-t border-zinc-100">
             <div className="flex flex-col md:flex-row justify-between items-center gap-6">
@@ -12,7 +19,7 @@ export default function Footer() {
                     <Link href="/" className="font-bold text-zinc-900">Atmosphere</Link>
                     <span className="text-zinc-500">|</span>
                     <p className="text-zinc-500 text-xs">
-                        © {new Date().getFullYear()} Atmosphere Furniture Indonesia. {t("footer.rights")}
+                        © {isMounted ? new Date().getFullYear() : '2026'} Atmosphere Furniture Indonesia. {t("footer.rights")}
                     </p>
                 </div>
 

@@ -165,6 +165,9 @@ export default function Home() {
   const latestArticles = (articles || [])
     .filter(a => a.status === "Published")
     .slice(0, 4);
+
+  if (!mounted) return null;
+
   return (
     <main ref={containerRef} className="min-h-screen bg-white">
       <Navbar />
