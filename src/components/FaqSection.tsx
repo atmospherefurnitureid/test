@@ -89,6 +89,7 @@ export default function FaqSection() {
                     >
                         <button
                             onClick={() => setOpenIndex(openIndex === index ? null : index)}
+                            aria-expanded={openIndex === index}
                             className="w-full flex items-center justify-between p-6 md:p-8 text-left focus:outline-none group"
                         >
                             <span className={`text-base md:text-lg font-semibold transition-colors ${openIndex === index ? "text-zinc-900" : "text-zinc-500 group-hover:text-zinc-900"
@@ -97,7 +98,7 @@ export default function FaqSection() {
                             </span>
                             <div className={`p-2 rounded-full border transition-all ${openIndex === index
                                 ? "border-zinc-900 bg-zinc-900 text-white rotate-45"
-                                : "border-zinc-200 text-zinc-400 group-hover:border-zinc-900 group-hover:text-zinc-900"
+                                : "border-zinc-200 text-zinc-500 group-hover:border-zinc-900 group-hover:text-zinc-900"
                                 }`}>
                                 <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><path d="M12 5v14" /><path d="M5 12h14" /></svg>
                             </div>

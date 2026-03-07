@@ -10,16 +10,16 @@ export default function Footer() {
             <div className="flex flex-col md:flex-row justify-between items-center gap-6">
                 <div className="flex items-center gap-2">
                     <Link href="/" className="font-bold text-zinc-900">Atmosphere</Link>
-                    <span className="text-zinc-400">|</span>
+                    <span className="text-zinc-500">|</span>
                     <p className="text-zinc-500 text-xs">
                         © {new Date().getFullYear()} Atmosphere Furniture Indonesia. {t("footer.rights")}
                     </p>
                 </div>
 
                 <div className="flex items-center gap-6">
-                    <Link href="/privacy-policy" className="text-[11px] font-medium text-zinc-400 hover:text-zinc-900 transition-colors tracking-wide">{t("footer.privacy")}</Link>
-                    <Link href="/terms-of-service" className="text-[11px] font-medium text-zinc-400 hover:text-zinc-900 transition-colors tracking-wide">{t("footer.terms")}</Link>
-                    <Link href="/cookies" className="text-[11px] font-medium text-zinc-400 hover:text-zinc-900 transition-colors tracking-wide">{t("footer.cookies")}</Link>
+                    <Link href="/privacy-policy" className="text-[11px] font-medium text-zinc-600 hover:text-zinc-900 transition-colors tracking-wide">{t("footer.privacy")}</Link>
+                    <Link href="/terms-of-service" className="text-[11px] font-medium text-zinc-600 hover:text-zinc-900 transition-colors tracking-wide">{t("footer.terms")}</Link>
+                    <Link href="/cookies" className="text-[11px] font-medium text-zinc-600 hover:text-zinc-900 transition-colors tracking-wide">{t("footer.cookies")}</Link>
                 </div>
             </div>
         </footer>

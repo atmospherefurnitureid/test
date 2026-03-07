@@ -94,7 +94,7 @@ export default function Navbar() {
                         <span className="text-base font-bold tracking-tight text-zinc-900 leading-none">
                             Atmosphere Furniture
                         </span>
-                        <span className="text-[11px] font-medium tracking-[0.2em] text-zinc-400 uppercase">
+                        <span className="text-[11px] font-medium tracking-[0.2em] text-zinc-600 uppercase">
                             Indonesia
                         </span>
                     </div>
@@ -110,6 +110,8 @@ export default function Navbar() {
                                     <button
                                         onClick={() => setIsServicesOpen(!isServicesOpen)}
                                         onMouseEnter={() => setIsServicesOpen(true)}
+                                        aria-label={t("navbar.services")}
+                                        aria-expanded={isServicesOpen}
                                         className={`flex items-center gap-1 text-[13px] font-medium transition-all duration-300 cursor-pointer px-4 py-2 relative ${isChildActive
                                             ? "text-zinc-900 after:absolute after:bottom-0 after:left-4 after:right-4 after:h-0.5 after:bg-zinc-900"
                                             : "text-zinc-500 hover:text-zinc-900"
@@ -162,6 +164,7 @@ export default function Navbar() {
                     <div className="flex items-center gap-1">
                         <Link href="/products/checkout" aria-label="Lihat Keranjang Belanja" className="relative p-2 text-zinc-500 hover:text-zinc-900 transition-colors">
                             <ShoppingCart className="h-5 w-5" />
+                            <span className="sr-only">Checkout</span>
                             {isMounted && cartItems.length > 0 && (
                                 <span className="absolute -top-1 -right-1 h-4 w-4 bg-blue-500 text-white text-[8px] font-black rounded-full flex items-center justify-center border border-white">
                                     {cartItems.reduce((q, item) => q + item.quantity, 0)}
@@ -174,8 +177,10 @@ export default function Navbar() {
                             className="relative"
                             ref={langRef}
                         >
-                            <div
+                            <button
                                 onClick={() => setIsLangOpen(!isLangOpen)}
+                                aria-label="Ganti Bahasa / Change Language"
+                                aria-expanded={isLangOpen}
                                 className="flex items-center gap-3 px-3 py-1.5 bg-zinc-50 rounded-full border border-zinc-100 hover:bg-zinc-100 transition-colors cursor-pointer select-none"
                             >
                                 <div className="relative w-6 h-6 rounded-full overflow-hidden border border-zinc-200 shadow-sm">
@@ -193,9 +198,9 @@ export default function Navbar() {
                                     {isMounted ? language : "ID"}
                                 </span>
                                 {isMounted && (
-                                    <ChevronDown className={`h-3 w-3 text-zinc-400 transition-transform duration-300 ${isLangOpen ? "rotate-180" : ""}`} />
+                                    <ChevronDown className={`h-3 w-3 text-zinc-500 transition-transform duration-300 ${isLangOpen ? "rotate-180" : ""}`} />
                                 )}
-                            </div>
+                            </button>
 
                             {/* Language Dropdown */}
                             <div className={`absolute top-full right-0 pt-2 w-44 transition-all duration-200 origin-top-right z-[110] ${isLangOpen ? "scale-100 opacity-100 pointer-events-auto" : "scale-95 opacity-0 pointer-events-none"}`}>
@@ -230,6 +235,7 @@ export default function Navbar() {
                 <div className="flex md:hidden items-center gap-2">
                     <Link href="/products/checkout" aria-label="Lihat Keranjang Belanja" className="relative p-2 text-zinc-500">
                         <ShoppingCart className="h-5 w-5" />
+                        <span className="sr-only">Checkout</span>
                         {isMounted && cartItems.length > 0 && (
                             <span className="absolute -top-1 -right-1 h-4 w-4 bg-zinc-900 text-white text-[8px] font-bold rounded-full flex items-center justify-center border border-white">
                                 {cartItems.reduce((q, item) => q + item.quantity, 0)}
@@ -241,6 +247,8 @@ export default function Navbar() {
                     <div className="relative" ref={langRef}>
                         <button
                             onClick={() => setIsLangOpen(!isLangOpen)}
+                            aria-label="Ganti Bahasa / Change Language"
+                            aria-expanded={isLangOpen}
                             className="flex items-center gap-2 px-2.5 py-1.5 bg-zinc-50 rounded-full border border-zinc-100 shadow-sm active:bg-zinc-100 transition-colors"
                         >
                             <div className="relative w-5 h-5 rounded-full overflow-hidden border border-zinc-200">
@@ -315,13 +323,15 @@ export default function Navbar() {
                                     <div key={link.name} className="flex flex-col gap-1">
                                         <button
                                             onClick={() => setIsMobileServicesOpen(!isMobileServicesOpen)}
+                                            aria-label={link.name}
+                                            aria-expanded={isMobileServicesOpen}
                                             className="flex items-center justify-between w-full text-[15px] font-bold p-4 text-zinc-900 bg-zinc-50 rounded-2xl transition-all active:scale-[0.98]"
                                         >
                                             <span className="flex items-center gap-3">
                                                 <div className="w-1.5 h-1.5 rounded-full bg-sky-500"></div>
                                                 {link.name}
                                             </span>
-                                            <ChevronDown className={`h-4 w-4 text-zinc-400 transition-transform duration-300 ${isMobileServicesOpen ? "rotate-180" : ""}`} />
+                                            <ChevronDown className={`h-4 w-4 text-zinc-500 transition-transform duration-300 ${isMobileServicesOpen ? "rotate-180" : ""}`} />
                                         </button>
 
                                         <div className={`flex flex-col gap-1 pl-6 overflow-hidden transition-all duration-300 ${isMobileServicesOpen ? "max-h-[500px] opacity-100 mt-2 pb-2" : "max-h-0 opacity-0"}`}>

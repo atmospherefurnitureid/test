@@ -95,15 +95,18 @@ export default function Home() {
         const stats = document.querySelectorAll(".stat-number");
         stats.forEach(stat => {
           const targetValue = parseInt(stat.getAttribute("data-value") || "0");
-          gsap.to(stat, {
+          const counterObj = { val: 0 };
+          gsap.to(counterObj, {
             scrollTrigger: {
               trigger: "#about-stats",
               start: "top 90%",
             },
-            innerText: targetValue,
+            val: targetValue,
             duration: 2,
-            snap: { innerText: 1 },
             ease: "expo.out",
+            onUpdate: () => {
+              stat.textContent = Math.ceil(counterObj.val).toString();
+            },
             immediateRender: false,
           });
         });
@@ -173,6 +176,7 @@ export default function Home() {
                   src={`/images/flags/${cc}.png`}
                   alt={`${cc.toUpperCase()} Flag`}
                   fill
+                  sizes="40px"
                   className="object-cover"
                   priority
                 />
@@ -183,7 +187,7 @@ export default function Home() {
             <span className="text-[14px] text-zinc-900 font-semibold tracking-tight text-center md:text-left">
               {t("home.hero.badge")}
             </span>
-            <span className="text-[9px] font-medium text-sky-600 tracking-[0.2em] uppercase text-center md:text-left">
+            <span className="text-[9px] font-medium text-sky-700 tracking-[0.2em] uppercase text-center md:text-left">
               {t("home.hero.badge_desc")}
             </span>
           </div>
@@ -205,7 +209,7 @@ export default function Home() {
           >
             {t("home.hero.cta_primary")}
           </Link>
-          <span className="text-zinc-400 text-sm font-medium px-2">or</span>
+          <span className="text-zinc-500 text-sm font-medium px-2">or</span>
           <Link
             href="/products"
             className="rounded-full border-2 border-zinc-900 bg-white px-8 py-3.5 text-xs font-semibold text-zinc-900 hover:bg-zinc-900 hover:text-white transition-all flex items-center justify-center min-w-[200px] w-full sm:w-auto cursor-pointer"
@@ -446,25 +450,25 @@ export default function Home() {
             <span className="text-4xl font-bold text-zinc-900 mb-3 transition-transform group-hover:scale-110">
               <span className="stat-number" data-value="150">0</span>+
             </span>
-            <span className="text-[10px] uppercase tracking-[0.2em] text-zinc-400 font-black">{t("home.about.stats.projects")}</span>
+            <span className="text-[10px] uppercase tracking-[0.2em] text-zinc-600 font-black">{t("home.about.stats.projects")}</span>
           </div>
           <div className="flex flex-col items-center justify-center text-center group border-l border-zinc-50">
             <span className="text-4xl font-bold text-zinc-900 mb-3 transition-transform group-hover:scale-110">
               <span className="stat-number" data-value="100">0</span>+
             </span>
-            <span className="text-[10px] uppercase tracking-[0.2em] text-zinc-400 font-black">{t("home.about.stats.team")}</span>
+            <span className="text-[10px] uppercase tracking-[0.2em] text-zinc-600 font-black">{t("home.about.stats.team")}</span>
           </div>
           <div className="flex flex-col items-center justify-center text-center group border-l border-zinc-50">
             <span className="text-4xl font-bold text-zinc-900 mb-3 transition-transform group-hover:scale-110">
               <span className="stat-number" data-value="200">0</span>+
             </span>
-            <span className="text-[10px] uppercase tracking-[0.2em] text-zinc-400 font-black">{t("home.about.stats.reviews")}</span>
+            <span className="text-[10px] uppercase tracking-[0.2em] text-zinc-600 font-black">{t("home.about.stats.reviews")}</span>
           </div>
           <div className="flex flex-col items-center justify-center text-center group border-l border-zinc-50">
             <span className="text-4xl font-bold text-zinc-900 mb-3 transition-transform group-hover:scale-110">
               <span className="stat-number" data-value="30">0</span>
             </span>
-            <span className="text-[10px] uppercase tracking-[0.2em] text-zinc-400 font-black">{t("home.about.stats.awards")}</span>
+            <span className="text-[10px] uppercase tracking-[0.2em] text-zinc-600 font-black">{t("home.about.stats.awards")}</span>
           </div>
         </div>
       </section>
@@ -500,7 +504,7 @@ export default function Home() {
             </div>
             {/* Bottom Button Group */}
             <Link href="/services/desain-yang-dipersonalisasi-sepenuhnya" aria-label="Pelajari Layanan Desain yang Dipersonalisasi" className="w-fit text-white font-bold text-sm underline underline-offset-8 flex items-center gap-2 hover:gap-3 transition-all duration-300 group-hover:text-sky-500 group-hover:opacity-100 mt-8 md:mt-0">
-              Learn More
+              {t("home.services.view_details")} {t("home.services.card1.title")}
             </Link>
           </div>
 
@@ -518,7 +522,7 @@ export default function Home() {
             </div>
             {/* Bottom Button Group */}
             <Link href="/services/kualitas-dan-ketelitian-pengerjaan" aria-label="Pelajari Layanan Kualitas dan Ketelitian Pengerjaan" className="w-fit text-sky-500 font-bold text-sm underline underline-offset-8 flex items-center gap-2 hover:gap-3 transition-all group-hover:text-white mt-8 md:mt-0">
-              Learn More
+              {t("home.services.view_details")} {t("home.services.card2.title")}
             </Link>
           </div>
 
@@ -536,7 +540,7 @@ export default function Home() {
             </div>
             {/* Bottom Button Group */}
             <Link href="/services/solusi-fungsional-dan-estetis" aria-label="Pelajari Layanan Solusi Fungsional dan Estetis" className="w-fit text-sky-500 font-bold text-sm underline underline-offset-8 flex items-center gap-2 hover:gap-3 transition-all group-hover:text-white mt-8 md:mt-0">
-              Learn More
+              {t("home.services.view_details")} {t("home.services.card3.title")}
             </Link>
           </div>
 
@@ -554,7 +558,7 @@ export default function Home() {
             </div>
             {/* Bottom Button Group */}
             <Link href="/services/kolaborasi-untuk-hasil-terbaik" aria-label="Pelajari Layanan Kolaborasi untuk Hasil Terbaik" className="w-fit text-sky-500 font-bold text-sm underline underline-offset-8 flex items-center gap-2 hover:gap-3 transition-all group-hover:text-white mt-8 md:mt-0">
-              Learn More
+              {t("home.services.view_details")} {t("home.services.card4.title")}
             </Link>
           </div>
 
@@ -593,7 +597,7 @@ export default function Home() {
                 {t("contact.steps.step1.desc")}
               </p>
             </div>
-            <div className="text-[10px] font-black uppercase text-white/50 group-hover:text-zinc-300 tracking-widest mt-4">Step 01</div>
+            <div className="text-[10px] font-black uppercase text-white/80 group-hover:text-zinc-300 tracking-widest mt-4">Step 01</div>
           </Link>
 
           {/* Step 2: DP 50% */}
@@ -607,7 +611,7 @@ export default function Home() {
                 {t("contact.steps.step2.desc")}
               </p>
             </div>
-            <div className="text-[10px] font-black uppercase text-sky-200 group-hover:text-white/50 tracking-widest mt-4">Step 02</div>
+            <div className="text-[10px] font-black uppercase text-sky-700/60 group-hover:text-white/50 tracking-widest mt-4">Step 02</div>
           </div>
 
           {/* Step 3: Pengerjaan */}
@@ -621,7 +625,7 @@ export default function Home() {
                 {t("contact.steps.step3.desc")}
               </p>
             </div>
-            <div className="text-[10px] font-black uppercase text-sky-200 group-hover:text-white/50 tracking-widest mt-4">Step 03</div>
+            <div className="text-[10px] font-black uppercase text-sky-700/60 group-hover:text-white/50 tracking-widest mt-4">Step 03</div>
           </div>
 
           {/* Step 4: Pelunasan */}
@@ -635,7 +639,7 @@ export default function Home() {
                 {t("contact.steps.step4.desc")}
               </p>
             </div>
-            <div className="text-[10px] font-black uppercase text-sky-200 group-hover:text-white/50 tracking-widest mt-4">Step 04</div>
+            <div className="text-[10px] font-black uppercase text-sky-700/60 group-hover:text-white/50 tracking-widest mt-4">Step 04</div>
           </div>
 
           {/* Step 5: Pengiriman */}
@@ -649,7 +653,7 @@ export default function Home() {
                 {t("contact.steps.step5.desc")}
               </p>
             </div>
-            <div className="text-[10px] font-black uppercase text-sky-200 group-hover:text-white/50 tracking-widest mt-4">Step 05</div>
+            <div className="text-[10px] font-black uppercase text-sky-700/60 group-hover:text-white/50 tracking-widest mt-4">Step 05</div>
           </div>
 
           {/* Step 6: Garansi Kerusakan */}
@@ -663,7 +667,7 @@ export default function Home() {
                 {t("contact.steps.step6.desc")}
               </p>
             </div>
-            <div className="text-[10px] font-black uppercase text-sky-200 group-hover:text-white/50 tracking-widest mt-4">Step 06</div>
+            <div className="text-[10px] font-black uppercase text-sky-700/60 group-hover:text-white/50 tracking-widest mt-4">Step 06</div>
           </div>
 
         </div>
@@ -783,9 +787,9 @@ export default function Home() {
               {/* Content Part */}
               <div className="flex flex-col flex-1 text-left">
                 <div className="flex items-center gap-2 mb-3">
-                  <span className="text-[12px] font-medium text-zinc-400">{article.author}</span>
+                  <span className="text-[12px] font-medium text-zinc-600">{article.author}</span>
                   <span className="text-[12px] text-zinc-300">•</span>
-                  <span className="text-[12px] font-medium text-zinc-400">5 min read</span>
+                  <span className="text-[12px] font-medium text-zinc-600">5 min read</span>
                 </div>
 
                 <div className="flex justify-between items-start gap-4 mb-3">
@@ -803,7 +807,7 @@ export default function Home() {
                   <span className="px-3 py-1 bg-zinc-50 text-zinc-500 text-[11px] font-bold rounded-lg border border-zinc-100 uppercase tracking-wider">
                     {article.category}
                   </span>
-                  <span className="text-[11px] font-medium text-zinc-400">
+                  <span className="text-[11px] font-medium text-zinc-600">
                     {article.date.split(',')[0]}
                   </span>
                 </div>
@@ -863,7 +867,7 @@ export default function Home() {
             {t("home.cta.tagline")}
           </p>
 
-          <h3 className="text-zinc-400 text-xs md:text-sm max-w-xl leading-relaxed mb-10 italic font-medium">
+          <h3 className="text-zinc-500 text-xs md:text-sm max-w-xl leading-relaxed mb-10 italic font-medium">
             {t("home.cta.quote") === "home.cta.quote" ? t("contact.details.quote") : t("home.cta.quote")}
           </h3>
 
