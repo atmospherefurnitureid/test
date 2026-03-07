@@ -90,12 +90,13 @@ export default async function middleware(request: NextRequest) {
         const isMainDomain = hostname === MAIN_DOMAIN || hostname === `www.${MAIN_DOMAIN}`;
         const isAdminDomain = hostname === ADMIN_DOMAIN;
 
-        // A. Redirection from Main Domain (Public) to Admin Subdomain
+        // A. Block Admin Paths on Main Domain — rewrite to built-in 404 page
         if (isMainDomain) {
-            if (pathname.startsWith("/dashboard") || pathname === "/login") {
-                const url = new URL(request.url);
-                url.hostname = ADMIN_DOMAIN;
-                return NextResponse.redirect(url);
+            if (pathname.startsWith("/dashboard") || pathname.startsWith("/login")) {
+                // Rewrite to Next.js native not-found so custom not-found.tsx is rendered.
+                // URL in browser stays unchanged (no redirect), status 404 is returned.
+                const notFoundUrl = new URL("/_not-found", request.url);
+                return NextResponse.rewrite(notFoundUrl, { status: 404 });
             }
         }
 
