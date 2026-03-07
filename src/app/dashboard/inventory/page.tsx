@@ -105,7 +105,7 @@ export default function InventoryPage() {
                             ) : filteredProducts.map((product, index) => (
                                 <tr key={product.code} className="hover:bg-gray-50/50 transition-colors">
                                     <td className="px-6 py-5 text-sm text-gray-500">{index + 1}</td>
-                                    <td className="px-6 py-5 text-sm font-bold text-zinc-500">{product.code}</td>
+                                    <td className="px-6 py-5 text-sm font-medium text-zinc-500">{product.code}</td>
                                     <td className="px-6 py-5">
                                         <div className="flex items-center gap-3">
                                             <div className="h-10 w-10 rounded-lg overflow-hidden shrink-0 border border-gray-100 bg-gray-50 flex items-center justify-center">
@@ -117,7 +117,7 @@ export default function InventoryPage() {
                                                 })()}
                                             </div>
                                             <div>
-                                                <p className="text-sm font-bold text-zinc-900">{product.name}</p>
+                                                <p className="text-sm font-medium text-zinc-900">{product.name}</p>
                                                 <p className="text-xs text-zinc-400">{product.collection}</p>
                                             </div>
                                         </div>
@@ -136,7 +136,7 @@ export default function InventoryPage() {
                                             </span>
                                         </div>
                                     </td>
-                                    <td className="px-6 py-5 text-sm font-bold text-zinc-900 text-right">Rp {product.price.toLocaleString("id-ID")}</td>
+                                    <td className="px-6 py-5 text-sm font-medium text-zinc-900 text-right">Rp {product.price.toLocaleString("id-ID")}</td>
                                     <td className="px-6 py-5 text-right">
                                         <div className="flex items-center justify-end gap-2">
                                             <button

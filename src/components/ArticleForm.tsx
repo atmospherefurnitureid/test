@@ -202,29 +202,15 @@ export default function ArticleForm({ initialData, isEditing = false }: ArticleF
             {/* Sticky Header */}
             <div className="sticky top-0 z-30 -mx-3 sm:-mx-4 px-3 sm:px-4 py-4 sm:py-5 bg-white/80 backdrop-blur-md border-b border-zinc-100 mb-8 sm:mb-12">
                 <div className="flex items-center justify-between max-w-7xl mx-auto">
-                    <div className="flex items-center gap-2 sm:gap-3">
-                        <button
-                            onClick={() => router.back()}
-                            className="cursor-pointer p-2.5 sm:p-3 bg-zinc-50 border border-zinc-200 rounded-xl text-zinc-500 hover:text-zinc-900 hover:border-zinc-300 shadow-sm transition-all"
-                        >
-                            <ArrowLeft className="h-4 w-4 sm:h-5 sm:w-5" />
-                        </button>
-                        <div>
-                            <h2 className="text-xl sm:text-2xl font-semibold text-zinc-900 tracking-tight font-poppins">
-                                {isEditing ? "Edit Artikel" : "Tulis Artikel Baru"}
-                            </h2>
-                            <p className="text-sm sm:text-base text-zinc-500 font-normal mt-0.5 sm:mt-1">
-                                Lengkapi detail artikel Anda di bawah ini.
-                            </p>
-                        </div>
+                    <div>
+                        <h2 className="text-xl sm:text-2xl font-semibold text-zinc-900 tracking-tight font-poppins">
+                            {isEditing ? "Edit Artikel" : "Tulis Artikel Baru"}
+                        </h2>
+                        <p className="text-sm sm:text-base text-zinc-500 font-normal mt-0.5 sm:mt-1">
+                            Lengkapi detail artikel Anda di bawah ini.
+                        </p>
                     </div>
                     <div className="flex items-center gap-2 sm:gap-3">
-                        <button
-                            onClick={() => router.push("/dashboard/articles")}
-                            className="hidden sm:block cursor-pointer px-5 sm:px-6 py-2.5 sm:py-3 text-zinc-600 text-sm sm:text-base font-semibold hover:text-zinc-900 transition border border-zinc-200 rounded-xl bg-white hover:bg-zinc-50"
-                        >
-                            Batal
-                        </button>
                         <button
                             onClick={handleSave}
                             disabled={isSubmitting || uploading}
@@ -488,12 +474,6 @@ export default function ArticleForm({ initialData, isEditing = false }: ArticleF
                     {/* Mobile Sticky Save Button */}
                     <div className="fixed bottom-0 left-0 right-0 p-4 bg-white/90 backdrop-blur-md border-t border-zinc-100 lg:hidden z-20">
                         <div className="max-w-7xl mx-auto flex gap-3">
-                            <button
-                                onClick={() => router.push("/dashboard/articles")}
-                                className="flex-1 cursor-pointer px-5 py-3 text-zinc-600 text-sm font-semibold border border-zinc-200 rounded-xl bg-white hover:bg-zinc-50 transition"
-                            >
-                                Batal
-                            </button>
                             <button
                                 onClick={handleSave}
                                 disabled={isSubmitting || uploading}

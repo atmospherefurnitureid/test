@@ -91,17 +91,9 @@ export default function CommentManagementPage() {
         <div className="animate-fade-in-up space-y-8 sm:space-y-12 pb-20">
             {/* Header Area following qwen.md Page Header Pattern */}
             <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
-                <div className="flex items-center gap-2 sm:gap-3">
-                    <button
-                        onClick={() => router.back()}
-                        className="p-2.5 bg-zinc-50 border border-zinc-200 rounded-xl text-zinc-500 hover:text-zinc-900 transition-all active:scale-95"
-                    >
-                        <ArrowLeft className="h-5 w-5" />
-                    </button>
-                    <div>
-                        <h2 className="text-xl sm:text-2xl lg:text-4xl font-semibold text-zinc-900 tracking-tight font-poppins">Manajemen Komentar</h2>
-                        <p className="text-sm sm:text-base text-zinc-500 font-normal mt-1">Moderasi masukan pengunjung dan interaksi artikel.</p>
-                    </div>
+                <div>
+                    <h2 className="text-xl sm:text-2xl lg:text-4xl font-semibold text-zinc-900 tracking-tight font-poppins">Manajemen Komentar</h2>
+                    <p className="text-sm sm:text-base text-zinc-500 font-normal mt-1">Moderasi masukan pengunjung dan interaksi artikel.</p>
                 </div>
             </div>
 
@@ -199,7 +191,7 @@ export default function CommentManagementPage() {
                                             </p>
                                             <div className="flex items-center gap-2 text-xs text-zinc-500 font-medium uppercase">
                                                 <Clock className="h-3 w-3" />
-                                                {comment.timestamp ? new Date(comment.timestamp).toLocaleDateString('id-ID', { day: 'numeric', month: 'short', year: 'numeric' }) : comment.date}
+                                                {mounted && (comment.timestamp ? new Date(comment.timestamp).toLocaleDateString('id-ID', { day: 'numeric', month: 'short', year: 'numeric' }) : comment.date)}
                                             </div>
                                         </div>
                                     </td>

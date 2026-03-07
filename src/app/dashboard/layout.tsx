@@ -31,8 +31,10 @@ export default function DashboardLayout({
     const [expandedMenus, setExpandedMenus] = useState<string[]>(["Articles"]);
     const [user, setUser] = useState<{ username: string; role: string } | null>(null);
     const [counts, setCounts] = useState({ comments: 0, inventory: 0 });
+    const [mounted, setMounted] = useState(false);
 
     useEffect(() => {
+        setMounted(true);
         const fetchUser = async () => {
             try {
                 const res = await fetch('/api/auth/profile');
@@ -170,10 +172,10 @@ export default function DashboardLayout({
                         <div className="w-8 h-8 rounded-full bg-blue-100 text-blue-600 flex items-center justify-center text-sm font-semibold">
                             {user?.username ? user.username.substring(0, 2).toUpperCase() : "AD"}
                         </div>
-                        <div className="hidden sm:block">
-                            <p className="text-sm font-medium text-gray-900">{user?.username || "Admin"}</p>
+                        <div className="hidden sm:block text-right">
+                            <p className="text-sm font-semibold text-gray-900">{mounted ? (user?.username || "Admin") : "Admin"}</p>
                             <p className="text-xs text-gray-500 uppercase tracking-wider font-bold opacity-60">
-                                {user?.role || "Administrator"}
+                                {mounted ? (user?.role || "Administrator") : "Administrator"}
                             </p>
                         </div>
                         <ChevronDown className="h-3 w-3 text-gray-400 hidden sm:block" />
@@ -234,7 +236,7 @@ export default function DashboardLayout({
                                             {item.icon}
                                         </span>
                                         <span className="flex-grow text-left">{item.label}</span>
-                                        {item.badge && (
+                                        {mounted && item.badge && (
                                             <span className="bg-red-500 text-white text-xs font-semibold rounded-full py-0.5 px-2">
                                                 {item.badge}
                                             </span>
@@ -257,7 +259,7 @@ export default function DashboardLayout({
                                             {item.icon}
                                         </span>
                                         <span className="flex-grow">{item.label}</span>
-                                        {item.badge && (
+                                        {mounted && item.badge && (
                                             <span className="bg-red-500 text-white text-xs font-semibold rounded-full py-0.5 px-2">
                                                 {item.badge}
                                             </span>
@@ -280,7 +282,7 @@ export default function DashboardLayout({
                                                     <span className="h-3 w-3">{child.icon}</span>
                                                 )}
                                                 <span>{child.label}</span>
-                                                {child.badge && (
+                                                {mounted && child.badge && (
                                                     <span className="bg-red-500 text-white text-[10px] font-bold rounded-full py-0.5 px-1.5 ml-auto">
                                                         {child.badge}
                                                     </span>

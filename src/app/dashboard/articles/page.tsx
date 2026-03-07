@@ -30,12 +30,9 @@ export default function ArticlesAdminPage() {
     if (!mounted) return (
         <div className="animate-fade-in-up pb-24">
             <div className="sticky top-0 z-30 -mx-3 sm:-mx-4 px-3 sm:px-4 py-4 sm:py-5 bg-white/80 backdrop-blur-md border-b border-zinc-100 mb-8 sm:mb-12">
-                <div className="animate-pulse flex items-center gap-3">
-                    <div className="h-10 w-10 sm:h-11 sm:w-11 bg-zinc-200 rounded-xl" />
-                    <div className="space-y-2">
-                        <div className="h-6 w-40 bg-zinc-200 rounded" />
-                        <div className="h-4 w-24 bg-zinc-200 rounded" />
-                    </div>
+                <div className="flex flex-col gap-1.5">
+                    <div className="h-6 w-40 bg-zinc-200 rounded" />
+                    <div className="h-4 w-24 bg-zinc-200 rounded" />
                 </div>
             </div>
             <div className="max-w-7xl mx-auto px-3 sm:px-4">
@@ -55,17 +52,9 @@ export default function ArticlesAdminPage() {
             {/* Sticky Header */}
             <div className="sticky top-0 z-30 -mx-3 sm:-mx-4 px-3 sm:px-4 py-4 sm:py-5 bg-white/80 backdrop-blur-md border-b border-zinc-100 mb-8 sm:mb-12">
                 <div className="flex items-center justify-between max-w-7xl mx-auto">
-                    <div className="flex items-center gap-2 sm:gap-3">
-                        <button
-                            onClick={() => router.back()}
-                            className="cursor-pointer p-2.5 sm:p-3 bg-zinc-50 border border-zinc-200 rounded-xl text-zinc-500 hover:text-zinc-900 hover:border-zinc-300 shadow-sm transition-all"
-                        >
-                            <ArrowLeft className="h-4 w-4 sm:h-5 sm:w-5" />
-                        </button>
-                        <div>
-                            <h2 className="text-xl sm:text-2xl font-semibold text-zinc-900 tracking-tight font-poppins">Artikel</h2>
-                            <p className="text-sm sm:text-base text-zinc-500 font-normal mt-0.5 sm:mt-1">Kelola konten artikel blog Anda.</p>
-                        </div>
+                    <div>
+                        <h2 className="text-xl sm:text-2xl font-semibold text-zinc-900 tracking-tight font-poppins">Artikel</h2>
+                        <p className="text-sm sm:text-base text-zinc-500 font-normal mt-0.5 sm:mt-1">Kelola konten artikel blog Anda.</p>
                     </div>
                     <div className="flex items-center gap-2 sm:gap-3">
                         <Link
