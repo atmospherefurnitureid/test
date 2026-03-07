@@ -3,9 +3,15 @@
 import { useState, useEffect, useRef } from "react";
 import Image from "next/image";
 import Link from "next/link";
+import dynamic from "next/dynamic";
 import Navbar from "@/components/Navbar";
-import Footer from "@/components/Footer";
-import FaqSection from "@/components/FaqSection";
+
+// Low priority components below the fold - Dynamically Imported
+const FaqSection = dynamic(() => import("@/components/FaqSection"), {
+  loading: () => <div className="h-20 animate-pulse bg-zinc-50" />
+});
+const Footer = dynamic(() => import("@/components/Footer"));
+
 import { useContentStore } from "@/lib/contentStore";
 import { useProductStore } from "@/lib/productStore";
 import { slugify } from "@/lib/utils";
