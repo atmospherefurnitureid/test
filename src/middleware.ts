@@ -65,85 +65,77 @@ function isPublicPath(pathname: string, method: string): boolean {
     return false;
 }
 
-export async function proxy(request: NextRequest) {
+export default async function middleware(request: NextRequest) {
     const { pathname } = request.nextUrl;
     const method = request.method;
     const host = request.headers.get("host") || "";
-    const isDev = host.includes("localhost") || host.includes("127.0.0.1");
+    const hostname = host.split(":")[0]; // Ignore port in dev
+    const isDev = hostname === "localhost" || hostname === "127.0.0.1";
 
-    // Static assets, public files, and Next.js internal routes should never be redirected or restricted
+    // 1. Static assets & Next.js internals - allow immediately
     if (
         pathname.startsWith("/_next") ||
         pathname.startsWith("/public") ||
-        pathname.startsWith("/images") ||
-        pathname.includes(".") // Catch files like favicon.ico, sitemap.xml
+        pathname.startsWith("/api/upload") || // Assuming uploads are public or handled separately
+        pathname.includes(".")
     ) {
         return NextResponse.next();
     }
 
     /**
-     * DOMAIN SEPARATION LOGIC
-     * Only apply on production domains
+     * DOMAIN SEPARATION LOGIC (Production Only)
      */
     if (!isDev) {
-        const isMainDomain = host === MAIN_DOMAIN;
-        const isAdminDomain = host === ADMIN_DOMAIN;
+        // Support with and without 'www'
+        const isMainDomain = hostname === MAIN_DOMAIN || hostname === `www.${MAIN_DOMAIN}`;
+        const isAdminDomain = hostname === ADMIN_DOMAIN;
 
-        // 1. Redirection from Main Domain (Public) to Admin Subdomain
+        // A. Redirection from Main Domain (Public) to Admin Subdomain
         if (isMainDomain) {
-            if (pathname.startsWith("/dashboard") || pathname.startsWith("/login")) {
+            if (pathname.startsWith("/dashboard") || pathname === "/login") {
                 const url = new URL(request.url);
                 url.hostname = ADMIN_DOMAIN;
-                console.log(`[PROXY] Redirecting admin/login from main to admin domain: ${url.hostname}`);
                 return NextResponse.redirect(url);
             }
         }
 
-        // 2. Access control on Admin Domain
+        // B. Redirection from Admin Domain to Main Domain
         if (isAdminDomain) {
-            // Rewrite / on admin domain to dashboard directly if wanted, or just allow it
+            // Redirect root to dashboard (safer than rewrite to ensure auth check runs on /dashboard)
             if (pathname === "/") {
-                return NextResponse.rewrite(new URL("/dashboard", request.url));
+                return NextResponse.redirect(new URL("/dashboard", request.url));
             }
 
-            // Allowed paths on admin subdomain: dashboard, login, api
             const allowedOnAdmin =
                 pathname.startsWith("/dashboard") ||
                 pathname.startsWith("/login") ||
                 pathname.startsWith("/api");
 
             if (!allowedOnAdmin) {
-                // If user visits a public page (e.g. /products) on admin subdomain, send them to main domain
                 const url = new URL(request.url);
                 url.hostname = MAIN_DOMAIN;
-                console.log(`[PROXY] Redirecting public page from admin to main domain: ${url.hostname}`);
                 return NextResponse.redirect(url);
             }
         }
     }
 
-    // AUTHENTICATION LOGIC
-    // Allow all non-protected routes freely
+    // 2. AUTHENTICATION LOGIC
     const isDashboard = pathname.startsWith("/dashboard");
     const isApiRoute = pathname.startsWith("/api");
 
+    // Public pages & public API routes
     if (!isDashboard && !isApiRoute) {
         return NextResponse.next();
     }
 
-    // Check if route is explicitly public
     if (isPublicPath(pathname, method)) {
         return NextResponse.next();
     }
 
-    // Log ALL cookies to terminal to debug if 'token' is actually arriving
-    const allCookies = request.cookies.getAll().map(c => c.name).join(", ");
-    console.log(`[MIDDLEWARE] Path: ${pathname} | Cookies found: [${allCookies}]`);
-
+    // Protected Area Check
     const token = request.cookies.get("token")?.value;
 
     if (!token) {
-        console.warn(`[MIDDLEWARE] Redirecting to login: No token cookie found for protected path ${pathname}`);
         if (isApiRoute) {
             return NextResponse.json({ error: "Authentication required" }, { status: 401 });
         }
@@ -154,32 +146,32 @@ export async function proxy(request: NextRequest) {
 
     try {
         const secretKey = new TextEncoder().encode(JWT_SECRET);
-        const { payload } = await jwtVerify(token, secretKey);
-
-        console.log(`[MIDDLEWARE] Token valid for user: ${(payload as any).username}`);
+        await jwtVerify(token, secretKey);
+        // Token valid
         return NextResponse.next();
     } catch (err: any) {
-        console.error(`[MIDDLEWARE] Token invalid for ${pathname}: ${err.message}`);
         if (isApiRoute) {
-            return NextResponse.json({ error: "Invalid token" }, { status: 401 });
+            return NextResponse.json({ error: "Invalid or expired token" }, { status: 401 });
         }
         const loginUrl = new URL("/login", request.url);
         loginUrl.searchParams.set("from", pathname);
         const res = NextResponse.redirect(loginUrl);
-        // Clean bad cookie
-        res.cookies.set("token", "", { expires: new Date(0), path: "/" });
+        // Remove invalid cookie correctly across subdomains in production
+        const domain = !isDev ? `.${MAIN_DOMAIN}` : undefined;
+        res.cookies.set("token", "", { expires: new Date(0), path: "/", domain });
         return res;
     }
 }
 
 export const config = {
     matcher: [
-        "/dashboard/:path*",
-        "/api/products/:path*",
-        "/api/articles/:path*",
-        "/api/categories/:path*",
-        "/api/comments/:path*",
-        "/api/visitors/:path*",
-        "/api/upload/:path*",
+        /*
+         * Match all request paths except for the ones starting with:
+         * - api (unless you want middleware to filter api)
+         * - _next/static (static files)
+         * - _next/image (image optimization files)
+         * - favicon.ico (favicon file)
+         */
+        "/((?!_next/static|_next/image|favicon.ico).*)",
     ],
 };
