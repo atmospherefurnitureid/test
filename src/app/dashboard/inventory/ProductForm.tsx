@@ -177,8 +177,7 @@ export default function ProductForm({ initialData, onSave, onCancel, title, subt
         if (!form.category.trim()) { alert("Kategori harus dipilih atau diisi."); return; }
         if (!form.collection.trim()) { alert("Koleksi / ruangan harus diisi."); return; }
         if (!form.price || form.price <= 0) { alert("Harga normal harus lebih dari 0."); return; }
-        if (!form.memberPrice || form.memberPrice <= 0) { alert("Harga spesial harus lebih dari 0."); return; }
-        if (form.memberPrice > form.price) { alert("Harga spesial tidak boleh lebih besar dari harga normal."); return; }
+        if (form.memberPrice > 0 && form.memberPrice > form.price) { alert("Harga spesial tidak boleh lebih besar dari harga normal."); return; }
         if (!form.status) { alert("Status ketersediaan harus dipilih."); return; }
         if (form.status !== "Pre-order" && form.stock < 0) { alert("Stok harus 0 atau lebih."); return; }
         if (!form.description.trim()) { alert("Deskripsi produk tidak boleh kosong."); return; }
@@ -353,7 +352,7 @@ export default function ProductForm({ initialData, onSave, onCancel, title, subt
                                 </div>
                             </InputField>
 
-                            <InputField label="Harga Spesial (Jual)" required hint="Harga aktual yang dibayar pelanggan">
+                            <InputField label="Harga Spesial (Jual)" hint="Opsional — Kosongkan jika tidak ada promo">
                                 <div className="relative">
                                     <span className="absolute left-0 top-1/2 -translate-y-1/2 text-zinc-500 font-semibold text-sm">Rp</span>
                                     <input type="number" min={0}

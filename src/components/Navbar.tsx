@@ -160,7 +160,7 @@ export default function Navbar() {
                     {/* Cart Indicator */}
                     <div className="h-6 w-[1px] bg-zinc-100 mx-2"></div>
                     <div className="flex items-center gap-1">
-                        <Link href="/products/checkout" className="relative p-2 text-zinc-500 hover:text-zinc-900 transition-colors">
+                        <Link href="/products/checkout" aria-label="Lihat Keranjang Belanja" className="relative p-2 text-zinc-500 hover:text-zinc-900 transition-colors">
                             <ShoppingCart className="h-5 w-5" />
                             {isMounted && cartItems.length > 0 && (
                                 <span className="absolute -top-1 -right-1 h-4 w-4 bg-blue-500 text-white text-[8px] font-black rounded-full flex items-center justify-center border border-white">
@@ -182,8 +182,9 @@ export default function Navbar() {
                                     {isMounted && (
                                         <Image
                                             src={language === "ID" ? "/images/flags/id.png" : "/images/flags/us.png"}
-                                            alt={language}
+                                            alt={language === "ID" ? "Bahasa Indonesia" : "English"}
                                             fill
+                                            sizes="24px"
                                             className="object-cover"
                                         />
                                     )}
@@ -204,7 +205,7 @@ export default function Navbar() {
                                         className={`w-full flex items-center gap-3 px-3 py-2.5 rounded-xl transition-all cursor-pointer ${language === "ID" ? "bg-zinc-900 text-white" : "text-zinc-500 hover:bg-zinc-50 hover:text-zinc-900"}`}
                                     >
                                         <div className="relative w-5 h-5 rounded-full overflow-hidden border border-zinc-200 shrink-0">
-                                            <Image src="/images/flags/id.png" alt="ID" fill className="object-cover" />
+                                            <Image src="/images/flags/id.png" alt="Bahasa Indonesia" fill sizes="20px" className="object-cover" />
                                         </div>
                                         <span className="text-[13px] font-bold">Indonesia</span>
                                         {language === "ID" && <span className="ml-auto text-[10px] font-black">✓</span>}
@@ -214,7 +215,7 @@ export default function Navbar() {
                                         className={`w-full flex items-center gap-3 px-3 py-2.5 rounded-xl transition-all cursor-pointer ${language === "EN" ? "bg-zinc-900 text-white" : "text-zinc-500 hover:bg-zinc-50 hover:text-zinc-900"}`}
                                     >
                                         <div className="relative w-5 h-5 rounded-full overflow-hidden border border-zinc-200 shrink-0">
-                                            <Image src="/images/flags/us.png" alt="EN" fill className="object-cover" />
+                                            <Image src="/images/flags/us.png" alt="English (US)" fill sizes="20px" className="object-cover" />
                                         </div>
                                         <span className="text-[13px] font-bold">English (US)</span>
                                         {language === "EN" && <span className="ml-auto text-[10px] font-black">✓</span>}
@@ -227,7 +228,7 @@ export default function Navbar() {
 
                 {/* Mobile Controls */}
                 <div className="flex md:hidden items-center gap-2">
-                    <Link href="/products/checkout" className="relative p-2 text-zinc-500">
+                    <Link href="/products/checkout" aria-label="Lihat Keranjang Belanja" className="relative p-2 text-zinc-500">
                         <ShoppingCart className="h-5 w-5" />
                         {isMounted && cartItems.length > 0 && (
                             <span className="absolute -top-1 -right-1 h-4 w-4 bg-zinc-900 text-white text-[8px] font-bold rounded-full flex items-center justify-center border border-white">
@@ -246,8 +247,9 @@ export default function Navbar() {
                                 {isMounted && (
                                     <Image
                                         src={language === "ID" ? "/images/flags/id.png" : "/images/flags/us.png"}
-                                        alt={language}
+                                        alt={language === "ID" ? "Bahasa Indonesia" : "English"}
                                         fill
+                                        sizes="20px"
                                         className="object-cover"
                                     />
                                 )}
@@ -264,7 +266,7 @@ export default function Navbar() {
                                 className={`w-full flex items-center gap-2.5 px-3 py-2 rounded-xl transition-all cursor-pointer ${language === "ID" ? "bg-zinc-50 text-zinc-900" : "text-zinc-500"}`}
                             >
                                 <div className="relative w-4 h-4 rounded-full overflow-hidden border border-zinc-200 shrink-0">
-                                    <Image src="/images/flags/id.png" alt="ID" fill className="object-cover" />
+                                    <Image src="/images/flags/id.png" alt="Bahasa Indonesia" fill sizes="16px" className="object-cover" />
                                 </div>
                                 <span className="text-[12px] font-bold">Indonesia</span>
                             </button>
@@ -273,7 +275,7 @@ export default function Navbar() {
                                 className={`w-full flex items-center gap-2.5 px-3 py-2 rounded-xl transition-all cursor-pointer ${language === "EN" ? "bg-zinc-50 text-zinc-900" : "text-zinc-500"}`}
                             >
                                 <div className="relative w-4 h-4 rounded-full overflow-hidden border border-zinc-200 shrink-0">
-                                    <Image src="/images/flags/us.png" alt="EN" fill className="object-cover" />
+                                    <Image src="/images/flags/us.png" alt="English (US)" fill sizes="16px" className="object-cover" />
                                 </div>
                                 <span className="text-[12px] font-bold">English</span>
                             </button>
@@ -282,6 +284,8 @@ export default function Navbar() {
 
                     <button
                         onClick={() => setIsMenuOpen(!isMenuOpen)}
+                        aria-label={isMenuOpen ? "Tutup Menu" : "Buka Menu"}
+                        aria-expanded={isMenuOpen}
                         className="p-2 text-zinc-900"
                     >
                         {isMenuOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}

@@ -91,7 +91,7 @@ export default function ArticlesAdminPage() {
                                         <td className="text-sm text-zinc-900 py-3 px-4">
                                             <div className="flex items-center gap-3">
                                                 <div className="h-10 w-10 sm:h-12 sm:w-12 rounded-xl overflow-hidden shrink-0 border border-zinc-200 shadow-sm">
-                                                    <img src={article.image} alt="" className="w-full h-full object-cover" />
+                                                    <img src={article.image} alt="" className="w-full h-full object-cover" loading="lazy" />
                                                 </div>
                                                 <div className="min-w-0">
                                                     <p className="text-sm sm:text-base font-semibold text-zinc-900 line-clamp-1">{article.title}</p>

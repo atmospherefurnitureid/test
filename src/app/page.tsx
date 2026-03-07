@@ -7,6 +7,7 @@ import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import FaqSection from "@/components/FaqSection";
 import { useContentStore } from "@/lib/contentStore";
+import { useProductStore } from "@/lib/productStore";
 import { slugify } from "@/lib/utils";
 import { ArrowUpRight, Search } from "lucide-react";
 import { useLanguage } from "@/lib/i18n/LanguageContext";
@@ -15,20 +16,29 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 
 export default function Home() {
   const { articles, fetchArticles, fetchCategories } = useContentStore();
+  const { products, fetchProducts } = useProductStore();
   const { t } = useLanguage();
   const [mounted, setMounted] = useState(false);
   const containerRef = useRef<HTMLDivElement>(null);
-
   const [founder, setFounder] = useState<any>(null);
+  const [galleryProducts, setGalleryProducts] = useState<any[]>([]);
 
   useEffect(() => {
     setMounted(true);
     fetchArticles();
     fetchCategories();
+    fetchProducts();
 
     // Fetch founder data
     fetch('/api/founder').then(res => res.json()).then(data => setFounder(data)).catch(() => { });
-  }, [fetchArticles, fetchCategories]);
+  }, [fetchArticles, fetchCategories, fetchProducts]);
+
+  useEffect(() => {
+    if (mounted && products.length > 0 && galleryProducts.length === 0) {
+      const shuffled = [...products].sort(() => 0.5 - Math.random());
+      setGalleryProducts(shuffled.slice(0, 7));
+    }
+  }, [mounted, products, galleryProducts]);
 
   useEffect(() => {
     if (!mounted) return;
@@ -208,84 +218,145 @@ export default function Home() {
       {/* Hero Gallery Grid Section */}
       <section className="mx-auto w-full max-w-7xl px-6 pb-20">
         <div className="grid grid-cols-1 gap-2 sm:grid-cols-2 lg:grid-cols-5">
+          {galleryProducts.length > 0 ? (
+            <>
+              {/* Item 1 */}
+              <Link
+                href={`/products/${galleryProducts[0].code}`}
+                className="relative aspect-4/5 lg:col-span-1 overflow-hidden rounded-xl group hero-gallery-item"
+              >
+                <Image
+                  src={galleryProducts[0].media[0] || "https://images.unsplash.com/photo-1594026112284-02bb6f3352fe?auto=format&fit=crop&q=80&w=800"}
+                  alt={galleryProducts[0].name}
+                  fill
+                  className="object-cover transition-transform duration-500 group-hover:scale-110"
+                  priority
+                />
+                <div className="absolute inset-x-0 bottom-0 p-4 bg-gradient-to-t from-black/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity">
+                  <p className="text-white text-xs font-semibold">{galleryProducts[0].name}</p>
+                </div>
+              </Link>
 
-          {/* div1: Item 1 - Ladder/Shelf */}
-          <div className="relative aspect-4/5 lg:col-span-1 overflow-hidden rounded-xl group hero-gallery-item">
-            <Image
-              src="https://images.unsplash.com/photo-1594026112284-02bb6f3352fe?auto=format&fit=crop&q=80&w=800"
-              alt="Artistic Wood Ladder Shelf"
-              fill
-              className="object-cover transition-transform duration-500 group-hover:scale-110"
-              priority
-            />
-          </div>
+              {/* Item 2 */}
+              {galleryProducts[1] && (
+                <Link
+                  href={`/products/${galleryProducts[1].code}`}
+                  className="group relative aspect-16/10 lg:col-span-2 overflow-hidden rounded-xl hero-gallery-item"
+                >
+                  <Image
+                    src={galleryProducts[1].media[0] || "https://images.unsplash.com/photo-1595515106969-1ce29566ff1c?auto=format&fit=crop&q=80&w=1200"}
+                    alt={galleryProducts[1].name}
+                    fill
+                    className="object-cover transition-transform duration-500 group-hover:scale-110"
+                    priority
+                  />
+                  <div className="absolute inset-x-0 bottom-0 p-4 bg-gradient-to-t from-black/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity">
+                    <p className="text-white text-xs font-semibold">{galleryProducts[1].name}</p>
+                  </div>
+                </Link>
+              )}
 
-          {/* div2: Item 2 - Dining Table */}
-          <div className="group relative aspect-16/10 lg:col-span-2 overflow-hidden rounded-xl hero-gallery-item">
-            <Image
-              src="https://images.unsplash.com/photo-1595515106969-1ce29566ff1c?auto=format&fit=crop&q=80&w=1200"
-              alt="Minimalist Wooden Dining Table"
-              fill
-              className="object-cover transition-transform duration-500 group-hover:scale-110"
-              priority
-            />
-          </div>
+              {/* Item 3 */}
+              {galleryProducts[2] && (
+                <Link
+                  href={`/products/${galleryProducts[2].code}`}
+                  className="relative aspect-4/5 lg:col-start-4 overflow-hidden rounded-xl group hero-gallery-item"
+                >
+                  <Image
+                    src={galleryProducts[2].media[0] || "https://images.unsplash.com/photo-1503602642458-232111445657?auto=format&fit=crop&q=80&w=800"}
+                    alt={galleryProducts[2].name}
+                    fill
+                    className="object-cover transition-transform duration-500 group-hover:scale-110"
+                    priority
+                  />
+                  <div className="absolute inset-x-0 bottom-0 p-4 bg-gradient-to-t from-black/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity">
+                    <p className="text-white text-xs font-semibold">{galleryProducts[2].name}</p>
+                  </div>
+                </Link>
+              )}
 
-          {/* div3: Item 3 - Iron Chair */}
-          <div className="relative aspect-4/5 lg:col-start-4 overflow-hidden rounded-xl group hero-gallery-item">
-            <Image
-              src="https://images.unsplash.com/photo-1503602642458-232111445657?auto=format&fit=crop&q=80&w=800"
-              alt="Industrial Iron Cafe Chair"
-              fill
-              className="object-cover transition-transform duration-500 group-hover:scale-110"
-              priority
-            />
-          </div>
+              {/* Item 4 */}
+              {galleryProducts[3] && (
+                <Link
+                  href={`/products/${galleryProducts[3].code}`}
+                  className="relative hidden lg:block aspect-4/5 lg:col-start-5 overflow-hidden rounded-xl group hero-gallery-item"
+                >
+                  <Image
+                    src={galleryProducts[3].media[0] || "https://images.unsplash.com/photo-1586023492125-27b2c045efd7?auto=format&fit=crop&q=80&w=800"}
+                    alt={galleryProducts[3].name}
+                    fill
+                    className="object-cover transition-transform duration-500 group-hover:scale-110"
+                    priority
+                  />
+                  <div className="absolute inset-x-0 bottom-0 p-4 bg-gradient-to-t from-black/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity">
+                    <p className="text-white text-xs font-semibold">{galleryProducts[3].name}</p>
+                  </div>
+                </Link>
+              )}
 
-          {/* div4: Item 4 - Stool */}
-          <div className="relative hidden lg:block aspect-4/5 lg:col-start-5 overflow-hidden rounded-xl group hero-gallery-item">
-            <Image
-              src="https://images.unsplash.com/photo-1586023492125-27b2c045efd7?auto=format&fit=crop&q=80&w=800"
-              alt="Modern Minimalist Wood Stool"
-              fill
-              className="object-cover transition-transform duration-500 group-hover:scale-110"
-              priority
-            />
-          </div>
+              {/* Item 5 */}
+              {galleryProducts[4] && (
+                <Link
+                  href={`/products/${galleryProducts[4].code}`}
+                  className="relative hidden lg:block aspect-16/10 lg:col-span-2 lg:row-start-2 overflow-hidden rounded-xl group hero-gallery-item"
+                >
+                  <Image
+                    src={galleryProducts[4].media[0] || "https://images.unsplash.com/photo-1592078615290-033ee584e267?auto=format&fit=crop&q=80&w=1200"}
+                    alt={galleryProducts[4].name}
+                    fill
+                    className="object-cover transition-transform duration-500 group-hover:scale-110"
+                    loading="lazy"
+                  />
+                  <div className="absolute inset-x-0 bottom-0 p-4 bg-gradient-to-t from-black/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity">
+                    <p className="text-white text-xs font-semibold">{galleryProducts[4].name}</p>
+                  </div>
+                </Link>
+              )}
 
-          {/* div5: Item 5 - Workshop Details */}
-          <div className="relative hidden lg:block aspect-16/10 lg:col-span-2 lg:row-start-2 overflow-hidden rounded-xl group hero-gallery-item">
-            <Image
-              src="https://images.unsplash.com/photo-1592078615290-033ee584e267?auto=format&fit=crop&q=80&w=1200"
-              alt="Atmosphere Wood Joinery Workshop"
-              fill
-              className="object-cover transition-transform duration-500 group-hover:scale-110"
-              loading="lazy"
-            />
-          </div>
+              {/* Item 6 */}
+              {galleryProducts[5] && (
+                <Link
+                  href={`/products/${galleryProducts[5].code}`}
+                  className="relative hidden lg:block aspect-4/5 lg:col-start-3 lg:row-start-2 overflow-hidden rounded-xl group hero-gallery-item"
+                >
+                  <Image
+                    src={galleryProducts[5].media[0] || "https://images.unsplash.com/photo-1567538096630-e0c55bd6374c?auto=format&fit=crop&q=80&w=800"}
+                    alt={galleryProducts[5].name}
+                    fill
+                    className="object-cover transition-transform duration-500 group-hover:scale-110"
+                    loading="lazy"
+                  />
+                  <div className="absolute inset-x-0 bottom-0 p-4 bg-gradient-to-t from-black/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity">
+                    <p className="text-white text-xs font-semibold">{galleryProducts[5].name}</p>
+                  </div>
+                </Link>
+              )}
 
-          {/* div6: Item 6 - Wood Furniture Details */}
-          <div className="relative hidden lg:block aspect-4/5 lg:col-start-3 lg:row-start-2 overflow-hidden rounded-xl group hero-gallery-item">
-            <Image
-              src="https://images.unsplash.com/photo-1567538096630-e0c55bd6374c?auto=format&fit=crop&q=80&w=800"
-              alt="Premium Wood Furniture Detail"
-              fill
-              className="object-cover transition-transform duration-500 group-hover:scale-110"
-              loading="lazy"
-            />
-          </div>
-
-          {/* div7: Item 7 - Luxury Desk */}
-          <div className="relative hidden lg:block aspect-16/10 lg:col-span-2 lg:col-start-4 lg:row-start-2 overflow-hidden rounded-xl group hero-gallery-item">
-            <Image
-              src="https://images.unsplash.com/photo-1493663284031-b7e3aefcae8e?auto=format&fit=crop&q=80&w=1200"
-              alt="Modern Luxury Wood Desk"
-              fill
-              className="object-cover transition-transform duration-500 group-hover:scale-110"
-              loading="lazy"
-            />
-          </div>
-
+              {/* Item 7 */}
+              {galleryProducts[6] && (
+                <Link
+                  href={`/products/${galleryProducts[6].code}`}
+                  className="relative hidden lg:block aspect-16/10 lg:col-span-2 lg:col-start-4 lg:row-start-2 overflow-hidden rounded-xl group hero-gallery-item"
+                >
+                  <Image
+                    src={galleryProducts[6].media[0] || "https://images.unsplash.com/photo-1493663284031-b7e3aefcae8e?auto=format&fit=crop&q=80&w=1200"}
+                    alt={galleryProducts[6].name}
+                    fill
+                    className="object-cover transition-transform duration-500 group-hover:scale-110"
+                    loading="lazy"
+                  />
+                  <div className="absolute inset-x-0 bottom-0 p-4 bg-gradient-to-t from-black/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity">
+                    <p className="text-white text-xs font-semibold">{galleryProducts[6].name}</p>
+                  </div>
+                </Link>
+              )}
+            </>
+          ) : (
+            // Fallback empty loaders or placeholders could go here if products haven't loaded
+            Array.from({ length: 7 }).map((_, i) => (
+              <div key={i} className={`bg-zinc-100 animate-pulse rounded-xl ${i === 1 || i === 4 || i === 6 ? 'lg:col-span-2 aspect-16/10' : 'aspect-4/5'}`} />
+            ))
+          )}
         </div>
 
         {/* Load More Products Button */}
@@ -428,7 +499,7 @@ export default function Home() {
               </p>
             </div>
             {/* Bottom Button Group */}
-            <Link href="/services/desain-yang-dipersonalisasi-sepenuhnya" className="w-fit text-white font-bold text-sm underline underline-offset-8 flex items-center gap-2 hover:gap-3 transition-all duration-300 group-hover:text-sky-500 group-hover:opacity-100 mt-8 md:mt-0">
+            <Link href="/services/desain-yang-dipersonalisasi-sepenuhnya" aria-label="Pelajari Layanan Desain yang Dipersonalisasi" className="w-fit text-white font-bold text-sm underline underline-offset-8 flex items-center gap-2 hover:gap-3 transition-all duration-300 group-hover:text-sky-500 group-hover:opacity-100 mt-8 md:mt-0">
               Learn More
             </Link>
           </div>
@@ -446,7 +517,7 @@ export default function Home() {
               </p>
             </div>
             {/* Bottom Button Group */}
-            <Link href="/services/kualitas-dan-ketelitian-pengerjaan" className="w-fit text-sky-500 font-bold text-sm underline underline-offset-8 flex items-center gap-2 hover:gap-3 transition-all group-hover:text-white mt-8 md:mt-0">
+            <Link href="/services/kualitas-dan-ketelitian-pengerjaan" aria-label="Pelajari Layanan Kualitas dan Ketelitian Pengerjaan" className="w-fit text-sky-500 font-bold text-sm underline underline-offset-8 flex items-center gap-2 hover:gap-3 transition-all group-hover:text-white mt-8 md:mt-0">
               Learn More
             </Link>
           </div>
@@ -464,7 +535,7 @@ export default function Home() {
               </p>
             </div>
             {/* Bottom Button Group */}
-            <Link href="/services/solusi-fungsional-dan-estetis" className="w-fit text-sky-500 font-bold text-sm underline underline-offset-8 flex items-center gap-2 hover:gap-3 transition-all group-hover:text-white mt-8 md:mt-0">
+            <Link href="/services/solusi-fungsional-dan-estetis" aria-label="Pelajari Layanan Solusi Fungsional dan Estetis" className="w-fit text-sky-500 font-bold text-sm underline underline-offset-8 flex items-center gap-2 hover:gap-3 transition-all group-hover:text-white mt-8 md:mt-0">
               Learn More
             </Link>
           </div>
@@ -482,7 +553,7 @@ export default function Home() {
               </p>
             </div>
             {/* Bottom Button Group */}
-            <Link href="/services/kolaborasi-untuk-hasil-terbaik" className="w-fit text-sky-500 font-bold text-sm underline underline-offset-8 flex items-center gap-2 hover:gap-3 transition-all group-hover:text-white mt-8 md:mt-0">
+            <Link href="/services/kolaborasi-untuk-hasil-terbaik" aria-label="Pelajari Layanan Kolaborasi untuk Hasil Terbaik" className="w-fit text-sky-500 font-bold text-sm underline underline-offset-8 flex items-center gap-2 hover:gap-3 transition-all group-hover:text-white mt-8 md:mt-0">
               Learn More
             </Link>
           </div>

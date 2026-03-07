@@ -113,7 +113,7 @@ export default function InventoryPage() {
                                                     const med = product.media[product.mainMediaIndex || 0];
                                                     if (!med) return <Package className="h-5 w-5 text-gray-300" />;
                                                     const isVideo = med.match(/\.(mp4|webm|ogg|quicktime)$/i) || med.includes("video") || med.startsWith("data:video");
-                                                    return isVideo ? <Play className="h-5 w-5 text-zinc-400" /> : <img src={med} alt="" className="w-full h-full object-cover" />;
+                                                    return isVideo ? <Play className="h-5 w-5 text-zinc-400" /> : <img src={med} alt="" className="w-full h-full object-cover" loading="lazy" />;
                                                 })()}
                                             </div>
                                             <div>
