@@ -19,10 +19,15 @@ export default function Home() {
   const [mounted, setMounted] = useState(false);
   const containerRef = useRef<HTMLDivElement>(null);
 
+  const [founder, setFounder] = useState<any>(null);
+
   useEffect(() => {
     setMounted(true);
     fetchArticles();
     fetchCategories();
+
+    // Fetch founder data
+    fetch('/api/founder').then(res => res.json()).then(data => setFounder(data)).catch(() => { });
   }, [fetchArticles, fetchCategories]);
 
   useEffect(() => {
@@ -609,27 +614,51 @@ export default function Home() {
           <div className="flex flex-col md:flex-row items-start gap-8 group">
             <div className="relative aspect-3/4 w-full md:w-72 shrink-0 rounded-xl overflow-hidden shadow-xl">
               <Image
-                src="/images/team-1.png"
-                alt="Will Jones"
+                src={founder?.image || "/images/team-1.png"}
+                alt={founder?.name || "Will Jones"}
                 fill
                 className="object-cover transition-transform duration-700 group-hover:scale-105"
               />
             </div>
             <div className="pt-4 text-left">
-              <h3 className="text-2xl md:text-3xl font-semibold text-zinc-900 mb-3 tracking-tight">Will Jones</h3>
+              <h3 className="text-2xl md:text-3xl font-semibold text-zinc-900 mb-3 tracking-tight">
+                {founder?.name || "Will Jones"}
+              </h3>
               <p className="text-zinc-500 text-sm md:text-base leading-relaxed mb-6">
-                {t("home.team.ceo_desc")}
+                {founder?.bio || t("home.team.ceo_desc")}
               </p>
               <div className="flex items-center gap-3">
-                <a href="#" className="p-2 rounded-full bg-zinc-50 text-zinc-400 hover:text-zinc-900 hover:bg-zinc-100 transition-all">
-                  <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z" /></svg>
-                </a>
-                <a href="#" className="p-2 rounded-full bg-zinc-50 text-zinc-400 hover:text-zinc-900 hover:bg-zinc-100 transition-all">
-                  <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z" /></svg>
-                </a>
-                <a href="#" className="p-2 rounded-full bg-zinc-50 text-zinc-400 hover:text-zinc-900 hover:bg-zinc-100 transition-all">
-                  <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect width="20" height="20" x="2" y="2" rx="5" ry="5" /><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z" /><line x1="17.5" x2="17.51" y1="6.5" y2="6.5" /></svg>
-                </a>
+                {founder ? (
+                  <>
+                    {founder.whatsapp && (
+                      <a href={`https://wa.me/${founder.whatsapp}`} target="_blank" className="p-2 rounded-full bg-zinc-50 text-zinc-400 hover:text-green-600 hover:bg-green-50 transition-all">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81 1.7A2 2 0 0 1 22 16.92z" /></svg>
+                      </a>
+                    )}
+                    {founder.facebook && (
+                      <a href={founder.facebook} target="_blank" className="p-2 rounded-full bg-zinc-50 text-zinc-400 hover:text-blue-600 hover:bg-blue-50 transition-all">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z" /></svg>
+                      </a>
+                    )}
+                    {founder.instagram && (
+                      <a href={`https://instagram.com/${founder.instagram.replace('@', '')}`} target="_blank" className="p-2 rounded-full bg-zinc-50 text-zinc-400 hover:text-pink-600 hover:bg-pink-50 transition-all">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect width="20" height="20" x="2" y="2" rx="5" ry="5" /><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z" /><line x1="17.5" x2="17.51" y1="6.5" y2="6.5" /></svg>
+                      </a>
+                    )}
+                  </>
+                ) : (
+                  <>
+                    <a href="#" className="p-2 rounded-full bg-zinc-50 text-zinc-400 hover:text-zinc-900 hover:bg-zinc-100 transition-all">
+                      <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z" /></svg>
+                    </a>
+                    <a href="#" className="p-2 rounded-full bg-zinc-50 text-zinc-400 hover:text-zinc-900 hover:bg-zinc-100 transition-all">
+                      <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z" /></svg>
+                    </a>
+                    <a href="#" className="p-2 rounded-full bg-zinc-50 text-zinc-400 hover:text-zinc-900 hover:bg-zinc-100 transition-all">
+                      <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect width="20" height="20" x="2" y="2" rx="5" ry="5" /><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z" /><line x1="17.5" x2="17.51" y1="6.5" y2="6.5" /></svg>
+                    </a>
+                  </>
+                )}
               </div>
             </div>
           </div>
@@ -638,10 +667,10 @@ export default function Home() {
           <div className="flex items-center justify-center">
             <div className="space-y-6 py-8 px-6 bg-zinc-50/50 rounded-xl border border-zinc-100 w-full">
               <blockquote className="text-xl md:text-2xl font-semibold text-zinc-900 italic leading-relaxed">
-                {t("home.team.quote")}
+                {founder?.quote || t("home.team.quote")}
               </blockquote>
               <p className="text-zinc-500 text-sm md:text-base leading-relaxed font-bold mt-4">
-                — Will Jones, {t("home.team.master")}
+                — {founder?.name || "Will Jones"}, {founder?.role || t("home.team.master")}
               </p>
             </div>
           </div>

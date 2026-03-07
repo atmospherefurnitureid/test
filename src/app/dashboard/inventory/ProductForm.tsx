@@ -5,6 +5,8 @@ import {
     Plus, Trash2, Package, Save, Play, ArrowLeft, Info
 } from "lucide-react";
 import { Product, ProductSpec } from "@/types";
+import { generateSKU, CATEGORY_MAP } from "@/lib/utils";
+import { useProductStore } from "@/lib/productStore";
 import dynamic from "next/dynamic";
 
 const SunEditor = dynamic(() => import("suneditor-react"), {
@@ -46,12 +48,12 @@ MemoizedSunEditor.displayName = "MemoizedSunEditor";
 
 // ── Category taxonomy (furniture industry standard) ──────────────────────────
 const PRODUCT_CATEGORIES = [
-    { label: "Kursi", value: "Kursi" },
     { label: "Meja", value: "Meja" },
+    { label: "Kursi", value: "Kursi" },
+    { label: "Bangku / Bench", value: "Bench" },
+    { label: "Stool", value: "Stool" },
     { label: "Lemari", value: "Lemari" },
     { label: "Rak", value: "Rak" },
-    { label: "Bangku", value: "Bangku" },
-    { label: "Stool", value: "Stool" },
     { label: "Kabinet", value: "Kabinet" },
     { label: "Credenza", value: "Credenza" },
     { label: "Nakas", value: "Nakas" },
@@ -144,11 +146,12 @@ const emptyForm = (): Omit<Product, "code" | "rating"> => ({
 
 export default function ProductForm({ initialData, onSave, onCancel, title, subtitle }: ProductFormProps) {
     const [form, setForm] = useState<Omit<Product, "code" | "rating">>(emptyForm());
+    const [previewSKU, setPreviewSKU] = useState<string>("");
+    const { products } = useProductStore();
 
     useEffect(() => {
         if (initialData) {
             setForm(prev => {
-                // Only update if it's different to prevent loops
                 if (prev.name === initialData.name &&
                     prev.price === initialData.price &&
                     prev.description === initialData.description) return prev;
@@ -156,6 +159,17 @@ export default function ProductForm({ initialData, onSave, onCancel, title, subt
             });
         }
     }, [initialData]);
+
+    // Preview SKU Logic
+    useEffect(() => {
+        if (initialData?.code) {
+            setPreviewSKU(initialData.code);
+        } else {
+            const existingCodes = products.map(p => p.code);
+            const generated = generateSKU(form.label, form.category, existingCodes);
+            setPreviewSKU(generated);
+        }
+    }, [form.label, form.category, products, initialData]);
 
     const handleSave = () => {
         if (!form.name.trim()) { alert("Nama produk tidak boleh kosong."); return; }
@@ -186,6 +200,7 @@ export default function ProductForm({ initialData, onSave, onCancel, title, subt
         const validMedia = form.media.filter((m: string) => m.trim() !== "");
         const formToSave = {
             ...form,
+            code: previewSKU,
             media: validMedia,
             mainMediaIndex: form.mainMediaIndex ?? 0,
             specifications: form.specifications.filter((s) => s.key.trim() !== ""),
@@ -256,6 +271,16 @@ export default function ProductForm({ initialData, onSave, onCancel, title, subt
                                     className="w-full bg-transparent border-b border-zinc-300 py-3 text-base text-zinc-900 placeholder:text-zinc-400 placeholder:font-normal focus:outline-none focus:border-zinc-900 transition-all font-medium"
                                 />
                             </InputField>
+
+                            <div className="p-4 bg-zinc-50 border border-zinc-200 rounded-xl flex items-center justify-between">
+                                <div>
+                                    <p className="text-xs font-bold text-zinc-400 uppercase tracking-wider">Product Code (SKU) {initialData ? "" : "Preview"}</p>
+                                    <p className="text-xl font-mono font-bold text-zinc-900 mt-0.5">{previewSKU || "---"}</p>
+                                </div>
+                                <div className="text-right hidden sm:block">
+                                    <p className="text-[10px] text-zinc-400 italic">Otomatis dihitung berdasarkan material & kategori</p>
+                                </div>
+                            </div>
 
                             <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 sm:gap-8">
                                 <InputField label="Jenis Material" required hint="Menentukan kode produk (W-, I-, WI-)">
@@ -444,6 +469,9 @@ export default function ProductForm({ initialData, onSave, onCancel, title, subt
                                                 try {
                                                     const formData = new FormData();
                                                     formData.append('file', file);
+                                                    if (previewSKU) {
+                                                        formData.append('productCode', previewSKU);
+                                                    }
                                                     const res = await fetch('/api/upload', { method: 'POST', body: formData });
                                                     if (!res.ok) { const err = await res.json(); throw new Error(err.error || "Gagal upload"); }
                                                     const { url } = await res.json();

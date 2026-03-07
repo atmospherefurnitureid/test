@@ -2,6 +2,7 @@
 
 import { create } from "zustand";
 import { Product } from "@/types";
+import { generateSKU } from "@/lib/utils";
 
 interface ProductStoreState {
     products: Product[];
@@ -45,22 +46,9 @@ export const useProductStore = create<ProductStoreState>((set, get) => ({
         try {
             const { products } = get();
 
-            // Auto-generate product code
-            let prefix = "W-";
-            if (product.label === "Besi") prefix = "I-";
-            if (product.label === "Mixed") prefix = "WI-";
-
-            let catCode = "99";
-            const cat = product.category.toLowerCase();
-            if (cat.includes("meja") || cat.includes("desk")) catCode = "11";
-            else if (cat.includes("kursi") || cat.includes("chair")) catCode = "21";
-            else if (cat.includes("bangku") || cat.includes("bench")) catCode = "22";
-            else if (cat.includes("stool")) catCode = "23";
-
-            const matchPattern = `${prefix}${catCode}`;
-            const existingInCat = products.filter((p) => p.code.startsWith(matchPattern));
-            const sequenceStr = String(existingInCat.length + 1).padStart(3, "0");
-            const newCode = `${matchPattern}${sequenceStr}`;
+            // Auto-generate product code menggunakan utility jika belum ada
+            const existingCodes = products.map(p => p.code);
+            const newCode = (product as any).code || generateSKU(product.label, product.category, existingCodes);
 
             const finalProduct = { ...product, code: newCode };
 

@@ -2,12 +2,13 @@
 
 import { useRouter, usePathname } from "next/navigation";
 import Link from "next/link";
-import { useState } from "react";
+import Image from "next/image";
+import { useState, useEffect } from "react";
 import {
     LayoutDashboard, Package, FileText, DollarSign,
     Clock, MessageSquare, Settings, LogOut,
     ChevronDown, ChevronRight, Menu, X, Bell,
-    Search, Building2, Users, CreditCard, Play
+    Search, Users, CreditCard, Play
 } from "lucide-react";
 
 interface NavItem {
@@ -15,7 +16,7 @@ interface NavItem {
     href: string;
     icon: React.ReactNode;
     badge?: number;
-    children?: { label: string; href: string; icon?: React.ReactNode }[];
+    children?: { label: string; href: string; icon?: React.ReactNode; badge?: number }[];
 }
 
 export default function DashboardLayout({
@@ -28,6 +29,50 @@ export default function DashboardLayout({
     const [sidebarOpen, setSidebarOpen] = useState(true);
     const [mobileSidebarOpen, setMobileSidebarOpen] = useState(false);
     const [expandedMenus, setExpandedMenus] = useState<string[]>(["Articles"]);
+    const [user, setUser] = useState<{ username: string; role: string } | null>(null);
+    const [counts, setCounts] = useState({ comments: 0, inventory: 0 });
+
+    useEffect(() => {
+        const fetchUser = async () => {
+            try {
+                const res = await fetch('/api/auth/profile');
+                if (res.ok) {
+                    const data = await res.json();
+                    setUser(data);
+                }
+            } catch (err) {
+                console.error("Dashboard failed to fetch user profile", err);
+            }
+        };
+
+        const fetchCounts = async () => {
+            try {
+                // Fetch pending comments count
+                const resComm = await fetch('/api/comments');
+                if (resComm.ok) {
+                    const comments = await resComm.json();
+                    const pendingCount = comments.filter((c: any) => c.status === "Pending").length;
+
+                    // Fetch low stock inventory count
+                    const resProd = await fetch('/api/products');
+                    if (resProd.ok) {
+                        const products = await resProd.json();
+                        const lowStockCount = products.filter((p: any) => p.status === "Low Stock" || (p.stock > 0 && p.stock <= 5)).length;
+
+                        setCounts({ comments: pendingCount, inventory: lowStockCount });
+                    }
+                }
+            } catch (err) {
+                console.error("Failed to fetch notification counts", err);
+            }
+        };
+
+        fetchUser();
+        fetchCounts();
+        // Refresh counts every 2 minutes
+        const interval = setInterval(fetchCounts, 120000);
+        return () => clearInterval(interval);
+    }, []);
 
     const handleLogout = async () => {
         try {
@@ -48,16 +93,18 @@ export default function DashboardLayout({
 
     const navItems: NavItem[] = [
         { label: "Overview", href: "/dashboard", icon: <LayoutDashboard className="h-4 w-4" /> },
-        { label: "Inventory", href: "/dashboard/inventory", icon: <Package className="h-4 w-4" />, badge: 3 },
+        { label: "Inventory", href: "/dashboard/inventory", icon: <Package className="h-4 w-4" />, badge: counts.inventory > 0 ? counts.inventory : undefined },
         {
             label: "Articles", href: "/dashboard/articles", icon: <FileText className="h-4 w-4" />,
+            badge: counts.comments > 0 ? counts.comments : undefined,
             children: [
                 { label: "Buat Artikel", href: "/dashboard/articles" },
-                { label: "Komentar", href: "/dashboard/articles/comments" },
+                { label: "Komentar", href: "/dashboard/articles/comments", badge: counts.comments > 0 ? counts.comments : undefined },
                 { label: "Social Media Share", href: "/dashboard/articles/social-share" },
             ]
         },
-        { label: "Pengunjung", href: "/dashboard/visitors", icon: <Users className="h-4 w-4" /> },
+        { label: "Founder", href: "/dashboard/founder", icon: <Users className="h-4 w-4" /> },
+        { label: "Pengunjung", href: "/dashboard/visitors", icon: <Clock className="h-4 w-4" /> },
         { label: "Settings", href: "/dashboard/settings", icon: <Settings className="h-4 w-4" /> },
     ];
 
@@ -87,24 +134,22 @@ export default function DashboardLayout({
                         <Menu className="h-4 w-4 text-gray-600" />
                     </button>
 
-                    {/* Logo + Company Name */}
-                    <div className="flex items-center gap-3">
-                        <div className="w-8 h-8 bg-gray-900 rounded-lg flex items-center justify-center">
-                            <Building2 className="h-4 w-4 text-white" />
-                        </div>
-                        <div className="hidden sm:block">
-                            <h1 className="text-base font-semibold text-gray-900 leading-tight">
-                                Atmosphere Furniture
-                            </h1>
-                            <p className="text-xs text-gray-500">
-                                Wood & Iron Furniture
-                            </p>
-                        </div>
+                    <div className="flex items-center gap-6 ml-2 sm:ml-4">
+                        <Link href="/dashboard" className="relative h-9 w-36 flex shrink-0 hover:opacity-80 transition-opacity">
+                            <Image
+                                src="/logo-atmosphere.png"
+                                alt="Atmosphere Logo"
+                                fill
+                                className="object-contain object-left"
+                                priority
+                            />
+                        </Link>
+
                         <a
                             href={process.env.NODE_ENV === 'production' ? `https://${process.env.NEXT_PUBLIC_MAIN_DOMAIN}` : "/"}
                             target="_blank"
                             rel="noopener noreferrer"
-                            className="ml-4 flex items-center gap-1.5 px-3 py-1 bg-gray-100 hover:bg-gray-200 text-gray-600 rounded-full text-xs font-bold transition-colors"
+                            className="hidden sm:flex items-center gap-1.5 px-4 py-1.5 bg-gray-100 hover:bg-gray-200 text-gray-700 rounded-full text-xs font-bold transition-all shadow-sm active:scale-95"
                         >
                             View Site
                             <Play className="h-2.5 w-2.5 rotate-[-45deg]" />
@@ -123,11 +168,13 @@ export default function DashboardLayout({
                     {/* User avatar */}
                     <div className="flex items-center gap-2 bg-gray-50 rounded-lg px-3 py-1.5 cursor-pointer hover:bg-gray-100 transition-colors">
                         <div className="w-8 h-8 rounded-full bg-blue-100 text-blue-600 flex items-center justify-center text-sm font-semibold">
-                            AD
+                            {user?.username ? user.username.substring(0, 2).toUpperCase() : "AD"}
                         </div>
                         <div className="hidden sm:block">
-                            <p className="text-sm font-medium text-gray-900">Admin</p>
-                            <p className="text-xs text-gray-500">Administrator</p>
+                            <p className="text-sm font-medium text-gray-900">{user?.username || "Admin"}</p>
+                            <p className="text-xs text-gray-500 uppercase tracking-wider font-bold opacity-60">
+                                {user?.role || "Administrator"}
+                            </p>
                         </div>
                         <ChevronDown className="h-3 w-3 text-gray-400 hidden sm:block" />
                     </div>
@@ -136,12 +183,14 @@ export default function DashboardLayout({
 
             {/* ============ SIDEBAR (w-64, fixed, z-30) ============ */}
             {/* Mobile overlay */}
-            {mobileSidebarOpen && (
-                <div
-                    className="fixed inset-0 z-20 bg-black/50 md:hidden"
-                    onClick={() => setMobileSidebarOpen(false)}
-                />
-            )}
+            {
+                mobileSidebarOpen && (
+                    <div
+                        className="fixed inset-0 z-20 bg-black/50 md:hidden"
+                        onClick={() => setMobileSidebarOpen(false)}
+                    />
+                )
+            }
 
             <aside
                 className={`fixed top-0 left-0 z-30 pt-16 h-screen bg-white border-r border-gray-200 flex flex-col transition-all duration-300 ease-in-out
@@ -231,6 +280,11 @@ export default function DashboardLayout({
                                                     <span className="h-3 w-3">{child.icon}</span>
                                                 )}
                                                 <span>{child.label}</span>
+                                                {child.badge && (
+                                                    <span className="bg-red-500 text-white text-[10px] font-bold rounded-full py-0.5 px-1.5 ml-auto">
+                                                        {child.badge}
+                                                    </span>
+                                                )}
                                             </Link>
                                         ))}
                                     </div>

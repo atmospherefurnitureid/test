@@ -357,9 +357,14 @@ function CommentsSection({ articleId }: { articleId: string }) {
                         {/* Turnstile Captcha */}
                         <div className="pt-2">
                             <Turnstile
-                                siteKey="1x00000000000000000000AA"
+                                siteKey={process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY || "1x00000000000000000000AA"}
                                 onSuccess={(t) => setToken(t)}
                                 onExpire={() => setToken(null)}
+                                onError={() => setToken(null)}
+                                options={{
+                                    theme: 'light',
+                                    size: 'normal'
+                                }}
                             />
                         </div>
 

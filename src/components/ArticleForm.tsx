@@ -27,7 +27,7 @@ interface ArticleFormProps {
 
 export default function ArticleForm({ initialData, isEditing = false }: ArticleFormProps) {
     const router = useRouter();
-    const { addArticle, updateArticle, categories, addCategory, deleteCategory, uploadMedia } = useContentStore();
+    const { addArticle, updateArticle, categories, fetchCategories, addCategory, deleteCategory, uploadMedia } = useContentStore();
 
     // Form states
     const [title, setTitle] = useState(initialData?.title || "");
@@ -51,7 +51,8 @@ export default function ArticleForm({ initialData, isEditing = false }: ArticleF
 
     useEffect(() => {
         setIsMounted(true);
-    }, []);
+        fetchCategories();
+    }, [fetchCategories]);
 
     useEffect(() => {
         if (!category && categories.length > 0) {
@@ -240,7 +241,7 @@ export default function ArticleForm({ initialData, isEditing = false }: ArticleF
             <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-12 gap-8 sm:gap-12 lg:gap-16">
                 {/* Left Column (Main Content) */}
                 <div className="lg:col-span-8 space-y-8 sm:space-y-12">
-                    
+
                     {/* Basic Info Section */}
                     <section className="space-y-8">
                         <h3 className="text-lg sm:text-xl font-semibold text-zinc-900 tracking-tight font-poppins">Informasi Artikel</h3>
@@ -428,7 +429,7 @@ export default function ArticleForm({ initialData, isEditing = false }: ArticleF
 
                 {/* Right Column (Meta & Publication) */}
                 <div className="lg:col-span-4 space-y-8 sm:space-y-12">
-                    
+
                     {/* Publication Status */}
                     <div className="space-y-8">
                         <div>

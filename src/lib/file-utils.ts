@@ -1,4 +1,4 @@
-import { unlink } from 'fs/promises';
+import { unlink, rm } from 'fs/promises';
 import { join } from 'path';
 
 /**
@@ -12,8 +12,9 @@ export async function deleteUploadedFile(url: string) {
     }
 
     try {
-        const filename = url.replace('/uploads/', '');
-        const filePath = join(process.cwd(), 'public', 'uploads', filename);
+        // Remove leading /uploads/ to get relative path within uploads dir
+        const relativePath = url.replace('/uploads/', '');
+        const filePath = join(process.cwd(), 'public', 'uploads', ...relativePath.split('/'));
 
         await unlink(filePath);
         console.log(`Successfully deleted file: ${filePath}`);
@@ -33,4 +34,21 @@ export async function deleteUploadedFiles(urls: string[]) {
     if (!urls || !Array.isArray(urls)) return;
 
     await Promise.all(urls.map(url => deleteUploadedFile(url)));
+}
+
+/**
+ * Deletes an entire product's media folder.
+ */
+export async function deleteProductFolder(productCode: string) {
+    if (!productCode) return;
+
+    try {
+        const materialPrefix = productCode.split('-')[0];
+        const folderPath = join(process.cwd(), 'public', 'uploads', 'products', materialPrefix, productCode);
+
+        await rm(folderPath, { recursive: true, force: true });
+        console.log(`Successfully deleted product folder: ${folderPath}`);
+    } catch (error: any) {
+        console.error(`Error deleting product folder for ${productCode}:`, error);
+    }
 }

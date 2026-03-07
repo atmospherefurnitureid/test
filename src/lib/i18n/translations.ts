@@ -152,6 +152,69 @@ export const translations = {
             terms: "Syarat & Ketentuan",
             cookies: "Cookies"
         },
+        services: {
+            ui: {
+                about_service: "Tentang Layanan",
+                why_choose: "Mengapa Memilih Layanan Ini?",
+                start_project: "Mulai Proyek Anda",
+                contact_desc: "Tertarik dengan layanan kami? Hubungi tim kami untuk konsultasi gratis dan penawaran khusus.",
+                free_consultation: "Konsultasi Gratis",
+                other_services: "Layanan Lainnya",
+                back_link: "Kembali ke Semua Layanan",
+                not_found: "Layanan tidak ditemukan",
+                back_home: "Kembali ke Beranda"
+            },
+            items: {
+                "desain-yang-dipersonalisasi-sepenuhnya": {
+                    title: "Desain yang Dipersonalisasi Sepenuhnya",
+                    description: "Kami menyediakan furnitur dan solusi interior yang dirancang khusus sesuai kebutuhan, gaya, dan preferensi Anda. Setiap detail dibuat untuk mencerminkan visi pribadi Anda.",
+                    longDescription: "Layanan desain personalisasi kami memungkinkan Anda untuk menciptakan furnitur yang benar-benar unik dan sesuai dengan karakter ruangan Anda. Tim desainer profesional kami akan bekerja sama dengan Anda mulai dari konsep awal hingga eksekusi akhir, memastikan setiap detail mencerminkan kepribadian dan gaya hidup Anda.",
+                    features: [
+                        "Konsultasi desain gratis",
+                        "Material pilihan berkualitas tinggi",
+                        "Proses pengerjaan yang teliti",
+                        "Garansi kepuasan 100%",
+                        "Tim profesional berpengalaman"
+                    ]
+                },
+                "kualitas-dan-ketelitian-pengerjaan": {
+                    title: "Kualitas dan Ketelitian Pengerjaan",
+                    description: "Setiap produk dibuat dengan material pilihan dan proses pengerjaan yang teliti. Kami memastikan setiap sudut dan finishing memenuhi standar kualitas tinggi.",
+                    longDescription: "Kualitas adalah prioritas utama kami. Setiap furnitur yang kami buat melalui proses kontrol kualitas yang ketat, mulai dari pemilihan material, proses produksi, hingga finishing akhir. Kami menggunakan teknologi modern dan teknik tradisional untuk memastikan produk yang tahan lama dan estetis.",
+                    features: [
+                        "Material kayu pilihan grade A",
+                        "Finishing halus dan tahan lama",
+                        "Konstruksi kokoh dan stabil",
+                        "Detail craftsmanship yang presisi",
+                        "Standar kualitas internasional"
+                    ]
+                },
+                "solusi-fungsional-dan-estetis": {
+                    title: "Solusi Fungsional dan Estetis",
+                    description: "Kami menggabungkan fungsi dan estetika dalam setiap desain, memastikan setiap furnitur memberikan kenyamanan serta efisiensi ruang yang optimal.",
+                    longDescription: "Kami memahami bahwa furnitur yang baik tidak hanya tentang tampilan, tetapi juga tentang fungsi. Tim desainer kami menciptakan solusi yang mengoptimalkan ruang, meningkatkan kenyamanan, dan memperindah interior Anda secara bersamaan.",
+                    features: [
+                        "Desain ergonomis untuk kenyamanan",
+                        "Optimasi ruang yang maksimal",
+                        "Kombinasi estetika dan fungsi",
+                        "Solusi penyimpanan kreatif",
+                        "Adaptif untuk berbagai kebutuhan"
+                    ]
+                },
+                "kolaborasi-untuk-hasil-terbaik": {
+                    title: "Kolaborasi untuk Hasil Terbaik",
+                    description: "Kami bekerja sama dengan Anda dari tahap konsep hingga pemasangan akhir dengan komunikasi terbuka untuk memastikan hasil melampaui ekspektasi.",
+                    longDescription: "Kolaborasi adalah kunci kesuksesan proyek furnitur Anda. Kami melibatkan Anda dalam setiap tahap proses, dari brainstorming ide, review desain, hingga implementasi. Pendekatan kolaboratif ini memastikan hasil akhir sesuai dengan visi Anda.",
+                    features: [
+                        "Konsultasi berkelanjutan",
+                        "Update progress reguler",
+                        "Flexibilitas dalam perubahan desain",
+                        "Tim support yang responsif",
+                        "Komitmen terhadap kepuasan klien"
+                    ]
+                }
+            }
+        },
         contact_thanks: "terima kasih telah mengunjungi kami :)"
     },
     EN: {
@@ -306,6 +369,69 @@ export const translations = {
             privacy: "Privacy Policy",
             terms: "Terms of Service",
             cookies: "Cookies"
+        },
+        services: {
+            ui: {
+                about_service: "About Service",
+                why_choose: "Why Choose This Service?",
+                start_project: "Start Your Project",
+                contact_desc: "Interested in our services? Contact our team for a free consultation and special offer.",
+                free_consultation: "Free Consultation",
+                other_services: "Other Services",
+                back_link: "Back to All Services",
+                not_found: "Service not found",
+                back_home: "Back to Home"
+            },
+            items: {
+                "desain-yang-dipersonalisasi-sepenuhnya": {
+                    title: "Fully Personalized Design",
+                    description: "We provide customized furniture and interior solutions designed to meet your unique needs, styles, and preferences. Every detail is made to reflect your personal vision.",
+                    longDescription: "Our personalized design service allows you to create furniture that is truly unique and matches the character of your space. Our professional design team will work with you from the initial concept to the final execution, ensuring every detail reflects your personality and lifestyle.",
+                    features: [
+                        "Free design consultation",
+                        "High-quality selected materials",
+                        "Meticulous crafting process",
+                        "100% satisfaction guarantee",
+                        "Experienced professional team"
+                    ]
+                },
+                "kualitas-dan-ketelitian-pengerjaan": {
+                    title: "Quality and Craftsmanship Precision",
+                    description: "Every product is made with selected materials and a careful crafting process. We ensure every corner and finishing meets high quality standards.",
+                    longDescription: "Quality is our top priority. Every piece of furniture we create undergoes a strict quality control process, from material selection, production process, to final finishing. We use modern technology and traditional techniques to ensure durable and aesthetic products.",
+                    features: [
+                        "Grade A selected wood materials",
+                        "Smooth and durable finishing",
+                        "Sturdy and stable construction",
+                        "Precise craftsmanship details",
+                        "International quality standards"
+                    ]
+                },
+                "solusi-fungsional-dan-estetis": {
+                    title: "Functional and Aesthetic Solutions",
+                    description: "We combine function and aesthetics in every design, ensuring every piece of furniture provides comfort and optimal space efficiency.",
+                    longDescription: "We understand that good furniture is not just about looks, but also about function. Our design team creates solutions that optimize space, increase comfort, and beautify your interior simultaneously.",
+                    features: [
+                        "Ergonomic design for comfort",
+                        "Maximum space optimization",
+                        "Combination of aesthetics and function",
+                        "Creative storage solutions",
+                        "Adaptive for various needs"
+                    ]
+                },
+                "kolaborasi-untuk-hasil-terbaik": {
+                    title: "Collaboration for Best Results",
+                    description: "We work with you from the concept stage to the final installation with open communication to ensure results exceed expectations.",
+                    longDescription: "Collaboration is the key to the success of your furniture project. We involve you in every stage of the process, from brainstorming ideas, design reviews, to implementation. This collaborative approach ensures the final result matches your vision.",
+                    features: [
+                        "Continuous consultation",
+                        "Regular progress updates",
+                        "Flexibility in design changes",
+                        "Responsive support team",
+                        "Commitment to client satisfaction"
+                    ]
+                }
+            }
         },
         contact_thanks: "thanks for visiting us :)"
     }

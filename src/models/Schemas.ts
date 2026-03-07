@@ -88,6 +88,7 @@ const CategorySchema = new Schema({
 // --- User Schema ---
 const UserSchema = new Schema({
     username: { type: String, required: true, unique: true },
+    email: { type: String, required: false },
     password: { type: String, required: true },
     role: { type: String, enum: ["admin", "editor"], default: "admin" }
 }, { timestamps: true });
@@ -113,10 +114,23 @@ const CommentSchema = new Schema({
     timestamp: { type: Date, default: Date.now }
 }, { timestamps: true });
 
+// --- Founder Schema ---
+const FounderSchema = new Schema({
+    name: { type: String, required: true, default: "Will Jones" },
+    image: { type: String, required: true, default: "/images/team-1.png" },
+    role: { type: String, required: true, default: "CEO & Founder" },
+    bio: { type: String, required: true, default: "" },
+    quote: { type: String, required: true, default: "" },
+    facebook: { type: String, default: "" },
+    instagram: { type: String, default: "" },
+    whatsapp: { type: String, default: "" }
+}, { timestamps: true });
+
 export const Product = mongoose.models.Product || mongoose.model('Product', ProductSchema);
 export const Article = mongoose.models.Article || mongoose.model('Article', ArticleSchema);
 export const Category = mongoose.models.Category || mongoose.model('Category', CategorySchema);
 export const User = mongoose.models.User || mongoose.model('User', UserSchema);
 export const Visitor = mongoose.models.Visitor || mongoose.model('Visitor', VisitorSchema);
 export const Comment = mongoose.models.Comment || mongoose.model('Comment', CommentSchema);
+export const Founder = mongoose.models.Founder || mongoose.model('Founder', FounderSchema);
 

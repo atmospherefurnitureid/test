@@ -2,7 +2,7 @@ import { NextRequest, NextResponse } from 'next/server';
 import dbConnect from '@/lib/db';
 import { Product } from '@/models/Schemas';
 import { verifyAuthFromRequest } from '@/lib/authGuard';
-import { deleteUploadedFiles } from '@/lib/file-utils';
+import { deleteUploadedFiles, deleteProductFolder } from '@/lib/file-utils';
 
 export async function GET(
     request: NextRequest,
@@ -67,10 +67,8 @@ export async function DELETE(
         const product = await Product.findOneAndDelete({ code });
         if (!product) return NextResponse.json({ error: "Product not found." }, { status: 404 });
 
-        // Clean up associated media files
-        if (product.media && product.media.length > 0) {
-            await deleteUploadedFiles(product.media);
-        }
+        // Clean up associated media folder
+        await deleteProductFolder(code);
 
         return NextResponse.json({ message: "Product deleted successfully." });
     } catch (error) {

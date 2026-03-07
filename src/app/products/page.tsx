@@ -211,7 +211,7 @@ export default function ProductsPage() {
                         <p className="text-sm mt-1">Check back soon or contact us for more.</p>
                     </div>
                 ) : (
-                    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 border-t border-l border-zinc-100">
+                    <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 border-t border-l border-zinc-100">
                         {filteredProducts.map((product) => {
                             const slug = toSlug(product.name);
                             const detailHref = `/products/${product.code}/${slug}`;
@@ -220,8 +220,8 @@ export default function ProductsPage() {
                                 : 0;
 
                             return (
-                                <div key={product.code} className="product-card group flex flex-col p-6 border-r border-b border-zinc-100 transition-colors hover:bg-zinc-50/50">
-                                    <div className="relative rounded-xl overflow-hidden mb-4 aspect-square bg-zinc-50 border border-zinc-100 group/img">
+                                <div key={product.code} className="product-card group flex flex-col p-3 sm:p-6 border-r border-b border-zinc-100 transition-colors hover:bg-zinc-50/50">
+                                    <div className="relative rounded-xl overflow-hidden mb-3 sm:mb-4 aspect-square bg-zinc-50 border border-zinc-100 group/img">
                                         <Link href={detailHref}>
                                             {(() => {
                                                 const displayIndex = activeImages[product.code] !== undefined ? activeImages[product.code] : product.mainMediaIndex;
@@ -237,13 +237,13 @@ export default function ProductsPage() {
                                             })()}
                                         </Link>
                                         {product.status === "Pre-order" && (
-                                            <div className="absolute top-3 left-3">
-                                                <span className="text-[11px] px-3 py-1 rounded-md font-semibold bg-[#FDF2E3] text-[#A66E38] border border-[#F5E1C4] shadow-sm">Pre-order</span>
+                                            <div className="absolute top-2 left-2 sm:top-3 sm:left-3">
+                                                <span className="text-[9px] sm:text-[11px] px-2 sm:px-3 py-0.5 sm:py-1 rounded-md font-semibold bg-[#FDF2E3] text-[#A66E38] border border-[#F5E1C4] shadow-sm">Pre-order</span>
                                             </div>
                                         )}
                                     </div>
 
-                                    <div className="relative mb-4">
+                                    <div className="relative mb-4 hidden sm:block">
                                         <div className="flex gap-2 overflow-x-auto no-scrollbar scroll-smooth active:cursor-grabbing pb-1">
                                             {product.media.map((med, idx) => {
                                                 const defaultIdx = product.mainMediaIndex ?? 0;
@@ -258,20 +258,20 @@ export default function ProductsPage() {
                                         </div>
                                     </div>
 
-                                    <div className="mb-4">
-                                        <h3 className="text-lg font-semibold text-zinc-900 group-hover:text-sky-500 transition-colors leading-snug line-clamp-1 mb-1">
+                                    <div className="mb-2 sm:mb-4">
+                                        <h3 className="text-sm sm:text-lg font-semibold text-zinc-900 group-hover:text-sky-500 transition-colors leading-snug line-clamp-1 mb-1">
                                             <Link href={detailHref}>{product.name}</Link>
                                         </h3>
-                                        <div className="flex items-center gap-2 mb-1">
-                                            <p className="text-base font-bold text-zinc-900 leading-tight">Rp {(product.memberPrice || product.price).toLocaleString("id-ID")}</p>
-                                            {discountPercentage > 0 && <span className="text-[11px] px-2 py-0.5 rounded-full font-semibold bg-red-100 text-red-700">-{discountPercentage}%</span>}
+                                        <div className="flex flex-col sm:flex-row sm:items-center gap-1 sm:gap-2 mb-1">
+                                            <p className="text-sm sm:text-base font-bold text-zinc-900 leading-tight">Rp {(product.memberPrice || product.price).toLocaleString("id-ID")}</p>
+                                            {discountPercentage > 0 && <span className="text-[10px] sm:text-[11px] px-2 py-0.5 rounded-full font-semibold bg-red-100 text-red-700 w-fit">-{discountPercentage}%</span>}
                                         </div>
                                     </div>
 
-                                    <p className="text-sm text-zinc-400 font-medium mb-4">{product.code} | {product.category} | {product.label}</p>
-                                    <p className="text-sm text-zinc-500 mb-6 leading-relaxed font-normal line-clamp-3">{product.description.replace(/<[^>]*>/g, '')}</p>
+                                    <p className="text-sm text-zinc-400 font-medium mb-4 hidden sm:block">{product.code} | {product.category} | {product.label}</p>
+                                    <p className="text-sm text-zinc-500 mb-6 leading-relaxed font-normal hidden sm:line-clamp-3">{product.description.replace(/<[^>]*>/g, '')}</p>
 
-                                    <div className="mt-auto pt-4 border-t border-zinc-100 flex flex-col">
+                                    <div className="mt-auto pt-4 border-t border-zinc-100 hidden sm:flex flex-col">
                                         <div className="flex items-center justify-between gap-1 mb-2 bg-zinc-50 border border-zinc-100 rounded-lg px-2 py-1 w-full">
                                             <button onClick={() => updateQty(product.code, Math.max(0, getQty(product.code) - 1))} className="h-6 w-6 flex items-center justify-center rounded-md bg-white border border-zinc-200 text-zinc-500 hover:text-zinc-900 transition-colors disabled:opacity-30 disabled:cursor-not-allowed" disabled={getQty(product.code) <= 0}><Minus className="h-3 w-3" /></button>
                                             <span className="text-[14px] font-bold text-zinc-900 w-6 text-center">{getQty(product.code)}</span>

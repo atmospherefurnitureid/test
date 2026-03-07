@@ -20,11 +20,12 @@ const Editor = dynamic(() => import("@/components/Editor"), { ssr: false });
 export default function ArticlesAdminPage() {
     const router = useRouter();
     const [mounted, setMounted] = useState(false);
-    const { articles, updateArticle, deleteArticle } = useContentStore();
+    const { articles, updateArticle, deleteArticle, fetchArticles } = useContentStore();
 
     useEffect(() => {
         setMounted(true);
-    }, []);
+        fetchArticles();
+    }, [fetchArticles]);
 
     if (!mounted) return (
         <div className="animate-fade-in-up pb-24">
