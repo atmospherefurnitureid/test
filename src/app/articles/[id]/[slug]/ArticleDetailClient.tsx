@@ -138,6 +138,7 @@ export default function ArticleDetail() {
                                     {socialShare.enableFacebook && (
                                         <button
                                             title="Share on Facebook"
+                                            aria-label="Bagikan ke Facebook"
                                             onClick={() => window.open(`https://www.facebook.com/sharer/sharer.php?u=${window.location.href}`, '_blank')}
                                             className="w-10 h-10 rounded-full bg-[#3b5998] text-white flex items-center justify-center hover:opacity-90 transition-opacity cursor-pointer shadow-sm"
                                         >
@@ -147,6 +148,7 @@ export default function ArticleDetail() {
                                     {socialShare.enableWhatsapp && (
                                         <button
                                             title="Share on WhatsApp"
+                                            aria-label="Bagikan ke WhatsApp"
                                             onClick={() => window.open(`https://wa.me/?text=${encodeURIComponent(article.title + ' ' + window.location.href)}`, '_blank')}
                                             className="w-10 h-10 rounded-full bg-[#25d366] text-white flex items-center justify-center hover:opacity-90 transition-opacity cursor-pointer shadow-sm"
                                         >
@@ -156,6 +158,7 @@ export default function ArticleDetail() {
                                     {socialShare.enableInstagram && (
                                         <button
                                             title="Share on Instagram"
+                                            aria-label="Bagikan ke Instagram"
                                             onClick={() => window.open(`https://instagram.com`, '_blank')}
                                             className="w-10 h-10 rounded-full bg-gradient-to-tr from-[#f9ce34] via-[#ee2a7b] to-[#6228d7] text-white flex items-center justify-center hover:opacity-90 transition-opacity cursor-pointer shadow-sm"
                                         >
@@ -165,6 +168,7 @@ export default function ArticleDetail() {
                                     {socialShare.enableCopyLink && (
                                         <button
                                             title="Copy Link"
+                                            aria-label="Salin Link Artikel"
                                             onClick={() => {
                                                 navigator.clipboard.writeText(window.location.href);
                                                 alert("Link disalin ke clipboard!");

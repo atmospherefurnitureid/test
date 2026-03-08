@@ -2,6 +2,7 @@ import { Metadata } from "next";
 import ArticleDetailClient from "./ArticleDetailClient";
 import dbConnect from "@/lib/db";
 import { Article } from "@/models/Schemas";
+import { slugify } from "@/lib/utils";
 
 type Props = {
     params: Promise<{ id: string; slug: string }>;
@@ -28,6 +29,9 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
                 description: article.description,
                 images: article.image ? [{ url: article.image }] : [],
             },
+            alternates: {
+                canonical: `/articles/${article._id}/${slugify(article.title)}`
+            }
         };
     } catch (e) {
         return {

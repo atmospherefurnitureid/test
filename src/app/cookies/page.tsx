@@ -1,5 +1,11 @@
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
+import { Metadata } from "next";
+
+export const metadata: Metadata = {
+    title: "Cookie Policy | Atmosphere Furniture Indonesia",
+    alternates: { canonical: "/cookies" }
+};
 
 export default function CookiesPage() {
     return (
@@ -20,8 +26,8 @@ export default function CookiesPage() {
                     <section>
                         <h2 className="text-xl font-semibold text-zinc-900 mb-4">1. What Are Cookies</h2>
                         <p>
-                            Cookies are small text files that are stored on your computer or mobile device when you visit a website. 
-                            They are widely used to make websites work, or work more efficiently, as well as to provide information 
+                            Cookies are small text files that are stored on your computer or mobile device when you visit a website.
+                            They are widely used to make websites work, or work more efficiently, as well as to provide information
                             to the owners of the site.
                         </p>
                     </section>
@@ -29,7 +35,7 @@ export default function CookiesPage() {
                     <section>
                         <h2 className="text-xl font-semibold text-zinc-900 mb-4">2. How We Use Cookies</h2>
                         <p>
-                            Atmosphere Furniture Indonesia uses cookies to improve your browsing experience by remembering your 
+                            Atmosphere Furniture Indonesia uses cookies to improve your browsing experience by remembering your
                             preferences, analyzing site traffic, and understanding where our visitors are coming from.
                         </p>
                     </section>
@@ -46,7 +52,7 @@ export default function CookiesPage() {
                     <section>
                         <h2 className="text-xl font-semibold text-zinc-900 mb-4">4. Managing Cookies</h2>
                         <p>
-                            Most web browsers allow you to control cookies through their settings preferences. However, if you limit 
+                            Most web browsers allow you to control cookies through their settings preferences. However, if you limit
                             the ability of websites to set cookies, you may worsen your overall user experience.
                         </p>
                     </section>

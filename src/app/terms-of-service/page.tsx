@@ -1,5 +1,11 @@
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
+import { Metadata } from "next";
+
+export const metadata: Metadata = {
+    title: "Terms of Service | Atmosphere Furniture Indonesia",
+    alternates: { canonical: "/terms-of-service" }
+};
 
 export default function TermsOfService() {
     return (
@@ -20,8 +26,8 @@ export default function TermsOfService() {
                     <section>
                         <h2 className="text-xl font-semibold text-zinc-900 mb-4">1. Agreement to Terms</h2>
                         <p>
-                            By accessing or using the Atmosphere Furniture Indonesia website, you agree to be bound by these Terms of Service 
-                            and all applicable laws and regulations. If you do not agree with any of these terms, you are prohibited from 
+                            By accessing or using the Atmosphere Furniture Indonesia website, you agree to be bound by these Terms of Service
+                            and all applicable laws and regulations. If you do not agree with any of these terms, you are prohibited from
                             using or accessing this site.
                         </p>
                     </section>
@@ -29,7 +35,7 @@ export default function TermsOfService() {
                     <section>
                         <h2 className="text-xl font-semibold text-zinc-900 mb-4">2. Use License</h2>
                         <p>
-                            Permission is granted to temporarily download one copy of the materials (information or software) on Atmosphere 
+                            Permission is granted to temporarily download one copy of the materials (information or software) on Atmosphere
                             Furniture Indonesia's website for personal, non-commercial transitory viewing only.
                         </p>
                     </section>
@@ -37,7 +43,7 @@ export default function TermsOfService() {
                     <section>
                         <h2 className="text-xl font-semibold text-zinc-900 mb-4">3. Custom Orders & Production</h2>
                         <p>
-                            All custom furniture orders require a 50% Down Payment (DP) to begin production. Lead times are estimates and 
+                            All custom furniture orders require a 50% Down Payment (DP) to begin production. Lead times are estimates and
                             may vary based on material availability and design complexity. Final payment is required before delivery.
                         </p>
                     </section>
@@ -45,7 +51,7 @@ export default function TermsOfService() {
                     <section>
                         <h2 className="text-xl font-semibold text-zinc-900 mb-4">4. Warranty & Returns</h2>
                         <p>
-                            We provide a 1-year structural warranty for our products. Due to the custom nature of our furniture, returns are 
+                            We provide a 1-year structural warranty for our products. Due to the custom nature of our furniture, returns are
                             only accepted for items that arrive damaged or significantly deviate from the agreed-upon design specifications.
                         </p>
                     </section>
@@ -53,7 +59,7 @@ export default function TermsOfService() {
                     <section>
                         <h2 className="text-xl font-semibold text-zinc-900 mb-4">5. Governing Law</h2>
                         <p>
-                            These terms and conditions are governed by and construed in accordance with the laws of Indonesia and you 
+                            These terms and conditions are governed by and construed in accordance with the laws of Indonesia and you
                             irrevocably submit to the exclusive jurisdiction of the courts in that State or location.
                         </p>
                     </section>

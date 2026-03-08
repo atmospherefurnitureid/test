@@ -2,6 +2,7 @@ import { Metadata } from "next";
 import ProductDetailClient from "./ProductDetailClient";
 import dbConnect from "@/lib/db";
 import { Product } from "@/models/Schemas";
+import { slugify } from "@/lib/utils";
 
 type Props = {
     params: Promise<{ code: string; slug: string }>;
@@ -30,6 +31,9 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
                 description: description,
                 images: product.media?.[0] ? [{ url: product.media[0] }] : [],
             },
+            alternates: {
+                canonical: `/products/${product.code}/${slugify(product.name)}`
+            }
         };
     } catch (e) {
         return {
@@ -86,7 +90,7 @@ export default async function Page({ params }: Props) {
         ],
         "offers": {
             "@type": "Offer",
-            "url": `https://atmospherefurnitureid.com/products/${product.code}/${product.name.toLowerCase().replace(/ /g, "-")}`,
+            "url": `https://atmospherefurnitureid.com/products/${product.code}/${slugify(product.name)}`,
             "priceCurrency": "IDR",
             "price": product.memberPrice > 0 ? product.memberPrice : product.price,
             "priceValidUntil": "2026-12-31",

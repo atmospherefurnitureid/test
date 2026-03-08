@@ -73,13 +73,6 @@ export const metadata: Metadata = {
   verification: {
     google: "your-google-verification-code",
   },
-  alternates: {
-    canonical: "https://atmospherefurnitureid.com",
-    languages: {
-      "id-ID": "https://atmospherefurnitureid.com",
-      "en-US": "https://atmospherefurnitureid.com",
-    },
-  },
   category: "furniture",
   referrer: "origin-when-cross-origin",
   manifest: "/manifest.json",
