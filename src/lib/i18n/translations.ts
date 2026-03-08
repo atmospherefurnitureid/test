@@ -45,7 +45,7 @@ export const translations = {
             services: {
                 title: "Layanan yang Disesuaikan untuk Anda",
                 subtitle: "Kami menyediakan solusi furnitur dan interior kustom yang dirancang untuk memenuhi kebutuhan unik Anda, memastikan setiap bagian mencerminkan visi Anda dan melampaui ekspektasi.",
-                view_details: "Pelajari lebih lanjut tentang",
+                view_details: "Pelajari Lebih Lanjut",
                 card1: {
                     title: "Desain yang Dipersonalisasi Sepenuhnya",
                     desc: "Kami menyediakan furnitur dan solusi interior yang dirancang khusus sesuai kebutuhan, gaya, dan preferensi Anda. Setiap detail dibuat untuk mencerminkan visi pribadi Anda."
@@ -264,7 +264,7 @@ export const translations = {
             services: {
                 title: "Services Tailored to You",
                 subtitle: "We provide customized furniture and interior solutions designed to meet your unique needs, ensuring every piece reflects your vision and exceeds expectations.",
-                view_details: "Learn more about",
+                view_details: "View Details",
                 card1: {
                     title: "Fully Personalized Design",
                     desc: "We provide customized furniture and interior solutions designed to meet your unique needs, styles, and preferences. Every detail is made to reflect your personal vision."

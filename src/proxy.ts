@@ -34,6 +34,7 @@ const PUBLIC_GET_PATHS = [
     "/api/articles",
     "/api/categories",
     "/api/comments",
+    "/api/founder",
 ];
 
 /**

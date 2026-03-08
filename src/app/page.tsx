@@ -11,6 +11,8 @@ const FaqSection = dynamic(() => import("@/components/FaqSection"), {
   loading: () => <div className="h-20 animate-pulse bg-zinc-50" />
 });
 const Footer = dynamic(() => import("@/components/Footer"));
+const ServicesSection = dynamic(() => import("@/components/ServicesSection"));
+const StepsSection = dynamic(() => import("@/components/StepsSection"));
 
 import { useContentStore } from "@/lib/contentStore";
 import { useProductStore } from "@/lib/productStore";
@@ -20,6 +22,10 @@ import { useLanguage } from "@/lib/i18n/LanguageContext";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 
+if (typeof window !== "undefined") {
+  gsap.registerPlugin(ScrollTrigger);
+  ScrollTrigger.config({ limitCallbacks: true });
+}
 export default function Home() {
   const { articles, fetchArticles, fetchCategories } = useContentStore();
   const { products, fetchProducts } = useProductStore();
@@ -79,7 +85,7 @@ export default function Home() {
         });
 
         // Section Reveals on scroll
-        const sections = ["#about-section", "#services-section", "#steps-section", "#team-section", "#articles-section", "#cta-section"];
+        const sections = ["#about-section", "#team-section", "#articles-section", "#cta-section"];
         sections.forEach(section => {
           if (!document.querySelector(section)) return;
           gsap.from(`${section} > div`, {
@@ -101,19 +107,19 @@ export default function Home() {
         const stats = document.querySelectorAll(".stat-number");
         stats.forEach(stat => {
           const targetValue = parseInt(stat.getAttribute("data-value") || "0");
-          const counterObj = { val: 0 };
-          gsap.to(counterObj, {
+          const counter = { val: 0 };
+          gsap.to(counter, {
             scrollTrigger: {
               trigger: "#about-stats",
               start: "top 90%",
+              once: true,
             },
             val: targetValue,
             duration: 2,
             ease: "expo.out",
             onUpdate: () => {
-              stat.textContent = Math.ceil(counterObj.val).toString();
-            },
-            immediateRender: false,
+              stat.textContent = Math.round(counter.val).toString();
+            }
           });
         });
       });
@@ -132,25 +138,7 @@ export default function Home() {
           }
         });
 
-        // Service cards slide in
-        const serviceCards = document.querySelectorAll("#services-section .grid > div");
-        if (serviceCards.length) {
-          gsap.from(serviceCards, {
-            scrollTrigger: { trigger: "#services-section", start: "top 72%" },
-            x: 40, autoAlpha: 0, duration: 0.9, stagger: 0.15,
-            ease: "power3.out", immediateRender: false,
-          });
-        }
-
-        // Step cards pop
-        const stepCards = document.querySelectorAll("#steps-section .grid > div");
-        if (stepCards.length) {
-          gsap.from(stepCards, {
-            scrollTrigger: { trigger: "#steps-section", start: "top 72%" },
-            scale: 0.92, autoAlpha: 0, duration: 0.7, stagger: 0.1,
-            ease: "back.out(1.2)", immediateRender: false,
-          });
-        }
+        // Animations for Services and Steps have been moved to their respective components
       });
 
     }, containerRef);
@@ -235,7 +223,7 @@ export default function Home() {
             <>
               {/* Item 1 */}
               <Link
-                href={`/products/${galleryProducts[0].code}`}
+                href={`/products/${galleryProducts[0].code}/${slugify(galleryProducts[0].name)}`}
                 className="relative aspect-4/5 lg:col-span-1 overflow-hidden rounded-xl group hero-gallery-item"
               >
                 <Image
@@ -253,7 +241,7 @@ export default function Home() {
               {/* Item 2 */}
               {galleryProducts[1] && (
                 <Link
-                  href={`/products/${galleryProducts[1].code}`}
+                  href={`/products/${galleryProducts[1].code}/${slugify(galleryProducts[1].name)}`}
                   className="group relative aspect-16/10 lg:col-span-2 overflow-hidden rounded-xl hero-gallery-item"
                 >
                   <Image
@@ -272,7 +260,7 @@ export default function Home() {
               {/* Item 3 */}
               {galleryProducts[2] && (
                 <Link
-                  href={`/products/${galleryProducts[2].code}`}
+                  href={`/products/${galleryProducts[2].code}/${slugify(galleryProducts[2].name)}`}
                   className="relative aspect-4/5 lg:col-start-4 overflow-hidden rounded-xl group hero-gallery-item"
                 >
                   <Image
@@ -291,7 +279,7 @@ export default function Home() {
               {/* Item 4 */}
               {galleryProducts[3] && (
                 <Link
-                  href={`/products/${galleryProducts[3].code}`}
+                  href={`/products/${galleryProducts[3].code}/${slugify(galleryProducts[3].name)}`}
                   className="relative hidden lg:block aspect-4/5 lg:col-start-5 overflow-hidden rounded-xl group hero-gallery-item"
                 >
                   <Image
@@ -310,7 +298,7 @@ export default function Home() {
               {/* Item 5 */}
               {galleryProducts[4] && (
                 <Link
-                  href={`/products/${galleryProducts[4].code}`}
+                  href={`/products/${galleryProducts[4].code}/${slugify(galleryProducts[4].name)}`}
                   className="relative hidden lg:block aspect-16/10 lg:col-span-2 lg:row-start-2 overflow-hidden rounded-xl group hero-gallery-item"
                 >
                   <Image
@@ -329,7 +317,7 @@ export default function Home() {
               {/* Item 6 */}
               {galleryProducts[5] && (
                 <Link
-                  href={`/products/${galleryProducts[5].code}`}
+                  href={`/products/${galleryProducts[5].code}/${slugify(galleryProducts[5].name)}`}
                   className="relative hidden lg:block aspect-4/5 lg:col-start-3 lg:row-start-2 overflow-hidden rounded-xl group hero-gallery-item"
                 >
                   <Image
@@ -348,7 +336,7 @@ export default function Home() {
               {/* Item 7 */}
               {galleryProducts[6] && (
                 <Link
-                  href={`/products/${galleryProducts[6].code}`}
+                  href={`/products/${galleryProducts[6].code}/${slugify(galleryProducts[6].name)}`}
                   className="relative hidden lg:block aspect-16/10 lg:col-span-2 lg:col-start-4 lg:row-start-2 overflow-hidden rounded-xl group hero-gallery-item"
                 >
                   <Image
@@ -482,205 +470,9 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Services Section */}
-      <section id="services-section" className="mx-auto w-full max-w-7xl px-6 py-24">
-        {/* Services Header */}
-        <div className="flex flex-col md:flex-row justify-between items-end mb-16 gap-6">
-          <div className="max-w-2xl">
-            <h2 className="text-3xl md:text-5xl font-semibold text-zinc-900 mb-6 tracking-tight leading-tight">
-              {t("home.services.title")}
-            </h2>
-            <p className="text-zinc-500 text-sm md:text-base leading-relaxed font-medium">
-              {t("home.services.subtitle")}
-            </p>
-          </div>
-        </div>
+      <ServicesSection />
 
-        {/* Services Grid/Slider */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-2">
-
-          {/* Card 1: Featured Sky Blue (Inverts on Hover) */}
-          <div className="bg-sky-600 p-8 rounded-xl border border-sky-500 flex flex-col h-auto md:h-[420px] justify-between group cursor-pointer hover:shadow-2xl transition-all duration-500 hover:-translate-y-2 hover:bg-[#F0F9FF] hover:border-sky-100/50">
-            {/* Top Content Group */}
-            <div className="flex flex-col">
-              <div className="w-14 h-14 bg-white/20 backdrop-blur-md rounded-full flex items-center justify-center mb-8 text-white shadow-soft transition-all duration-300 group-hover:bg-[#0EA5E9] group-hover:text-white">
-                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a2 2 0 0 1 2.83 0l.3.3a2 2 0 0 1 0 2.83l-3.77 3.77a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a2 2 0 0 1 2.83 0l.3.3a2 2 0 0 1 0 2.83l-3.77 3.77a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0" /><path d="m2 22 5-5" /><path d="M9.5 14.5 16 8" /><path d="m17 2 5 5" /><path d="m7 14.5-5 5L4.5 22l5-5-2.5-2.5Z" /></svg>
-              </div>
-              <h3 className="text-2xl font-semibold text-white mb-4 transition-colors duration-300 group-hover:text-zinc-900 leading-tight">{t("home.services.card1.title")}</h3>
-              <p className="text-sky-50 text-sm leading-relaxed transition-colors duration-300 group-hover:text-zinc-500 hidden md:block">
-                {t("home.services.card1.desc")}
-              </p>
-            </div>
-            {/* Bottom Button Group */}
-            <Link href="/services/desain-yang-dipersonalisasi-sepenuhnya" aria-label="Pelajari Layanan Desain yang Dipersonalisasi" className="w-fit text-white font-bold text-sm underline underline-offset-8 flex items-center gap-2 hover:gap-3 transition-all duration-300 group-hover:text-sky-500 group-hover:opacity-100 mt-8 md:mt-0">
-              {t("home.services.view_details")} {t("home.services.card1.title")}
-            </Link>
-          </div>
-
-          {/* Card 2: Soft Sky Blue */}
-          <div className="bg-[#F0F9FF] p-8 rounded-xl border border-sky-100/50 flex flex-col h-auto md:h-[420px] justify-between group cursor-pointer hover:shadow-xl transition-all duration-500 hover:-translate-y-2 hover:bg-sky-600">
-            {/* Top Content Group */}
-            <div className="flex flex-col">
-              <div className="w-14 h-14 flex items-center justify-start mb-8 group-hover:scale-110 transition-transform">
-                <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#0EA5E9" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" className="group-hover:stroke-white transition-colors duration-300"><path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z" /><polyline points="9 22 9 12 15 12 15 22" /></svg>
-              </div>
-              <h3 className="text-2xl font-semibold text-zinc-900 mb-4 group-hover:text-white transition-colors duration-300 leading-tight">{t("home.services.card2.title")}</h3>
-              <p className="text-zinc-500 text-sm leading-relaxed group-hover:text-sky-50 transition-colors duration-300 hidden md:block font-medium">
-                {t("home.services.card2.desc")}
-              </p>
-            </div>
-            {/* Bottom Button Group */}
-            <Link href="/services/kualitas-dan-ketelitian-pengerjaan" aria-label="Pelajari Layanan Kualitas dan Ketelitian Pengerjaan" className="w-fit text-sky-500 font-bold text-sm underline underline-offset-8 flex items-center gap-2 hover:gap-3 transition-all group-hover:text-white mt-8 md:mt-0">
-              {t("home.services.view_details")} {t("home.services.card2.title")}
-            </Link>
-          </div>
-
-          {/* Card 3: Soft Sky Blue */}
-          <div className="bg-[#F0F9FF] p-8 rounded-xl border border-sky-100/50 flex flex-col h-auto md:h-[420px] justify-between group cursor-pointer hover:shadow-xl transition-all duration-500 hover:-translate-y-2 hover:bg-sky-600">
-            {/* Top Content Group */}
-            <div className="flex flex-col">
-              <div className="w-14 h-14 flex items-center justify-start mb-8 group-hover:scale-110 transition-transform">
-                <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#0EA5E9" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" className="group-hover:stroke-white transition-colors duration-300"><path d="M12 3a9 9 0 0 0-9 9l7 7 2 2 2-2 7-7a9 9 0 0 0-9-9Z" /><path d="M12 14v4" /></svg>
-              </div>
-              <h3 className="text-2xl font-semibold text-zinc-900 mb-4 group-hover:text-white transition-colors duration-300 leading-tight">{t("home.services.card3.title")}</h3>
-              <p className="text-zinc-500 text-sm leading-relaxed group-hover:text-sky-50 transition-colors duration-300 hidden md:block font-medium">
-                {t("home.services.card3.desc")}
-              </p>
-            </div>
-            {/* Bottom Button Group */}
-            <Link href="/services/solusi-fungsional-dan-estetis" aria-label="Pelajari Layanan Solusi Fungsional dan Estetis" className="w-fit text-sky-500 font-bold text-sm underline underline-offset-8 flex items-center gap-2 hover:gap-3 transition-all group-hover:text-white mt-8 md:mt-0">
-              {t("home.services.view_details")} {t("home.services.card3.title")}
-            </Link>
-          </div>
-
-          {/* Card 4: Soft Sky Blue */}
-          <div className="bg-[#F0F9FF] p-8 rounded-xl border border-sky-100/50 flex flex-col h-auto md:h-[420px] justify-between group cursor-pointer hover:shadow-xl transition-all duration-500 hover:-translate-y-2 hover:bg-sky-600">
-            {/* Top Content Group */}
-            <div className="flex flex-col">
-              <div className="w-14 h-14 flex items-center justify-start mb-8 group-hover:scale-110 transition-transform">
-                <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#0EA5E9" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" className="group-hover:stroke-white transition-colors duration-300"><path d="M12 4v16" /><path d="M4 12h16" /><path d="M6 18l12-12" /><path d="M6 6l12 12" /></svg>
-              </div>
-              <h3 className="text-2xl font-semibold text-zinc-900 mb-4 group-hover:text-white transition-colors duration-300 leading-tight">{t("home.services.card4.title")}</h3>
-              <p className="text-zinc-500 text-sm leading-relaxed group-hover:text-sky-50 transition-colors duration-300 hidden md:block font-medium">
-                {t("home.services.card4.desc")}
-              </p>
-            </div>
-            {/* Bottom Button Group */}
-            <Link href="/services/kolaborasi-untuk-hasil-terbaik" aria-label="Pelajari Layanan Kolaborasi untuk Hasil Terbaik" className="w-fit text-sky-500 font-bold text-sm underline underline-offset-8 flex items-center gap-2 hover:gap-3 transition-all group-hover:text-white mt-8 md:mt-0">
-              {t("home.services.view_details")} {t("home.services.card4.title")}
-            </Link>
-          </div>
-
-        </div>
-      </section>
-
-      {/* Steps-to-Steps Order Section */}
-      <section id="steps-section" className="mx-auto w-full max-w-7xl px-6 py-24 border-t border-zinc-100">
-        {/* Header */}
-        <div className="flex flex-col md:flex-row justify-between items-end mb-16 gap-6">
-          <div className="max-w-2xl text-left">
-            <h2 className="text-3xl md:text-5xl font-semibold text-zinc-900 mb-6 tracking-tight leading-tight">
-              {t("contact.steps.title")}
-            </h2>
-            <p className="text-zinc-500 text-base md:text-lg leading-relaxed">
-              {t("contact.steps.subtitle")}
-            </p>
-          </div>
-        </div>
-
-        {/* Steps Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-
-          {/* Step 1: Konsultasi */}
-          <Link
-            href="https://wa.me/62882005824231"
-            target="_blank"
-            className="bg-sky-600 p-8 rounded-xl border border-sky-500 flex flex-col h-auto md:h-[420px] justify-between group cursor-pointer hover:shadow-2xl transition-all duration-500 hover:-translate-y-2 hover:bg-[#F0F9FF] hover:border-sky-100/50 text-left"
-          >
-            <div className="flex flex-col">
-              <div className="w-14 h-14 bg-white/20 backdrop-blur-md rounded-full flex items-center justify-center mb-8 text-white shadow-soft transition-all duration-300 group-hover:bg-[#0EA5E9] group-hover:text-white">
-                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M7.9 20A9 9 0 1 0 4 16.1L2 22Z" /></svg>
-              </div>
-              <h3 className="text-2xl font-semibold text-white mb-4 transition-colors duration-300 group-hover:text-zinc-900 leading-tight">{t("contact.steps.step1.title")}</h3>
-              <p className="text-sky-50 text-sm leading-relaxed transition-colors duration-300 group-hover:text-zinc-500 hidden md:block font-normal">
-                {t("contact.steps.step1.desc")}
-              </p>
-            </div>
-            <div className="text-[10px] font-black uppercase text-white/80 group-hover:text-zinc-300 tracking-widest mt-4">Step 01</div>
-          </Link>
-
-          {/* Step 2: DP 50% */}
-          <div className="bg-[#F0F9FF] p-8 rounded-xl border border-sky-100/50 flex flex-col h-auto md:h-[420px] justify-between group cursor-pointer hover:shadow-xl transition-all duration-500 hover:-translate-y-2 hover:bg-sky-600 text-left">
-            <div className="flex flex-col">
-              <div className="w-14 h-14 flex items-center justify-start mb-8 group-hover:scale-110 transition-transform">
-                <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#0EA5E9" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" className="group-hover:stroke-white transition-colors duration-300"><rect width="20" height="14" x="2" y="5" rx="2" /><line x1="2" x2="22" y1="10" y2="10" /></svg>
-              </div>
-              <h3 className="text-2xl font-semibold text-zinc-900 mb-4 group-hover:text-white transition-colors duration-300 leading-tight">{t("contact.steps.step2.title")}</h3>
-              <p className="text-zinc-500 text-sm leading-relaxed group-hover:text-sky-50 transition-colors duration-300 hidden md:block font-medium">
-                {t("contact.steps.step2.desc")}
-              </p>
-            </div>
-            <div className="text-[10px] font-black uppercase text-sky-700/60 group-hover:text-white/50 tracking-widest mt-4">Step 02</div>
-          </div>
-
-          {/* Step 3: Pengerjaan */}
-          <div className="bg-[#F0F9FF] p-8 rounded-xl border border-sky-100/50 flex flex-col h-auto md:h-[420px] justify-between group cursor-pointer hover:shadow-xl transition-all duration-500 hover:-translate-y-2 hover:bg-sky-600 text-left">
-            <div className="flex flex-col">
-              <div className="w-14 h-14 flex items-center justify-start mb-8 group-hover:scale-110 transition-transform">
-                <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#0EA5E9" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" className="group-hover:stroke-white transition-colors duration-300"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a2 2 0 0 1 2.83 0l.3.3a2 2 0 0 1 0 2.83l-3.77 3.77a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0" /><path d="m2 22 5-5" /><path d="M9.5 14.5 16 8" /><path d="m17 2 5 5" /><path d="m7 14.5-5 5L4.5 22l5-5-2.5-2.5Z" /></svg>
-              </div>
-              <h3 className="text-2xl font-semibold text-zinc-900 mb-4 group-hover:text-white transition-colors duration-300 leading-tight">{t("contact.steps.step3.title")}</h3>
-              <p className="text-zinc-500 text-sm leading-relaxed group-hover:text-sky-50 transition-colors duration-300 hidden md:block font-medium">
-                {t("contact.steps.step3.desc")}
-              </p>
-            </div>
-            <div className="text-[10px] font-black uppercase text-sky-700/60 group-hover:text-white/50 tracking-widest mt-4">Step 03</div>
-          </div>
-
-          {/* Step 4: Pelunasan */}
-          <div className="bg-[#F0F9FF] p-8 rounded-xl border border-sky-100/50 flex flex-col h-auto md:h-[420px] justify-between group cursor-pointer hover:shadow-xl transition-all duration-500 hover:-translate-y-2 hover:bg-sky-600 text-left">
-            <div className="flex flex-col">
-              <div className="w-14 h-14 flex items-center justify-start mb-8 group-hover:scale-110 transition-transform">
-                <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#0EA5E9" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" className="group-hover:stroke-white transition-colors duration-300"><polyline points="20 6 9 17 4 12" /></svg>
-              </div>
-              <h3 className="text-2xl font-semibold text-zinc-900 mb-4 group-hover:text-white transition-colors duration-300 leading-tight">{t("contact.steps.step4.title")}</h3>
-              <p className="text-zinc-500 text-sm leading-relaxed group-hover:text-sky-50 transition-colors duration-300 hidden md:block font-medium">
-                {t("contact.steps.step4.desc")}
-              </p>
-            </div>
-            <div className="text-[10px] font-black uppercase text-sky-700/60 group-hover:text-white/50 tracking-widest mt-4">Step 04</div>
-          </div>
-
-          {/* Step 5: Pengiriman */}
-          <div className="bg-[#F0F9FF] p-8 rounded-xl border border-sky-100/50 flex flex-col h-auto md:h-[420px] justify-between group cursor-pointer hover:shadow-xl transition-all duration-500 hover:-translate-y-2 hover:bg-sky-600 text-left">
-            <div className="flex flex-col">
-              <div className="w-14 h-14 flex items-center justify-start mb-8 group-hover:scale-110 transition-transform">
-                <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#0EA5E9" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" className="group-hover:stroke-white transition-colors duration-300"><rect width="16" height="13" x="2" y="3" rx="2" /><path d="M16 21h4a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2h-4" /><circle cx="7" cy="18" r="2" /><circle cx="18" cy="18" r="2" /></svg>
-              </div>
-              <h3 className="text-2xl font-semibold text-zinc-900 mb-4 group-hover:text-white transition-colors duration-300 leading-tight">{t("contact.steps.step5.title")}</h3>
-              <p className="text-zinc-500 text-sm leading-relaxed group-hover:text-sky-50 transition-colors duration-300 hidden md:block font-medium">
-                {t("contact.steps.step5.desc")}
-              </p>
-            </div>
-            <div className="text-[10px] font-black uppercase text-sky-700/60 group-hover:text-white/50 tracking-widest mt-4">Step 05</div>
-          </div>
-
-          {/* Step 6: Garansi Kerusakan */}
-          <div className="bg-[#F0F9FF] p-8 rounded-xl border border-sky-100/50 flex flex-col h-auto md:h-[420px] justify-between group cursor-pointer hover:shadow-xl transition-all duration-500 hover:-translate-y-2 hover:bg-sky-600 text-left">
-            <div className="flex flex-col">
-              <div className="w-14 h-14 flex items-center justify-start mb-8 group-hover:scale-110 transition-transform">
-                <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#0EA5E9" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" className="group-hover:stroke-white transition-colors duration-300"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10Z" /></svg>
-              </div>
-              <h3 className="text-2xl font-semibold text-zinc-900 mb-4 group-hover:text-white transition-colors duration-300 leading-tight">{t("contact.steps.step6.title")}</h3>
-              <p className="text-zinc-500 text-sm leading-relaxed group-hover:text-sky-50 transition-colors duration-300 hidden md:block font-medium">
-                {t("contact.steps.step6.desc")}
-              </p>
-            </div>
-            <div className="text-[10px] font-black uppercase text-sky-700/60 group-hover:text-white/50 tracking-widest mt-4">Step 06</div>
-          </div>
-
-        </div>
-      </section>
+      <StepsSection />
 
       {/* Our Team Section */}
       <section id="team-section" className="mx-auto w-full max-w-7xl px-6 py-24">
