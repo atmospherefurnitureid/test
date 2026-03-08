@@ -168,20 +168,7 @@ export default function RootLayout({
                     }
                   }
                 ]
-              },
-              "makesOffer": [
-                {
-                  "@type": "Offer",
-                  "itemOffered": {
-                    "@type": "Product",
-                    "name": "Furniture Besi Kayu",
-                    "description": "Furniture kombinasi besi dan kayu untuk interior industrial",
-                    "category": "Furniture Industrial",
-                    "material": ["Kayu Solid", "Besi Hollow"],
-                    "manufacturer": "Atmosphere Furniture Indonesia"
-                  }
-                }
-              ]
+              }
             })
           }}
         />
