@@ -21,12 +21,19 @@ export default async function Home() {
     await dbConnect();
     const db = mongoose.connection.db!;
     
-    // Fetch products
-    const rawProducts = await db.collection('products')
-      .find({})
-      .sort({ createdAt: -1 })
-      .limit(20)
-      .toArray();
+    // Fetch products and articles in parallel
+    const [rawProducts, rawArticles] = await Promise.all([
+      db.collection('products')
+        .find({})
+        .sort({ createdAt: -1 })
+        .limit(20)
+        .toArray(),
+      db.collection('articles')
+        .find({ status: "Published" })
+        .sort({ date: -1 })
+        .limit(4)
+        .toArray()
+    ]);
       
     products = rawProducts.map(p => ({
       ...p,
@@ -34,13 +41,6 @@ export default async function Home() {
       createdAt: p.createdAt?.toISOString(),
       updatedAt: p.updatedAt?.toISOString(),
     }));
-
-    // Fetch articles
-    const rawArticles = await db.collection('articles')
-        .find({ status: "Published" })
-        .sort({ date: -1 })
-        .limit(4)
-        .toArray();
 
     articles = rawArticles.map(a => ({
         ...a,

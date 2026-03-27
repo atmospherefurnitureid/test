@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Poppins } from "next/font/google";
+import Script from "next/script";
 import "./globals.css";
 
 import { ClientProviders } from "@/components/ClientProviders";
@@ -172,12 +173,12 @@ export default function RootLayout({
             })
           }}
         />
-        {/* AdSense loaded as a standard script in head for Google crawler verification while suppressing hydration warnings */}
-        <script
-          async
+        {/* AdSense loaded via next/script with afterInteractive to avoid render blocking */}
+        <Script
+          id="adsense-init"
+          strategy="afterInteractive"
           src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5144148071107084"
           crossOrigin="anonymous"
-          suppressHydrationWarning
         />
       </head>
       <body className={`${poppins.variable} font-sans antialiased`} suppressHydrationWarning>

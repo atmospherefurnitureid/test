@@ -46,22 +46,9 @@
   --color-sidebar: var(--sidebar);
   --font-sans: var(--font-poppins), system-ui, sans-serif;
   --font-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
-  --animate-marquee: marquee 40s linear infinite;
 }
 
-.pause-animation:hover {
-  animation-play-state: paused;
-}
-
-@keyframes marquee {
-  0% {
-    transform: translateX(0);
-  }
-
-  100% {
-    transform: translateX(-50%);
-  }
-}
+/* Marquee removed from global scope to save bytes on home page */
 
 body {
   background: var(--background);
@@ -107,39 +94,8 @@ body {
   }
 }
 
-/* Smooth menu animations */
-@keyframes slideDown {
-  from {
-    opacity: 0;
-    transform: translateY(-4px);
-  }
-
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-.animate-slide-down {
-  animation: slideDown 0.2s ease-out forwards;
-}
-
-/* Page entry animation */
-@keyframes fadeInUp {
-  from {
-    opacity: 0;
-    transform: translateY(16px);
-  }
-
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-.animate-fade-in-up {
-  animation: fadeInUp 0.5s ease-out forwards;
-}
+/* Animations removed from global scope for home page performance. 
+   Dashboard specific animations should be moved to dashboard layout or components */
 
 
 
