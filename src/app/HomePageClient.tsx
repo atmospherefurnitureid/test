@@ -90,7 +90,7 @@ export default function Home({ initialProducts = [], initialArticles = [] }: Hom
                   fill
                   sizes="40px"
                   className="object-cover"
-                  priority
+                  unoptimized
                 />
               </div>
             ))}
@@ -148,8 +148,8 @@ export default function Home({ initialProducts = [], initialArticles = [] }: Hom
                     alt={product.name}
                     fill
                     className="object-cover transition-transform duration-500 group-hover:scale-110"
-                    priority={idx === 0}
-                    loading={idx === 0 ? "eager" : "lazy"}
+                    priority={idx < 2}
+                    loading={idx < 2 ? "eager" : "lazy"}
                     quality={75}
                     sizes="(max-width: 640px) 90vw, (max-width: 1024px) 45vw, 18vw"
                   />
@@ -291,6 +291,7 @@ export default function Home({ initialProducts = [], initialArticles = [] }: Hom
                   loading="lazy"
                   quality={75}
                   sizes="(max-width: 640px) 90vw, (max-width: 1024px) 45vw, 22vw"
+                  unoptimized={article.image.startsWith("data:")}
                 />
               </div>
 

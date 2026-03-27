@@ -145,12 +145,13 @@ export default function Navbar() {
                     backdropFilter: isScrolled ? "blur(12px)" : "none",
                     WebkitBackdropFilter: isScrolled ? "blur(12px)" : "none",
                 }}
+                aria-label="Global Navigation"
             >
                 <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
                     <div className="flex h-20 items-center justify-between">
 
                         {/* Logo */}
-                        <Link href="/" className="flex items-center gap-4 group shrink-0">
+                        <Link href="/" className="flex items-center gap-4 group shrink-0" aria-label="Atmosphere Home">
                             <div className="relative w-14 h-14 transition-transform duration-500 group-hover:scale-105">
                                 <Image 
                                     src="/logo-atmosphere.png" 
@@ -227,7 +228,7 @@ export default function Navbar() {
                             {/* Icons */}
                             <div className="flex items-center gap-1">
                                 {/* Cart */}
-                                <Link href="/products/checkout" className="relative p-2 text-zinc-900 hover:text-sky-600 transition-colors">
+                                <Link href="/products/checkout" className="relative p-2 text-zinc-900 hover:text-sky-600 transition-colors" aria-label="View Shopping Cart">
                                     <ShoppingCart className="h-5 w-5" />
                                     {isMounted && cartItems.length > 0 && (
                                         <span className="absolute top-1 right-1 flex h-4 w-4 items-center justify-center rounded-full bg-sky-500 text-[9px] font-bold text-white leading-none ring-2 ring-white animate-in zoom-in duration-300">
@@ -265,7 +266,7 @@ export default function Navbar() {
 
                         {/* Mobile: Right Icons */}
                         <div className="flex md:hidden items-center gap-3">
-                            <Link href="/products/checkout" className="relative p-2 text-zinc-900">
+                            <Link href="/products/checkout" className="relative p-2 text-zinc-900" aria-label="View Shopping Cart">
                                 <ShoppingCart className="h-6 w-6" />
                                 {isMounted && cartItems.length > 0 && (
                                     <span className="absolute top-1 right-1 h-4 w-4 rounded-full bg-sky-500 text-[9px] font-bold text-white flex items-center justify-center ring-2 ring-white animate-in zoom-in duration-300">
@@ -273,7 +274,12 @@ export default function Navbar() {
                                     </span>
                                 )}
                             </Link>
-                            <button onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)} className="p-2 text-zinc-900">
+                            <button 
+                                onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)} 
+                                className="p-2 text-zinc-900" 
+                                aria-label={isMobileMenuOpen ? "Close menu" : "Open menu"}
+                                aria-expanded={isMobileMenuOpen}
+                            >
                                 {isMobileMenuOpen ? <X className="h-7 w-7" /> : <Menu className="h-7 w-7" />}
                             </button>
                         </div>
@@ -363,15 +369,82 @@ export default function Navbar() {
 
                         {/* Social & Copyright */}
                         <div className="flex items-center justify-between gap-4 pt-4 border-t border-zinc-50">
-                            <p className="text-[10px] text-zinc-400 font-medium">
+                            <p className="text-[10px] text-zinc-500 font-medium">
                                 &copy; {isMounted ? new Date().getFullYear() : "2026"} Atmosphere Furniture
                             </p>
                             <div className="flex items-center gap-3">
-                                <a href="https://instagram.com/atmosphere.furnitureid" target="_blank" className="w-8 h-8 rounded-full bg-zinc-50 flex items-center justify-center text-zinc-400">
+                                <a href="https://instagram.com/atmosphere.furnitureid" target="_blank" className="w-8 h-8 rounded-full bg-zinc-50 flex items-center justify-center text-zinc-500 transition-colors hover:text-sky-600" aria-label="Visit Atmosphere on Instagram">
                                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect width="20" height="20" x="2" y="2" rx="5" ry="5" /><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z" /><line x1="17.5" x2="17.51" y1="6.5" y2="6.5" /></svg>
                                 </a>
-                                <a href="https://wa.me/62882005824231" target="_blank" className="w-8 h-8 rounded-full bg-zinc-50 flex items-center justify-center text-zinc-400">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z" /></svg>
+                                <a href="https://wa.me/62882005824231" target="_blank" className="w-8 h-8 rounded-full bg-zinc-50 flex items-center justify-center text-zinc-500 transition-colors hover:text-green-600" aria-label="Contact us on WhatsApp">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79(pagead2.googlesyndication.com)
+14d
+178 KiB
+/pagead/show_companion_ad.js?fcd=true(pagead2.googlesyndication.com)
+1h
+12 KiB
+Cloudflare utility 
+11 KiB
+/beacon.min.js/v8c78df7…(static.cloudflareinsights.com)
+1d
+11 KiB
+atmospherefurnitureid.com 1st party
+1 KiB
+…cloudflare-static/email-decode.min.js(atmospherefurnitureid.com)
+47m 43s
+1 KiB
+Legacy JavaScript Est savings of 14 KiB
+Polyfills and transforms enable older browsers to use new JavaScript features. However, many aren't necessary for modern browsers. Consider modifying your JavaScript build process to not transpile Baseline features, unless you know you must support older browsers. Learn why most sites can deploy ES6+ code without transpilingLCPFCPUnscored
+URL
+Wasted bytes
+atmospherefurnitureid.com 1st party
+13.8 KiB
+…chunks/69be398…d.js(atmospherefurnitureid.com)
+13.8 KiB
+…chunks/69be398…d.js:1:5107(atmospherefurnitureid.com)
+Array.prototype.at
+…chunks/69be398…d.js:1:4495(atmospherefurnitureid.com)
+Array.prototype.flat
+…chunks/69be398…d.js:1:4608(atmospherefurnitureid.com)
+Array.prototype.flatMap
+…chunks/69be398…d.js:1:4984(atmospherefurnitureid.com)
+Object.fromEntries
+…chunks/69be398…d.js:1:5242(atmospherefurnitureid.com)
+Object.hasOwn
+…chunks/69be398…d.js:1:4237(atmospherefurnitureid.com)
+String.prototype.trimEnd
+…chunks/69be398…d.js:1:4152(atmospherefurnitureid.com)
+String.prototype.trimStart
+LCP breakdown
+3rd parties
+These insights are also available in the Chrome DevTools Performance Panel - record a trace to view more detailed information.
+Diagnostics
+Reduce unused JavaScript Est savings of 212 KiB
+Reduce unused JavaScript and defer loading scripts until they are required to decrease bytes consumed by network activity. Learn how to reduce unused JavaScript.LCPFCPUnscored
+URL
+Transfer Size
+Est Savings
+Google/Doubleclick Ads ad 
+231.0 KiB	156.1 KiB
+…m202…/show_ads_impl_fy2021.js(pagead2.googlesyndication.com)
+176.8 KiB
+131.0 KiB
+…js/adsbygoogle.js?client=ca-pub-514…(pagead2.googlesyndication.com)
+54.2 KiB
+25.1 KiB
+Google FundingChoices consent-provider 
+68.4 KiB	34.8 KiB
+/i/ca-pub-51…?href=https%3A%2F%2Fatmospherefurnitureid.com&ers=2(fundingchoicesmessages.google.com)
+68.4 KiB
+34.8 KiB
+atmospherefurnitureid.com 1st party
+68.2 KiB	21.0 KiB
+…chunks/69be398…d.js(atmospherefurnitureid.com)
+68.2 KiB
+21.0 KiB
+Avoid long main-thread tasks 5 long tasks found
+More information about the performance of your application. These numbers don't directly affect the Performance score.
+-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z" /></svg>
                                 </a>
                             </div>
                         </div>
