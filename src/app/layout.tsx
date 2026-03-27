@@ -107,8 +107,6 @@ export default function RootLayout({
       <head>
         <link rel="preconnect" href="https://pagead2.googlesyndication.com" />
         <link rel="preconnect" href="https://res.cloudinary.com" />
-        <link rel="preconnect" href="https://ep1.adtrafficquality.google" />
-        <link rel="preconnect" href="https://fundingchoicesmessages.google.com" />
         <link rel="dns-prefetch" href="https://pagead2.googlesyndication.com" />
         <link rel="dns-prefetch" href="https://res.cloudinary.com" />
         <script
