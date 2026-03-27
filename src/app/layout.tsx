@@ -106,9 +106,11 @@ export default function RootLayout({
     <html lang="id" suppressHydrationWarning>
       <head>
         <link rel="preconnect" href="https://pagead2.googlesyndication.com" />
+        <link rel="preconnect" href="https://res.cloudinary.com" />
         <link rel="preconnect" href="https://ep1.adtrafficquality.google" />
         <link rel="preconnect" href="https://fundingchoicesmessages.google.com" />
         <link rel="dns-prefetch" href="https://pagead2.googlesyndication.com" />
+        <link rel="dns-prefetch" href="https://res.cloudinary.com" />
         <script
           type="application/ld+json"
           id="organization-schema"
@@ -173,12 +175,38 @@ export default function RootLayout({
             })
           }}
         />
-        {/* AdSense loaded via next/script with afterInteractive to avoid render blocking */}
+        {/* Smart AdSense Injection: Delay loading until interaction or timeout to save TBT on mobile */}
         <Script
-          id="adsense-init"
+          id="adsense-lazy-load"
           strategy="afterInteractive"
-          src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5144148071107084"
-          crossOrigin="anonymous"
+          dangerouslySetInnerHTML={{
+            __html: `
+              (function() {
+                var adsLoaded = false;
+                function loadAds() {
+                  if (adsLoaded) return;
+                  adsLoaded = true;
+                  var script = document.createElement('script');
+                  script.src = 'https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5144148071107084';
+                  script.async = true;
+                  script.crossOrigin = 'anonymous';
+                  document.head.appendChild(script);
+                  
+                  // Clean up listeners
+                  window.removeEventListener('scroll', loadAds);
+                  window.removeEventListener('mousemove', loadAds);
+                  window.removeEventListener('touchstart', loadAds);
+                }
+                
+                // Load after 3.5s of idle or on first user interaction
+                var delayTimer = setTimeout(loadAds, 3500);
+                
+                window.addEventListener('scroll', loadAds, { passive: true });
+                window.addEventListener('mousemove', loadAds, { passive: true });
+                window.addEventListener('touchstart', loadAds, { passive: true });
+              })();
+            `
+          }}
         />
       </head>
       <body className={`${poppins.variable} font-sans antialiased`} suppressHydrationWarning>

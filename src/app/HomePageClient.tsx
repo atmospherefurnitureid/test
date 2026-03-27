@@ -37,10 +37,19 @@ export default function Home({ initialProducts = [], initialArticles = [] }: Hom
 
   useEffect(() => {
     setMounted(true);
-    // Only fetch if stores are empty to avoid redundant network calls
-    if (articles.length === 0) fetchArticles();
-    if (products.length === 0) fetchProducts();
-  }, [fetchArticles, fetchProducts, articles.length, products.length]);
+    
+    // Seed stores with initial data if they are empty
+    if (initialArticles.length > 0 && articles.length === 0) {
+      useContentStore.setState({ articles: initialArticles });
+    }
+    if (initialProducts.length > 0 && products.length === 0) {
+      useProductStore.setState({ products: initialProducts });
+    }
+
+    // Only fetch if stores are still empty (e.g. no initial data)
+    if (articles.length === 0 && initialArticles.length === 0) fetchArticles();
+    if (products.length === 0 && initialProducts.length === 0) fetchProducts();
+  }, [fetchArticles, fetchProducts, articles.length, products.length, initialArticles, initialProducts]);
 
   useEffect(() => {
     if (products.length > 0 || initialProducts.length > 0) {
