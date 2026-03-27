@@ -166,6 +166,13 @@ export default function RootLayout({
             })
           }}
         />
+        {/* AdSense loaded as a standard script in head for Google crawler verification while suppressing hydration warnings */}
+        <script
+          async
+          src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5144148071107084"
+          crossOrigin="anonymous"
+          suppressHydrationWarning
+        />
       </head>
       <body className={`${poppins.variable} font-poppins antialiased`} suppressHydrationWarning>
         <ClientProviders>
