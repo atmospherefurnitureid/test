@@ -148,9 +148,10 @@ export default function Home({ initialProducts = [], initialArticles = [] }: Hom
                     alt={product.name}
                     fill
                     className="object-cover transition-transform duration-500 group-hover:scale-110"
-                    priority={idx < 2}
-                    loading={idx < 2 ? "eager" : "lazy"}
-                    sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 20vw"
+                    priority={idx === 0}
+                    loading={idx === 0 ? "eager" : "lazy"}
+                    quality={75}
+                    sizes="(max-width: 640px) 90vw, (max-width: 1024px) 45vw, 18vw"
                   />
                   <div className="absolute inset-x-0 bottom-0 p-4 bg-gradient-to-t from-black/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity">
                     <p className="text-white text-xs font-semibold">{product.name}</p>
@@ -288,8 +289,8 @@ export default function Home({ initialProducts = [], initialArticles = [] }: Hom
                   fill
                   className="object-cover transition-transform duration-700 group-hover:scale-105"
                   loading="lazy"
-                  sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 25vw"
-                  unoptimized={article.image.startsWith("http") || article.image.startsWith("data:")}
+                  quality={75}
+                  sizes="(max-width: 640px) 90vw, (max-width: 1024px) 45vw, 22vw"
                 />
               </div>
 

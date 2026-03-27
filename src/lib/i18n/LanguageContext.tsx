@@ -2,9 +2,11 @@
 
 import React, { createContext, useContext, useState, useEffect, useCallback } from "react";
 
-import { translations } from "@/lib/i18n/translations";
+import { id } from "./locales/id";
+import { en } from "./locales/en";
 
-type TranslationDict = typeof translations.ID;
+const localeData = { ID: id, EN: en };
+
 type Language = "ID" | "EN";
 
 interface LanguageContextType {
@@ -25,7 +27,6 @@ export function LanguageProvider({ children }: { children: React.ReactNode }) {
         if (savedLang && (savedLang === "ID" || savedLang === "EN")) {
             setLanguageState(savedLang);
         } else {
-            // Default to EN unless the user is from Indonesia
             const userLang = typeof navigator !== "undefined" ? navigator.language.toLowerCase() : "";
             if (userLang.startsWith("id")) {
                 setLanguageState("ID");
@@ -50,13 +51,12 @@ export function LanguageProvider({ children }: { children: React.ReactNode }) {
 
     const t = useCallback((keyPath: string) => {
         const keys = keyPath.split(".");
-        let result: any = translations[language];
+        let result: any = localeData[language];
 
         for (const key of keys) {
             if (result && typeof result === 'object' && result[key] !== undefined) {
                 result = result[key];
             } else {
-                // Return original key path if not found
                 return keyPath;
             }
         }

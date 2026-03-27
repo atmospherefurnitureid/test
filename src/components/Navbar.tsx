@@ -59,21 +59,35 @@ export default function Navbar() {
     useEffect(() => {
         setIsMounted(true);
 
+        let rafId: number;
+        let lastKnownScrollY = window.scrollY;
+
         const handleScroll = () => {
             if (isMobileMenuOpen) return;
-            const currentScrollY = window.scrollY;
-            if (currentScrollY > lastScrollY && currentScrollY > 100) {
-                setIsVisible(false);
-            } else {
-                setIsVisible(true);
-            }
-            setLastScrollY(currentScrollY);
-            setIsScrolled(currentScrollY > 20);
+            
+            rafId = requestAnimationFrame(() => {
+                const currentScrollY = window.scrollY;
+                
+                // Only update if there's a significant change to avoid micro-renders
+                if (Math.abs(currentScrollY - lastKnownScrollY) < 5) return;
+
+                if (currentScrollY > lastKnownScrollY && currentScrollY > 100) {
+                    setIsVisible(false);
+                } else {
+                    setIsVisible(true);
+                }
+                
+                setIsScrolled(currentScrollY > 20);
+                lastKnownScrollY = currentScrollY;
+            });
         };
 
         window.addEventListener("scroll", handleScroll, { passive: true });
-        return () => window.removeEventListener("scroll", handleScroll);
-    }, [lastScrollY, isMobileMenuOpen]);
+        return () => {
+            window.removeEventListener("scroll", handleScroll);
+            cancelAnimationFrame(rafId);
+        };
+    }, [isMobileMenuOpen]);
 
     useEffect(() => {
         if (!isMounted) return;
