@@ -13,6 +13,7 @@ const FaqSection = dynamic(() => import("@/components/FaqSection"), {
 const Footer = dynamic(() => import("@/components/Footer"));
 const ServicesSection = dynamic(() => import("@/components/ServicesSection"));
 const StepsSection = dynamic(() => import("@/components/StepsSection"));
+const AdUnit = dynamic(() => import("@/components/AdUnit"), { ssr: false });
 
 import { useContentStore } from "@/lib/contentStore";
 import { useProductStore } from "@/lib/productStore";
@@ -222,6 +223,9 @@ export default function Home() {
           </Link>
         </div>
       </section>
+
+      {/* AdSense Unit */}
+      <AdUnit slot="4274589480" style={{ display: 'block' }} />
 
 
 
