@@ -3,7 +3,7 @@ import AboutPageClient from "./AboutPageClient";
 
 export const metadata: Metadata = {
     title: "Tentang Kami | Atmosphere Furniture Indonesia",
-    description: "Kenali lebih dekat Atmosphere Furniture Indonesia, produsen furnitur kustom kualitas ekspor yang menggabungkan keahlian tradisional dengan desain modern sejak 2015.",
+    description: "Spesialis Custom Design Furniture Jepara kualitas ekspor sejak 2015. Atmosphere Furniture Indonesia menjembatani keahlian tradisional dengan desain besi modern.",
 };
 
 export default function AboutPage() {

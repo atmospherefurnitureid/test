@@ -22,7 +22,12 @@ import { ArrowUpRight, Search } from "lucide-react";
 import { useLanguage } from "@/lib/i18n/LanguageContext";
 import { DUMMY_FOUNDER } from "@/lib/dummyData";
 
-export default function Home() {
+interface HomePageClientProps {
+  initialProducts?: any[];
+  initialArticles?: any[];
+}
+
+export default function Home({ initialProducts = [], initialArticles = [] }: HomePageClientProps) {
   const { articles, fetchArticles, fetchCategories } = useContentStore();
   const { products, fetchProducts } = useProductStore();
   const { t } = useLanguage();
@@ -32,24 +37,26 @@ export default function Home() {
 
   useEffect(() => {
     setMounted(true);
-    fetchArticles();
-    fetchCategories();
-    fetchProducts();
-  }, [fetchArticles, fetchCategories, fetchProducts]);
+    // Only fetch if stores are empty to avoid redundant network calls
+    if (articles.length === 0) fetchArticles();
+    if (products.length === 0) fetchProducts();
+  }, [fetchArticles, fetchProducts, articles.length, products.length]);
 
   useEffect(() => {
-    if (mounted && products.length > 0 && galleryProducts.length === 0) {
-      const shuffled = [...products].sort(() => 0.5 - Math.random());
-      let filledProducts = [...shuffled];
-      while (filledProducts.length < 9 && filledProducts.length > 0) {
-        filledProducts = [...filledProducts, ...shuffled];
+    if (products.length > 0 || initialProducts.length > 0) {
+      const sourceProducts = products.length > 0 ? products : initialProducts;
+      if (galleryProducts.length === 0) {
+        // Use a stable selection for SSR/Initial mount to avoid CLS
+        // Shuffle only if specifically desired, but here we prefer consistency
+        const sorted = [...sourceProducts].slice(0, 9);
+        setGalleryProducts(sorted);
       }
-      setGalleryProducts(filledProducts.slice(0, 9));
     }
-  }, [mounted, products, galleryProducts]);
+  }, [products, initialProducts, galleryProducts.length]);
 
-  // Get 4 latest published articles
-  const latestArticles = (articles || [])
+  // Get 4 latest published articles (prefer initial if store empty)
+  const currentArticles = articles.length > 0 ? articles : initialArticles;
+  const latestArticles = (currentArticles || [])
     .filter(a => a.status === "Published")
     .slice(0, 4);
 
@@ -118,10 +125,10 @@ export default function Home() {
       {/* Hero Gallery Grid Section */}
       <section className="mx-auto w-full max-w-7xl px-6 pb-20">
         <div className="grid grid-cols-1 gap-2 sm:grid-cols-2 lg:grid-cols-10">
-          {galleryProducts.length > 0 ? (
+          {(galleryProducts.length > 0 || initialProducts.length > 0) ? (
             <>
               {/* Row 1: 5 Items */}
-              {galleryProducts.slice(0, 5).map((product, idx) => (
+              {(galleryProducts.length > 0 ? galleryProducts : initialProducts).slice(0, 5).map((product, idx) => (
                 <Link
                   key={`hero-row1-${product.code}-${idx}`}
                   href={`/products/${product.code}/${slugify(product.name)}`}
@@ -132,8 +139,8 @@ export default function Home() {
                     alt={product.name}
                     fill
                     className="object-cover transition-transform duration-500 group-hover:scale-110"
-                    priority
-                    loading="eager"
+                    priority={idx < 2}
+                    loading={idx < 2 ? "eager" : "lazy"}
                     sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 20vw"
                   />
                   <div className="absolute inset-x-0 bottom-0 p-4 bg-gradient-to-t from-black/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity">
@@ -143,48 +150,51 @@ export default function Home() {
               ))}
 
               {/* Row 2: 4 Items Centered */}
-              {/* First item is offset by 1 column starting from the left */}
-              {galleryProducts[5] && (
-                <Link
-                  href={`/products/${galleryProducts[5].code}/${slugify(galleryProducts[5].name)}`}
-                  className="group relative aspect-[4/5] sm:col-span-1 lg:col-span-2 lg:col-start-2 lg:row-start-2 overflow-hidden rounded-xl hero-gallery-item hidden md:block"
-                >
-                  <Image
-                    src={galleryProducts[5].media[0] || "https://images.unsplash.com/photo-1595515106969-1ce29566ff1c?auto=format&fit=crop&q=80&w=1200"}
-                    alt={galleryProducts[5].name}
-                    fill
-                    className="object-cover transition-transform duration-500 group-hover:scale-110"
-                    priority
-                    loading="eager"
-                    sizes="(max-width: 1024px) 50vw, 20vw"
-                  />
-                  <div className="absolute inset-x-0 bottom-0 p-4 bg-gradient-to-t from-black/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity">
-                    <p className="text-white text-sm font-semibold">{galleryProducts[5].name}</p>
-                  </div>
-                </Link>
-              )}
+              {(() => {
+                const currentData = galleryProducts.length > 0 ? galleryProducts : initialProducts;
+                return currentData[5] && (
+                  <Link
+                    href={`/products/${currentData[5].code}/${slugify(currentData[5].name)}`}
+                    className="group relative aspect-[4/5] sm:col-span-1 lg:col-span-2 lg:col-start-2 lg:row-start-2 overflow-hidden rounded-xl hero-gallery-item hidden md:block"
+                  >
+                    <Image
+                      src={currentData[5].media[0] || "https://images.unsplash.com/photo-1595515106969-1ce29566ff1c?auto=format&fit=crop&q=80&w=1200"}
+                      alt={currentData[5].name}
+                      fill
+                      className="object-cover transition-transform duration-500 group-hover:scale-110"
+                      loading="lazy"
+                      sizes="(max-width: 1024px) 50vw, 20vw"
+                    />
+                    <div className="absolute inset-x-0 bottom-0 p-4 bg-gradient-to-t from-black/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity">
+                      <p className="text-white text-sm font-semibold">{currentData[5].name}</p>
+                    </div>
+                  </Link>
+                );
+              })()}
 
               {/* Next 3 items just span normally in the second row */}
-              {galleryProducts.slice(6, 9).map((product, idx) => (
-                <Link
-                  key={`hero-row2-${product.code}-${idx}`}
-                  href={`/products/${product.code}/${slugify(product.name)}`}
-                  className="relative aspect-[4/5] sm:col-span-1 lg:col-span-2 overflow-hidden rounded-xl group hero-gallery-item hidden md:block"
-                >
-                  <Image
-                    src={product.media[0] || "https://images.unsplash.com/photo-1503602642458-232111445657?auto=format&fit=crop&q=80&w=800"}
-                    alt={product.name}
-                    fill
-                    className="object-cover transition-transform duration-500 group-hover:scale-110"
-                    priority
-                    loading="eager"
-                    sizes="(max-width: 1024px) 50vw, 20vw"
-                  />
-                  <div className="absolute inset-x-0 bottom-0 p-4 bg-gradient-to-t from-black/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity">
-                    <p className="text-white text-xs font-semibold">{product.name}</p>
-                  </div>
-                </Link>
-              ))}
+              {(() => {
+                const currentData = galleryProducts.length > 0 ? galleryProducts : initialProducts;
+                return currentData.slice(6, 9).map((product, idx) => (
+                  <Link
+                    key={`hero-row2-${product.code}-${idx}`}
+                    href={`/products/${product.code}/${slugify(product.name)}`}
+                    className="relative aspect-[4/5] sm:col-span-1 lg:col-span-2 overflow-hidden rounded-xl group hero-gallery-item hidden md:block"
+                  >
+                    <Image
+                      src={product.media[0] || "https://images.unsplash.com/photo-1503602642458-232111445657?auto=format&fit=crop&q=80&w=800"}
+                      alt={product.name}
+                      fill
+                      className="object-cover transition-transform duration-500 group-hover:scale-110"
+                      loading="lazy"
+                      sizes="(max-width: 1024px) 50vw, 20vw"
+                    />
+                    <div className="absolute inset-x-0 bottom-0 p-4 bg-gradient-to-t from-black/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity">
+                      <p className="text-white text-xs font-semibold">{product.name}</p>
+                    </div>
+                  </Link>
+                ));
+              })()}
             </>
           ) : (
             <>

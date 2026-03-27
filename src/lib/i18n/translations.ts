@@ -29,7 +29,7 @@ export const translations = {
             },
             about: {
                 title: "Tentang Kami - Atmosphere Furniture Indonesia",
-                desc: "Atmosphere Furniture Indonesia adalah perusahaan furnitur yang mengkhususkan diri dalam menciptakan potongan furnitur yang unik dan inovatif. Kami percaya bahwa furnitur harus menjadi cerminan dari orang yang menggunakannya.",
+                desc: "Pakar Custom Design furnitur yang menjembatani keindahan kayu jati Jepara dengan kekuatan besi modern. Sejak 2015, Atmosphere Furniture Indonesia telah menjadi mitra terpercaya dalam mewujudkan ide furnitur unik yang mencerminkan visi dan karakter eksklusif hunian Anda.",
                 headline: "Menjembatani Tradisi & Inovasi",
                 brief: "Atmosphere Furniture Indonesia adalah produsen utama yang mengkhususkan diri dalam furnitur perpaduan kayu dan besi berkualitas tinggi. Sejak 2015, kami telah berdedikasi untuk menjembatani pengerjaan tradisional dengan presisi desain modern.",
                 vision_title: "Visi Kami",
@@ -363,7 +363,7 @@ export const translations = {
             },
             about: {
                 title: "About Us - Atmosphere Furniture Indonesia",
-                desc: "Atmosphere Furniture Indonesia is a furniture company that specializes in creating unique and innovative furniture pieces. We believe that furniture should be a reflection of the people who use it.",
+                desc: "Your Custom Design furniture expert, bridging the beauty of Jepara teak wood with modern iron strength. Since 2015, Atmosphere Furniture Indonesia has been a trusted partner in realizing unique furniture ideas that reflect your vision and exclusive lifestyle.",
                 headline: "Bridging Tradition & Innovation",
                 brief: "Atmosphere Furniture Indonesia is a premier manufacturer specializing in high-quality wood and iron fusion furniture. Since 2015, we have been dedicated to bridging traditional craftsmanship with modern design precision.",
                 vision_title: "Our Vision",

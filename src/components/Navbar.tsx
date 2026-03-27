@@ -76,15 +76,20 @@ export default function Navbar() {
     }, [lastScrollY, isMobileMenuOpen]);
 
     useEffect(() => {
+        if (!isMounted) return;
+        
         if (isMobileMenuOpen) {
             document.body.style.overflow = "hidden";
-        } else {
+        } else if (document.body.style.overflow === "hidden") {
             document.body.style.overflow = "unset";
         }
+        
         return () => {
-            document.body.style.overflow = "unset";
+            if (document.body.style.overflow === "hidden") {
+                document.body.style.overflow = "unset";
+            }
         };
-    }, [isMobileMenuOpen]);
+    }, [isMobileMenuOpen, isMounted]);
 
     useEffect(() => {
         const handleClickOutside = (event: MouseEvent) => {

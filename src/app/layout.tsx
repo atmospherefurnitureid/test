@@ -17,7 +17,7 @@ export const metadata: Metadata = {
     default: "Atmosphere Furniture Indonesia | Pusat Furniture Jepara Murah & Berkualitas",
     template: "%s | Atmosphere Furniture Indonesia",
   },
-  description: "Temukan koleksi furniture Jepara terbaik di Atmosphere Furniture Indonesia. Kami menyediakan berbagai mebel kayu jati dan besi berkualitas dengan harga murah langsung dari pengrajin Indonesia. Melayani custom design untuk keindahan hunian Anda.",
+  description: "Spesialis Custom Design Furniture Jepara Jati & Besi kualitas ekspor sejak 2015. Wujudkan desain furnitur unik sesuai keinginan dengan harga pengrajin langsung. Melayani pengiriman global & proyek besar.",
   keywords: [
     "furniture jepara", "mebel indonesia", "pengrajin kayu jepara", "jepara furniture export",
     "mebel jawa tengah", "furniture murah berkualitas", "furniture jati awet",
@@ -104,7 +104,10 @@ export default function RootLayout({
   return (
     <html lang="id" suppressHydrationWarning>
       <head>
-        {/* Preconnects removed as they are handled by next/font */}
+        <link rel="preconnect" href="https://pagead2.googlesyndication.com" />
+        <link rel="preconnect" href="https://ep1.adtrafficquality.google" />
+        <link rel="preconnect" href="https://fundingchoicesmessages.google.com" />
+        <link rel="dns-prefetch" href="https://pagead2.googlesyndication.com" />
         <script
           type="application/ld+json"
           id="organization-schema"
@@ -114,7 +117,7 @@ export default function RootLayout({
               "@context": "https://schema.org",
               "@type": "Organization",
               "name": "Atmosphere Furniture Indonesia",
-              "description": "Pusat Furniture Jepara Murah & Berkualitas. Produsen mebel kayu jati dan besi terpercaya di Indonesia sejak 2015.",
+              "description": "Pakar Custom Design furnitur yang menjembatani keindahan kayu jati Jepara dengan kekuatan besi modern. Sejak 2015, Atmosphere Furniture Indonesia telah menjadi mitra terpercaya dalam mewujudkan ide furnitur unik yang mencerminkan visi dan karakter eksklusif hunian Anda.",
               "url": "https://atmospherefurnitureid.com",
               "logo": "https://atmospherefurnitureid.com/logo-atmosphere.png",
               "image": "https://atmospherefurnitureid.com/logo-atmosphere.png",
@@ -177,7 +180,7 @@ export default function RootLayout({
           suppressHydrationWarning
         />
       </head>
-      <body className={`${poppins.variable} font-poppins antialiased`} suppressHydrationWarning>
+      <body className={`${poppins.variable} font-sans antialiased`} suppressHydrationWarning>
         <ClientProviders>
           {children}
         </ClientProviders>

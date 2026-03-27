@@ -20,10 +20,10 @@ export default function AdUnit({ slot, style, layout, format }: AdUnitProps) {
   }, []);
 
   return (
-    <div className="mx-auto w-full max-w-7xl px-6 py-8 overflow-hidden flex justify-center">
+    <div className="mx-auto w-full max-w-7xl px-6 py-8 overflow-hidden flex justify-center min-h-[200px]">
       <ins
         className="adsbygoogle"
-        style={style || { display: "block", textAlign: "center" }}
+        style={style || { display: "block", textAlign: "center", minHeight: "90px" }}
         data-ad-client="ca-pub-5144148071107084"
         data-ad-slot={slot}
         data-ad-layout={layout}
