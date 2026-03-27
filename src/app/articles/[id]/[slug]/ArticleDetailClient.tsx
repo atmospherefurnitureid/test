@@ -25,6 +25,8 @@ import {
     Reply,
     ArrowUpRight
 } from "lucide-react";
+import dynamic from "next/dynamic";
+const AdUnit = dynamic(() => import("@/components/AdUnit"), { ssr: false });
 
 export default function ArticleDetail() {
     const params = useParams();
@@ -112,7 +114,7 @@ export default function ArticleDetail() {
                         />
                     </div>
                 </section>
-
+                
                 {/* Main Content Area */}
                 <div className="mx-auto w-full max-w-4xl px-6 pb-24">
                     <div className="w-full">
@@ -124,11 +126,37 @@ export default function ArticleDetail() {
                             <p className="font-semibold text-zinc-900 text-base md:text-lg">
                                 {article.category} — {article.description.split('.')[0]}.
                             </p>
-                            <div dangerouslySetInnerHTML={{ __html: article.content || '<p>Content coming soon...</p>' }} />
+                            
+                            {/* Content with Auto-Injected Ads */}
+                            {(() => {
+                                const content = article.content || '<p>Content coming soon...</p>';
+                                const paragraphs = content.split('</p>');
+                                
+                                // Only inject if we have enough paragraphs (e.g., more than 2)
+                                if (paragraphs.length > 2) {
+                                    const midPoint = Math.ceil(paragraphs.length / 2);
+                                    const part1 = paragraphs.slice(0, midPoint).join('</p>') + '</p>';
+                                    const part2 = paragraphs.slice(midPoint).join('</p>');
+                                    
+                                    return (
+                                        <>
+                                            <div dangerouslySetInnerHTML={{ __html: part1 }} />
+                                            <div className="my-10 py-4 border-y border-zinc-50 bg-zinc-50/20">
+                                                <AdUnit 
+                                                    slot="3017348131" 
+                                                    layout="in-article" 
+                                                    format="fluid" 
+                                                    style={{ display: 'block', textAlign: 'center' }} 
+                                                />
+                                            </div>
+                                            <div dangerouslySetInnerHTML={{ __html: part2 }} />
+                                        </>
+                                    );
+                                }
+                                
+                                return <div dangerouslySetInnerHTML={{ __html: content }} />;
+                            })()}
                         </div>
-
-                        {/* Divider */}
-                        <hr className="border-zinc-100 mb-8" />
 
                         {/* Share Section */}
                         {(socialShare.enableFacebook || socialShare.enableWhatsapp || socialShare.enableInstagram || socialShare.enableCopyLink) && (
