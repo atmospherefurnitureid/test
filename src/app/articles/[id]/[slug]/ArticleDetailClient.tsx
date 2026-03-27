@@ -121,7 +121,7 @@ export default function ArticleDetail() {
                                 prose-strong:text-zinc-900 prose-strong:font-bold
                                 "
                         >
-                            <p className="font-bold text-zinc-900 text-base md:text-lg">
+                            <p className="font-semibold text-zinc-900 text-base md:text-lg">
                                 {article.category} — {article.description.split('.')[0]}.
                             </p>
                             <div dangerouslySetInnerHTML={{ __html: article.content || '<p>Content coming soon...</p>' }} />
@@ -133,7 +133,7 @@ export default function ArticleDetail() {
                         {/* Share Section */}
                         {(socialShare.enableFacebook || socialShare.enableWhatsapp || socialShare.enableInstagram || socialShare.enableCopyLink) && (
                             <div className="mb-16">
-                                <h4 className="text-sm font-black uppercase tracking-widest text-zinc-900 mb-6">Bagikan Artikel:</h4>
+                                <h4 className="text-sm font-semibold text-zinc-900 mb-6">Bagikan Artikel:</h4>
                                 <div className="flex items-center gap-3">
                                     {socialShare.enableFacebook && (
                                         <button
@@ -259,7 +259,7 @@ function CommentsSection({ articleId }: { articleId: string }) {
     return (
         <div className="space-y-12">
             <div>
-                <h3 className="text-xl font-bold text-zinc-900 mb-6 font-poppins">Diskusi ({articleComments.length})</h3>
+                <h3 className="text-xl font-semibold text-zinc-900 mb-6 font-poppins">Diskusi ({articleComments.length})</h3>
                 <div className="space-y-8">
                     {articleComments.length === 0 ? (
                         <div className="flex flex-col items-center gap-4 py-12 bg-zinc-50 rounded-2xl border border-zinc-100/50 border-dashed">
@@ -275,8 +275,8 @@ function CommentsSection({ articleId }: { articleId: string }) {
                                 <div className="space-y-3 flex-1 pt-1">
                                     <div className="flex items-center justify-between">
                                         <div className="flex flex-col">
-                                            <span className="font-bold text-base text-zinc-900 leading-tight">{c.author}</span>
-                                            <span className="text-[11px] font-bold text-zinc-400 uppercase tracking-widest mt-0.5">
+                                            <span className="font-semibold text-base text-zinc-900 leading-tight">{c.author}</span>
+                                            <span className="text-[11px] font-semibold text-zinc-400 mt-0.5">
                                                 {c.timestamp ? new Date(c.timestamp).toLocaleDateString('id-ID', { day: 'numeric', month: 'short', year: 'numeric' }) : c.date}
                                             </span>
                                         </div>
@@ -291,7 +291,7 @@ function CommentsSection({ articleId }: { articleId: string }) {
                                             </div>
                                             <div className="flex items-center gap-2 mb-3">
                                                 <div className="w-6 h-6 rounded-lg bg-zinc-900 flex items-center justify-center text-[10px] text-white font-black">A</div>
-                                                <span className="text-[11px] font-black uppercase tracking-[0.2em] text-zinc-900">Atmosphere Official</span>
+                                                <span className="text-[11px] font-black tracking-[0.2em] text-zinc-900">Atmosphere Official</span>
                                             </div>
                                             <p className="text-zinc-700 text-[14px] leading-relaxed font-semibold italic">"{c.adminReply}"</p>
                                         </div>
@@ -305,7 +305,7 @@ function CommentsSection({ articleId }: { articleId: string }) {
 
             {/* Comment Form Card */}
             <div className="bg-zinc-50/30 p-8 md:p-10 rounded-2xl border border-zinc-100">
-                <h4 className="text-lg font-bold text-zinc-900 mb-8 border-b border-zinc-100 pb-4">Tinggalkan Komentar</h4>
+                <h4 className="text-lg font-semibold text-zinc-900 mb-8 border-b border-zinc-100 pb-4">Tinggalkan Komentar</h4>
 
                 {success ? (
                     <div className="bg-zinc-900 text-white p-6 rounded-xl text-center">

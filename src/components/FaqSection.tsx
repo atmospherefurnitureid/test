@@ -1,8 +1,6 @@
 "use client";
 
-import { useState, useEffect, useRef } from "react";
-import gsap from "gsap";
-import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { useState, useRef } from "react";
 
 const faqs = [
     {
@@ -31,41 +29,7 @@ export default function FaqSection() {
     const [openIndex, setOpenIndex] = useState<number | null>(0);
     const sectionRef = useRef<HTMLDivElement>(null);
 
-    useEffect(() => {
-        gsap.registerPlugin(ScrollTrigger);
 
-        const ctx = gsap.context(() => {
-            // Header animation
-            gsap.from(".faq-header > *", {
-                scrollTrigger: {
-                    trigger: ".faq-header",
-                    start: "top 85%",
-                },
-                y: 30,
-                autoAlpha: 0,
-                duration: 0.8,
-                stagger: 0.2,
-                ease: "power3.out",
-                immediateRender: false
-            });
-
-            // FAQ Items staggered reveal
-            gsap.from(".faq-item", {
-                scrollTrigger: {
-                    trigger: ".faq-list",
-                    start: "top 85%",
-                },
-                y: 20,
-                autoAlpha: 0,
-                duration: 0.5,
-                stagger: 0.1,
-                ease: "power2.out",
-                immediateRender: false
-            });
-        }, sectionRef);
-
-        return () => ctx.revert();
-    }, []);
 
     return (
         <section ref={sectionRef} className="mx-auto w-full max-w-4xl px-6 py-24 font-poppins">
@@ -90,23 +54,23 @@ export default function FaqSection() {
                         <button
                             onClick={() => setOpenIndex(openIndex === index ? null : index)}
                             aria-expanded={openIndex === index}
-                            className="w-full flex items-center justify-between p-6 md:p-8 text-left focus:outline-none group"
+                            className="w-full flex items-center justify-start gap-4 md:gap-6 p-6 md:p-8 text-left focus:outline-none cursor-pointer group"
                         >
+                            <div className={`shrink-0 p-2 rounded-full border transition-all ${openIndex === index
+                                ? "border-sky-500 bg-sky-500 text-white rotate-45"
+                                : "border-zinc-200 text-zinc-500 group-hover:border-sky-500 group-hover:text-sky-500"
+                                }`}>
+                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><path d="M12 5v14" /><path d="M5 12h14" /></svg>
+                            </div>
                             <span className={`text-base md:text-lg font-semibold transition-colors ${openIndex === index ? "text-zinc-900" : "text-zinc-500 group-hover:text-zinc-900"
                                 }`}>
                                 {faq.question}
                             </span>
-                            <div className={`p-2 rounded-full border transition-all ${openIndex === index
-                                ? "border-zinc-900 bg-zinc-900 text-white rotate-45"
-                                : "border-zinc-200 text-zinc-500 group-hover:border-zinc-900 group-hover:text-zinc-900"
-                                }`}>
-                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><path d="M12 5v14" /><path d="M5 12h14" /></svg>
-                            </div>
                         </button>
 
                         <div className={`overflow-hidden transition-all duration-300 ease-in-out ${openIndex === index ? "max-h-96 opacity-100" : "max-h-0 opacity-0"
                             }`}>
-                            <div className="px-6 md:px-8 pb-8 pt-0 text-zinc-500 text-sm md:text-base leading-relaxed">
+                            <div className="pl-[4.6rem] md:pl-[5.6rem] pr-6 md:pr-8 pb-8 pt-0 text-zinc-500 text-sm md:text-base leading-relaxed md:px-0 px-4">
                                 {faq.answer}
                             </div>
                         </div>

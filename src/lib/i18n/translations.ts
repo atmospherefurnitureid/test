@@ -4,7 +4,8 @@ export const translations = {
             home: "Beranda",
             products: "Produk",
             services: "Layanan",
-            artikel: "Artikel",
+            articles: "Artikel",
+            about: "Tentang Kami",
             contact: "Kontak",
             cart: "Keranjang",
             services_1: "Desain yang Dipersonalisasi Sepenuhnya",
@@ -64,8 +65,8 @@ export const translations = {
                 }
             },
             team: {
-                title: "Kami memiliki seluruh tim untuk mendukung bisnis",
-                ceo_desc: "Chief Executive Officer (CEO) & Pendiri Atmosphere Furniture Indonesia.",
+                title: "We have got entire team to support your business",
+                ceo_desc: "Will Jones memulai Atmosphere dari sebuah bengkel kecil di Jawa, menggabungkan kecintaannya pada material besi dengan keahlian pengrajin lokal.",
                 quote: "\"Membuat furnitur bukan hanya tentang menyambung kayu dan besi; ini tentang menenun cerita ke dalam setiap serat kayu, menciptakan harmoni antara bentuk dan fungsi yang bertahan lama.\"",
                 master: "Pendiri & Pengrajin Utama"
             },
@@ -77,6 +78,43 @@ export const translations = {
                 tagline: "Produsen Furnitur Besi & Kayu Custom Kualitas Ekspor",
                 description: "Wujudkan ide furnitur Anda bersama pengrajin berpengalaman Jepara.",
                 quote: "\"Hilangkan keraguan Anda dan mulailah melangkah untuk mewujudkan ide furnitur Anda\""
+            },
+            products: {
+                title: "Jelajahi Koleksi Furnitur Kami",
+                subtitle: "Temukan pilihan furnitur kayu dan besi yang dikurasi untuk memadukan seni alami dengan keanggunan modern bagi ruang tamu premium Anda.",
+                filter_type: "Jenis",
+                filter_category: "Macam",
+                search_placeholder: "Cari Judul atau Kode Produk... (min. 3 karakter)",
+                search_hint: "Ketik {count} karakter lagi untuk mencari...",
+                stats: "item",
+                loading: "Memuat produk...",
+                loading_subtitle: "Menyiapkan galeri furnitur premium Anda.",
+                not_found: "Produk tidak tersedia.",
+                not_found_subtitle: "Periksa kembali segera atau hubungi kami untuk informasi lebih lanjut.",
+                add_to_cart: "Tambah ke keranjang",
+                added_to_cart: "berhasil ditambahkan!",
+                added_to_cart_desc: "{count} item telah bergabung dalam pilihan Anda.",
+                labels: {
+                    "All Labels": "Semua Jenis",
+                    "Kayu": "Kayu",
+                    "Besi": "Besi",
+                    "Mixed": "Campuran"
+                },
+                categories: {
+                    "All": "Semua",
+                    "Kursi": "Kursi",
+                    "Meja": "Meja",
+                    "Lemari": "Lemari",
+                    "Rak": "Rak",
+                    "Bangku": "Bangku",
+                    "Stool": "Stool",
+                    "Kabinet": "Kabinet",
+                    "Credenza": "Credenza",
+                    "Nakas": "Nakas",
+                    "Bed Frame": "Rangka Tempat Tidur",
+                    "Sofa": "Sofa",
+                    "Konsol": "Meja Konsol"
+                }
             }
         },
         articles: {
@@ -139,11 +177,88 @@ export const translations = {
                 },
                 step5: {
                     title: "Pengiriman",
-                    desc: "Produk Anda dikirim menggunakan ekspedisi terpercaya dengan packing yang aman sampai ke tujuan."
+                    desc: "Produk dikemas dengan standar keamanan tinggi dan dikirim melalui ekspedisi terpercaya ke alamat Anda."
                 },
                 step6: {
-                    title: "Garansi",
-                    desc: "Kami menjamin kualitas produk kami. Jika terjadi kerusakan selama pengiriman, segera hubungi kami."
+                    title: "Garansi Kerusakan",
+                    desc: "Kami memberikan garansi perbaikan jika ditemukan kerusakan akibat produksi saat produk tiba di lokasi."
+                },
+                items: {
+                    "konsultasi": {
+                        title: "Konsultasi Desain Gratis",
+                        description: "Langkah awal untuk mewujudkan furnitur impian Anda melalui diskusi mendalam bersama tim ahli.",
+                        longDescription: "Tahap konsultasi adalah pondasi dari setiap proyek di Atmosphere Furniture Indonesia. Kami mendengarkan visi Anda, memahami kebutuhan fungsional ruang, dan memberikan saran profesional mengenai material serta estetika. Anda dapat berkonsultasi secara tatap muka maupun daring kapan saja.\n\nTim desainer kami akan membantu Anda memilih jenis kayu, finishing, hingga detail konstruksi yang paling sesuai dengan anggaran dan konsep interior Anda. Kami percaya bahwa komunikasi yang baik di awal adalah kunci keberhasilan produk akhir.",
+                        features: [
+                            "Diskusi konsep dan gaya desain",
+                            "Saran pemilihan material (Kayu & Besi)",
+                            "Estimasi anggaran transparan",
+                            "Penjadwalan survei lokasi jika diperlukan"
+                        ]
+                    },
+                    "dp-50": {
+                        title: "Komitmen & DP 50%",
+                        description: "Pengamanan pesanan dan inisiasi proses pengadaan material produksi.",
+                        longDescription: "Setelah desain dan harga disepakati, pembayaran uang muka (Down Payment) sebesar 50% menjadi tanda dimulainya kerja sama resmi. Dana ini digunakan sepenuhnya untuk pengadaan bahan baku berkualitas tinggi dan penjadwalan slot produksi di workshop kami.\n\nSistem pembayaran kami aman dan terdokumentasi dengan baik. Anda akan menerima invoice resmi sebagai bukti transaksi yang sah. Dengan melakukan pelunasan DP, pesanan Anda akan segera masuk ke dalam daftar prioritas produksi kami.",
+                        features: [
+                            "Invoice resmi perusahaan",
+                            "Pengamanan stok material pilihan",
+                            "Penetapan estimasi waktu selesai",
+                            "Slot prioritas di workshop"
+                        ]
+                    },
+                    "pengerjaan": {
+                        title: "Proses Produksi Presisi",
+                        description: "Tahap di mana material pilihan bertransformasi menjadi mahakarya furniture oleh pengrajin ahli.",
+                        longDescription: "Produksi dilakukan oleh tangan-tangan terampil pengrajin Jepara yang telah berpengalaman lintas generasi. Kami menggabungkan teknik pertukangan tradisional yang kokoh dengan peralatan modern untuk mencapai tingkat presisi yang tinggi.\n\nSelama tahap ini, kami menerapkan Quality Control (QC) yang ketat di setiap langkah—mulai dari konstruksi rangka, penghalusan permukaan, hingga tahap finishing akhir. Fokus kami adalah menciptakan furnitur yang tidak hanya indah secara visual, tetapi juga memiliki ketahanan struktural untuk penggunaan jangka panjang.",
+                        features: [
+                            "Pengrajin Jepara berpengalaman",
+                            "Update progres berkala (Foto/Video)",
+                            "Sistem pengawasan kualitas 3 lapis",
+                            "Penggunaan material finishing premium"
+                        ]
+                    },
+                    "pelunasan": {
+                        title: "Konfirmasi & Pelunasan",
+                        description: "Tahap akhir verifikasi kualitas sebelum furnitur impian dikirim ke rumah Anda.",
+                        longDescription: "Kepuasan Anda adalah prioritas kami. Sebelum pengiriman dilakukan, kami akan mengirimkan dokumentasi lengkap berupa foto dan video dari produk jadi yang telah lulus QC. Anda dapat memeriksa setiap detail untuk memastikan semuanya sesuai dengan pesanan.\n\nSetelah Anda mengonfirmasi bahwa produk sudah sesuai, pembayaran sisa (pelunasan 50%) dilakukan. Hal ini memastikan bahwa furnitur yang Anda terima adalah benar-benar hasil akhir yang Anda inginkan tanpa ada kompromi pada kualitas.",
+                        features: [
+                            "Dokumentasi produk jadi (High-Res)",
+                            "Pengecekan detail akhir bersama konsumen",
+                            "Penyusunan dokumen pengiriman",
+                            "Proses administrasi yang cepat"
+                        ]
+                    },
+                    "pengiriman": {
+                        title: "Pengiriman Aman Seluruh Dunia",
+                        description: "Layanan logistik profesional untuk memastikan furnitur tiba dalam kondisi sempurna.",
+                        longDescription: "Kami memahami bahwa furnitur premium memerlukan penanganan khusus saat pengiriman. Setiap produk dikemas menggunakan standar keamanan berlapis (Single face, foam, dan palet kayu jika diperlukan) untuk melindunginya dari guncangan selama perjalanan.\n\nKami bekerja sama dengan ekspedisi spesialis furnitur terpercaya untuk pengiriman domestik maupun internasional. Tim kami akan terus memantau keberadaan paket Anda hingga tiba dengan selamat di depan pintu rumah Anda.",
+                        features: [
+                            "Packing standar ekspor (Berlapis)",
+                            "Asuransi pengiriman terpercaya",
+                            "Tracking pengiriman real-time",
+                            "Opsi jasa bongkar muat/instalasi"
+                        ]
+                    },
+                    "garansi-kerusakan": {
+                        title: "Garansi & Layanan Purna Jual",
+                        description: "Komitmen kami untuk memberikan ketenangan pikiran bagi setiap pelanggan.",
+                        longDescription: "Atmosphere Furniture Indonesia berdiri di belakang kualitas setiap produk yang dihasilkan. Jika terjadi kerusakan produksi (bukan akibat kelalaian penggunaan atau bencana alam) saat barang diterima, kami menyediakan layanan garansi perbaikan atau penggantian komponen.\n\nLayanan purna jual kami sangat responsif. Anda cukup melampirkan video unboxing dan foto bagian yang bermasalah, dan tim teknis kami akan segera memberikan solusi terbaik. Kami ingin memastikan investasi furnitur Anda terlindungi dengan baik.",
+                        features: [
+                            "Garansi struktur dan finishing",
+                            "Layanan klaim mudah & cepat",
+                            "Dukungan tim teknis profesional",
+                            "Konsultasi perawatan furniture pasca beli"
+                        ]
+                    }
+                },
+                ui: {
+                    about_step: "Tentang Langkah Ini",
+                    why_important: "Mengapa Ini Penting?",
+                    start_now: "Mulai Sekarang",
+                    contact_us: "Hubungi Kami",
+                    back_to_steps: "Kembali ke Alur Kerja",
+                    not_found: "Langkah Tidak Ditemukan",
+                    back_home: "Kembali ke Beranda"
                 }
             }
         },
@@ -223,7 +338,8 @@ export const translations = {
             home: "Home",
             products: "Products",
             services: "Services",
-            artikel: "Articles",
+            articles: "Articles",
+            about: "About Us",
             contact: "Contact",
             cart: "Cart",
             services_1: "Fully Personalized Design",
@@ -284,7 +400,7 @@ export const translations = {
             },
             team: {
                 title: "We have got entire team to support your business",
-                ceo_desc: "Chief Executive Officer (CEO) & Founder of Atmosphere Furniture Indonesia.",
+                ceo_desc: "Will Jones started Atmosphere from a small workshop in Java, combining his passion for iron materials with local artisan expertise.",
                 quote: "\"Crafting furniture is not just about joining wood and iron; it's about weaving stories into every grain, creating harmony between form and function that stands the test of time.\"",
                 master: "Founder & Master Craftsman"
             },
@@ -296,6 +412,43 @@ export const translations = {
                 tagline: "Custom Wood & Iron Furniture Manufacturer of Export Quality",
                 description: "Realize your furniture ideas with experienced craftsmen from Jepara.",
                 quote: "\"Remove your doubts and start taking steps to realize your furniture idea\""
+            },
+            products: {
+                title: "Explore Our Furniture Pieces",
+                subtitle: "Discover a curated selection of wood and iron furniture designed to blend natural art with modern elegance for your premium living spaces.",
+                filter_type: "Type",
+                filter_category: "Category",
+                search_placeholder: "Search Product Title or Code... (min. 3 chars)",
+                search_hint: "Type {count} more characters to search...",
+                stats: "items",
+                loading: "Loading products...",
+                loading_subtitle: "Preparing your premium furniture gallery.",
+                not_found: "No products available.",
+                not_found_subtitle: "Check back soon or contact us for more.",
+                add_to_cart: "Add to cart",
+                added_to_cart: "added to cart!",
+                added_to_cart_desc: "{count} item(s) joined your selection.",
+                labels: {
+                    "All Labels": "All Types",
+                    "Kayu": "Wood",
+                    "Besi": "Iron",
+                    "Mixed": "Mixed"
+                },
+                categories: {
+                    "All": "All",
+                    "Kursi": "Chair",
+                    "Meja": "Table",
+                    "Lemari": "Wardrobe",
+                    "Rak": "Shelf",
+                    "Bangku": "Bench",
+                    "Stool": "Stool",
+                    "Kabinet": "Cabinet",
+                    "Credenza": "Credenza",
+                    "Nakas": "Nightstand",
+                    "Bed Frame": "Bed Frame",
+                    "Sofa": "Sofa",
+                    "Konsol": "Console Table"
+                }
             }
         },
         articles: {
@@ -338,15 +491,15 @@ export const translations = {
                 payment_methods: "Global Payment Methods"
             },
             steps: {
-                title: "Steps-to-Steps Order",
-                subtitle: "Our streamlined process ensures your custom furniture journey is smooth, transparent, and meets the highest standards of quality at every stage.",
+                title: "Ordering Steps",
+                subtitle: "Our efficient process ensures your custom furniture journey is smooth, transparent, and meets the highest quality standards at every stage.",
                 step1: {
                     title: "Consultation",
                     desc: "Discuss your furniture ideas and needs with our expert team for free to get the best concept."
                 },
                 step2: {
-                    title: "DP 50%",
-                    desc: "Down-payment of 50% to secure your order and begin material procurement."
+                    title: "50% Down Payment",
+                    desc: "A 50% down payment to secure your order and begin material procurement."
                 },
                 step3: {
                     title: "Production",
@@ -358,11 +511,88 @@ export const translations = {
                 },
                 step5: {
                     title: "Shipping",
-                    desc: "Your products are shipped using trusted expeditions with secure packing to their destination."
+                    desc: "Products are packed with high security standards and sent via trusted expeditions to your address."
                 },
                 step6: {
-                    title: "Warranty",
-                    desc: "We guarantee the quality of our products. If damage occurs during shipping, contact us immediately."
+                    title: "Damage Warranty",
+                    desc: "We provide repair guarantees if production damage is found when the product arrives at the location."
+                },
+                items: {
+                    "konsultasi": {
+                        title: "Free Design Consultation",
+                        description: "The first step to realizing your dream furniture through in-depth discussions with our expert team.",
+                        longDescription: "The consultation phase is the foundation of every project at Atmosphere Furniture Indonesia. We listen to your vision, understand the functional needs of the space, and provide professional advice on materials and aesthetics. You can consult face-to-face or online at any time.\n\nOur design team will help you choose the type of wood, finishing, and construction details that best suit your budget and interior concept. We believe that good communication at the beginning is the key to the success of the final product.",
+                        features: [
+                            "Concept and design style discussion",
+                            "Material selection advice (Wood & Metal)",
+                            "Transparent budget estimation",
+                            "Site survey scheduling if needed"
+                        ]
+                    },
+                    "dp-50": {
+                        title: "Commitment & 50% DP",
+                        description: "Securing your order and initiating the production material procurement process.",
+                        longDescription: "After the design and price are agreed upon, a down payment of 50% marks the start of the official collaboration. These funds are used entirely for procurement of high-quality raw materials and scheduling production slots in our workshop.\n\nOur payment system is secure and well-documented. You will receive an official invoice as valid proof of transaction. By making the DP payment, your order will immediately enter our production priority list.",
+                        features: [
+                            "Official company invoice",
+                            "Securing selected material stock",
+                            "Setting estimated completion time",
+                            "Priority slot at the workshop"
+                        ]
+                    },
+                    "pengerjaan": {
+                        title: "Precision Production Process",
+                        description: "The stage where selected materials transform into furniture masterpieces by master craftsmen.",
+                        longDescription: "Production is carried out by the skilled hands of Jepara craftsmen who have been experienced across generations. We combine robust traditional carpentry techniques with modern equipment to achieve a high degree of precision.\n\nDuring this stage, we implement strict Quality Control (QC) at every step—from frame construction, surface smoothing, to the final finishing stage. Our focus is to create furniture that is not only visually beautiful, but also has structural durability for long-term use.",
+                        features: [
+                            "Experienced Jepara craftsmen",
+                            "Regular progress updates (Photo/Video)",
+                            "3-layer quality monitoring system",
+                            "Use of premium finishing materials"
+                        ]
+                    },
+                    "pelunasan": {
+                        title: "Confirmation & Final Payment",
+                        description: "Final quality verification stage before your dream furniture is shipped to your home.",
+                        longDescription: "Your satisfaction is our priority. Before shipping is done, we will send complete documentation in the form of photos and videos of the finished product that has passed QC. You can check every detail to ensure everything matches the order.\n\nAfter you confirm that the product is ready, the remaining payment (50% final payment) is made. This ensures that the furniture you receive is truly the final result you want without any compromise on quality.",
+                        features: [
+                            "Finished product documentation (High-Res)",
+                            "Final checklist with the consumer",
+                            "Preparation of shipping documents",
+                            "Fast administrative process"
+                        ]
+                    },
+                    "pengiriman": {
+                        title: "Safe Worldwide Shipping",
+                        description: "Professional logistics services to ensure furniture arrives in perfect condition.",
+                        longDescription: "We understand that premium furniture requires special handling during shipping. Each product is packed using multi-layered security standards (Single face, foam, and wooden pallets if needed) to protect it from shocks during the journey.\n\nWe work with trusted furniture specialist expeditions for domestic and international shipping. Our team will continue to monitor the location of your package until it arrives safely at your doorstep.",
+                        features: [
+                            "Export standard packing (Multi-layered)",
+                            "Trusted shipping insurance",
+                            "Real-time shipping tracking",
+                            "Loading/unloading and installation services"
+                        ]
+                    },
+                    "garansi-kerusakan": {
+                        title: "Warranty & After-Sales Service",
+                        description: "Our commitment to providing peace of mind for every customer.",
+                        longDescription: "Atmosphere Furniture Indonesia stands behind the quality of every product produced. If production damage occurs (not due to misuse or natural disasters) when the items are received, we provide repair services or component replacement.\n\nOur after-sales service is very responsive. You simply attach the unboxing video and photos of the problematic part, and our technical team will immediately provide the best solution. We want to ensure your furniture investment is well-protected.",
+                        features: [
+                            "Structural and finishing warranty",
+                            "Easy & fast claim service",
+                            "Professional technical team support",
+                            "Post-purchase furniture care consultation"
+                        ]
+                    }
+                },
+                ui: {
+                    about_step: "About This Step",
+                    why_important: "Why Is This Important?",
+                    start_now: "Start Now",
+                    contact_us: "Contact Us",
+                    back_to_steps: "Back to Workflow",
+                    not_found: "Step Not Found",
+                    back_home: "Back to Home"
                 }
             }
         },

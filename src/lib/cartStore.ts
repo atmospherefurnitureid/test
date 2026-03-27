@@ -53,12 +53,10 @@ function saveCart(items: CartItem[]) {
 let globalCartItems: CartItem[] = [];
 
 // Helper to initialize cart on first possible moment
-if (typeof window !== "undefined") {
-    globalCartItems = loadCart();
-}
+// Removed global initialization to prevent hydration mismatch
 
 export function useCartStore() {
-    const [items, setItems] = useState<CartItem[]>(globalCartItems);
+    const [items, setItems] = useState<CartItem[]>([]);
 
     const syncItems = useCallback(() => {
         const loaded = loadCart();

@@ -2,12 +2,17 @@ import { NextRequest, NextResponse } from 'next/server';
 import dbConnect from '@/lib/db';
 import { Article } from '@/models/Schemas';
 import { verifyAuthFromRequest } from '@/lib/authGuard';
+import mongoose from 'mongoose';
 
 export async function GET() {
     // GET is public — needed for public article listing
     try {
         await dbConnect();
-        const articles = await Article.find({}).sort({ createdAt: -1 });
+        const db = mongoose.connection.db!;
+        const articles = await db.collection('articles')
+            .find({})
+            .sort({ createdAt: -1 })
+            .toArray();
         return NextResponse.json(articles);
     } catch (error) {
         console.error("API GET Articles Error:", error);

@@ -91,6 +91,8 @@ export const metadata: Metadata = {
   },
 };
 
+
+
 export default function RootLayout({
   children,
 }: Readonly<{
@@ -102,6 +104,8 @@ export default function RootLayout({
         {/* Preconnects removed as they are handled by next/font */}
         <script
           type="application/ld+json"
+          id="organization-schema"
+          suppressHydrationWarning
           dangerouslySetInnerHTML={{
             __html: JSON.stringify({
               "@context": "https://schema.org",

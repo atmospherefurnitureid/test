@@ -25,7 +25,8 @@ export function LanguageProvider({ children }: { children: React.ReactNode }) {
         if (savedLang && (savedLang === "ID" || savedLang === "EN")) {
             setLanguageState(savedLang);
         } else {
-            const userLang = navigator.language.toLowerCase();
+            // Default to EN unless the user is from Indonesia
+            const userLang = typeof navigator !== "undefined" ? navigator.language.toLowerCase() : "";
             if (userLang.startsWith("id")) {
                 setLanguageState("ID");
             } else {

@@ -144,8 +144,4 @@ body {
 }
 
 
-
-/* GSAP: prevent flash of invisible content (FOIC) */
-.gsap-will-animate {
-  opacity: 1;
-}
+

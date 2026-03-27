@@ -9,9 +9,6 @@ import { slugify } from "@/lib/utils";
 import { useContentStore } from "@/lib/contentStore";
 import { ArrowUpRight, Search } from "lucide-react";
 import { useLanguage } from "@/lib/i18n/LanguageContext";
-import { useRef } from "react";
-import gsap from "gsap";
-import { ScrollTrigger } from "gsap/ScrollTrigger";
 
 export default function ArticlesPageClient() {
     const { t, language } = useLanguage();
@@ -25,8 +22,6 @@ export default function ArticlesPageClient() {
         setIsMounted(true);
         fetchArticles();
     }, [fetchArticles]);
-
-    const containerRef = useRef<HTMLDivElement>(null);
 
     // Get unique categories for filters
     const categories = ["All", ...new Set(publishedArticles.map((a: any) => a.category))];
@@ -43,57 +38,14 @@ export default function ArticlesPageClient() {
         return matchesCategory && matchesSearch;
     });
 
-    useEffect(() => {
-        if (!isMounted) return;
 
-        gsap.registerPlugin(ScrollTrigger);
-        const mm = gsap.matchMedia();
-
-        const ctx = gsap.context(() => {
-            // Header Animation
-            gsap.from(".articles-header > *", {
-                y: 30,
-                autoAlpha: 0,
-                duration: 0.8,
-                stagger: 0.2,
-                ease: "power3.out",
-                immediateRender: false,
-            });
-
-            // Mobile-first reveal for article cards
-            mm.add("(min-width: 0px)", () => {
-                const cards = document.querySelectorAll(".article-card");
-                if (cards.length > 0) {
-                    gsap.from(cards, {
-                        scrollTrigger: {
-                            trigger: ".articles-grid",
-                            start: "top 85%",
-                            toggleActions: "play none none none"
-                        },
-                        y: 40,
-                        autoAlpha: 0,
-                        duration: 0.6,
-                        stagger: 0.1,
-                        ease: "power2.out",
-                        immediateRender: false,
-                    });
-                }
-            });
-
-        }, containerRef);
-
-        return () => {
-            ctx.revert();
-            mm.revert();
-        };
-    }, [isMounted, filteredArticles.length]);
 
     return (
-        <main ref={containerRef} className="min-h-screen bg-white text-zinc-900 font-poppins">
+        <main className="min-h-screen bg-white text-zinc-900 font-poppins">
             <Navbar />
 
             {/* Header */}
-            <section className="mx-auto w-full max-w-7xl px-6 pt-16 pb-8 articles-header">
+            <section className="mx-auto w-full max-w-7xl px-6 pt-4 pb-8 md:pt-4 articles-header">
                 <h1 className="mb-4 text-3xl md:text-4xl lg:text-5xl font-semibold text-zinc-900 leading-[1.15] tracking-tight max-w-5xl">
                     {t("articles.title")}
                 </h1>
@@ -115,8 +67,8 @@ export default function ArticlesPageClient() {
                                 <button
                                     key={cat}
                                     onClick={() => setActiveFilter(cat)}
-                                    className={`px-4 py-1.5 rounded-full text-sm font-normal whitespace-nowrap transition-all cursor-pointer ${activeFilter === cat
-                                        ? "bg-zinc-900 text-white shadow-md shadow-zinc-200"
+                                    className={`px-4 py-1.5 rounded-full text-sm font-semibold whitespace-nowrap transition-all cursor-pointer ${activeFilter === cat
+                                        ? "bg-sky-500 text-white shadow-md shadow-sky-100"
                                         : "text-zinc-400 hover:text-zinc-900"
                                         }`}
                                 >
@@ -125,7 +77,7 @@ export default function ArticlesPageClient() {
                             ))}
                         </div>
                     </div>
-                    <span className="text-sm text-zinc-400 font-normal whitespace-nowrap tracking-widest hidden sm:block uppercase">
+                    <span className="text-sm text-zinc-400 font-normal whitespace-nowrap hidden sm:block">
                         {filteredArticles.length} {t("articles.stats")}
                     </span>
                 </div>
@@ -180,9 +132,9 @@ export default function ArticlesPageClient() {
                                 {/* Content Part */}
                                 <div className="flex flex-col flex-1">
                                     <div className="flex items-center gap-2 mb-3">
-                                        <span className="text-xs font-bold text-sky-600 uppercase tracking-tighter">{article.author}</span>
+                                        <span className="text-sm font-semibold text-sky-600 uppercase tracking-tighter">{article.author}</span>
                                         <span className="text-sm text-zinc-300">•</span>
-                                        <span className="text-xs font-medium text-zinc-400">{t("articles.read_time")}</span>
+                                        <span className="text-sm font-medium text-zinc-400">{t("articles.read_time")}</span>
                                     </div>
 
                                     <div className="flex justify-between items-start gap-4 mb-3">
@@ -192,15 +144,15 @@ export default function ArticlesPageClient() {
                                         <ArrowUpRight className="h-4 w-4 text-zinc-300 group-hover:text-zinc-900 transition-colors shrink-0 mt-1" />
                                     </div>
 
-                                    <p className="text-sm text-zinc-500 leading-relaxed line-clamp-2 mb-6 font-medium">
+                                    <p className="text-base text-zinc-500 leading-relaxed line-clamp-2 mb-6 font-medium">
                                         {article.description}
                                     </p>
 
                                     <div className="mt-auto flex items-center justify-between pt-5">
-                                        <span className="px-3 py-1 bg-zinc-50 text-zinc-500 text-[10px] font-bold uppercase tracking-wider rounded-lg border border-zinc-100">
+                                        <span className="px-3 py-1 bg-zinc-50 text-zinc-500 text-sm font-medium rounded-lg border border-zinc-100">
                                             {article.category}
                                         </span>
-                                        <span className="text-xs font-medium text-zinc-400">
+                                        <span className="text-sm font-medium text-zinc-400">
                                             {article.date}
                                         </span>
                                     </div>

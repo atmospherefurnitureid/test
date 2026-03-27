@@ -100,11 +100,11 @@ export default function ServiceContent() {
             <Navbar />
 
             {/* Header - Aligned with Products Style */}
-            <section className="mx-auto w-full max-w-7xl px-6 pt-16 pb-4">
-                <h1 className="mb-4 text-3xl md:text-4xl lg:text-5xl font-semibold text-zinc-900 leading-[1.15] tracking-tight max-w-5xl">
+            <section className="mx-auto w-full max-w-7xl px-6 pt-4 pb-4 md:pt-4">
+                <h1 className="mb-4 text-3xl md:text-5xl font-semibold text-zinc-900 leading-[1.1] tracking-tight max-w-5xl uppercase">
                     {serviceContent.title}
                 </h1>
-                <p className="text-zinc-500 text-[13px] leading-relaxed max-w-2xl font-medium">
+                <p className="text-zinc-500 text-base md:text-lg leading-relaxed max-w-2xl font-medium">
                     {serviceContent.description}
                 </p>
             </section>
@@ -115,12 +115,12 @@ export default function ServiceContent() {
                     {/* Description */}
                     <div>
                         <div className="prose prose-lg max-w-none">
-                            <h2 className="text-2xl font-bold text-zinc-900 mb-6">{serviceUI.about_service}</h2>
-                            <p className="text-zinc-600 leading-relaxed mb-6 whitespace-pre-line">
+                            <h2 className="text-3xl md:text-5xl font-semibold text-zinc-900 mb-8 tracking-tight leading-tight">{serviceUI.about_service}</h2>
+                            <p className="text-zinc-500 text-base leading-relaxed mb-10 whitespace-pre-line font-medium">
                                 {serviceContent.longDescription}
                             </p>
 
-                            <h3 className="text-xl font-semibold text-zinc-900 mb-4">{serviceUI.why_choose}</h3>
+                            <h3 className="text-2xl md:text-4xl font-semibold text-zinc-900 mb-6 tracking-tight">{serviceUI.why_choose}</h3>
                             <ul className="space-y-3">
                                 {serviceContent.features.map((feature: string, index: number) => (
                                     <li key={index} className="flex items-start gap-3">
@@ -129,7 +129,7 @@ export default function ServiceContent() {
                                                 <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
                                             </svg>
                                         </div>
-                                        <span className="text-zinc-600">{feature}</span>
+                                        <span className="text-zinc-500 text-base font-medium">{feature}</span>
                                     </li>
                                 ))}
                             </ul>
@@ -139,9 +139,9 @@ export default function ServiceContent() {
                     {/* Sidebar - Contact and Action */}
                     <div className="space-y-8">
                         {/* Contact Card */}
-                        <div className="bg-zinc-50 rounded-2xl p-8 border border-zinc-100">
-                            <h3 className="text-xl font-semibold text-zinc-900 mb-4">{serviceUI.start_project}</h3>
-                            <p className="text-zinc-600 mb-6">
+                        <div className="bg-zinc-50 rounded-[2rem] p-8 border border-zinc-100">
+                            <h3 className="text-2xl md:text-4xl font-semibold text-zinc-900 mb-4 tracking-tight leading-tight">{serviceUI.start_project}</h3>
+                            <p className="text-zinc-500 text-base font-medium mb-8">
                                 {serviceUI.contact_desc}
                             </p>
 
@@ -163,8 +163,8 @@ export default function ServiceContent() {
                         </div>
 
                         {/* Related Services */}
-                        <div className="bg-white rounded-2xl p-6 border border-zinc-100">
-                            <h3 className="text-lg font-semibold text-zinc-900 mb-4">{serviceUI.other_services}</h3>
+                        <div className="bg-white rounded-[2rem] p-6 border border-zinc-100">
+                            <h3 className="text-xl font-semibold text-zinc-900 mb-6 tracking-tight">{serviceUI.other_services}</h3>
                             <div className="space-y-3">
                                 {Object.entries(serviceItems || {})
                                     .filter(([s]) => s !== slug)

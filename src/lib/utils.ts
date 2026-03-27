@@ -31,9 +31,9 @@ export const CATEGORY_MAP: Record<string, string> = {
 };
 
 export function generateSKU(label: string, category: string, existingCodes: string[]): string {
-    let prefix = "W-";
-    if (label === "Besi") prefix = "I-";
-    if (label === "Mixed") prefix = "WI-";
+    let prefix = "W";
+    if (label === "Besi") prefix = "I";
+    if (label === "Mixed") prefix = "WI";
 
     let catCode = "99";
     const catLower = category.toLowerCase();
@@ -53,5 +53,5 @@ export function generateSKU(label: string, category: string, existingCodes: stri
         });
 
     const maxSeq = sequences.length > 0 ? Math.max(...sequences) : 0;
-    return `${matchPattern}${String(maxSeq + 1).padStart(4, "0")}`;
+    return `${matchPattern}${String(maxSeq + 1).padStart(5, "0")}`;
 }

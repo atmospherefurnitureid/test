@@ -63,6 +63,8 @@ interface ContentStoreState {
     uploadMedia: (file: File) => Promise<string>;
 }
 
+import { DUMMY_ARTICLES, DUMMY_CATEGORIES } from "@/lib/dummyData";
+
 const STORAGE_KEY_SOCIAL_SHARE = "atm_social_share_v1";
 
 export const useContentStore = create<ContentStoreState>((set, get) => ({
@@ -92,7 +94,7 @@ export const useContentStore = create<ContentStoreState>((set, get) => ({
     },
 
     fetchArticles: async () => {
-        if (get().hasFetchedArticles) return;
+        if (get().hasFetchedArticles && get().articles.length > 0) return;
         set({ isLoading: true });
         try {
             const response = await fetch('/api/articles');
@@ -107,7 +109,6 @@ export const useContentStore = create<ContentStoreState>((set, get) => ({
     },
 
     fetchComments: async () => {
-        // We always fetch comments to ensure latest discussions
         try {
             const response = await fetch('/api/comments');
             if (response.ok) {

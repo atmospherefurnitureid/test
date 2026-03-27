@@ -19,7 +19,7 @@ export default function Footer() {
                     <Link href="/" className="font-bold text-zinc-900">Atmosphere</Link>
                     <span className="text-zinc-500">|</span>
                     <p className="text-zinc-500 text-xs">
-                        © {isMounted ? new Date().getFullYear() : '2026'} Atmosphere Furniture Indonesia. {t("footer.rights")}
+                        © {isMounted ? new Date().getFullYear() : '2026'} Atmosphere Furniture Indonesia. {isMounted ? t("footer.rights") : "All rights reserved."}
                     </p>
                 </div>
 

@@ -2,17 +2,25 @@ import { NextRequest, NextResponse } from 'next/server';
 import dbConnect from '@/lib/db';
 import { Product } from '@/models/Schemas';
 import { verifyAuthFromRequest } from '@/lib/authGuard';
+import mongoose from 'mongoose';
 
 export async function GET() {
     // GET is public — accessible from storefront
     try {
         await dbConnect();
-        const products = await Product.find({}).sort({ createdAt: -1 });
+        // Use raw driver to avoid Mongoose schema validation mismatch
+        const db = mongoose.connection.db!;
+        const products = await db.collection('products')
+            .find({})
+            .sort({ createdAt: -1 })
+            .toArray();
         return NextResponse.json(products);
-    } catch {
+    } catch (err) {
+        console.error('GET /api/products error:', err);
         return NextResponse.json({ error: "Failed to fetch products." }, { status: 500 });
     }
 }
+
 
 export async function POST(request: NextRequest) {
     // Auth required

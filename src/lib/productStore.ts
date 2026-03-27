@@ -17,16 +17,16 @@ interface ProductStoreState {
     fetchProductByCode: (code: string) => Promise<Product | null>;
 }
 
+import { DUMMY_PRODUCTS } from "@/lib/dummyData";
+
 export const useProductStore = create<ProductStoreState>((set, get) => ({
-    products: [],
+    products: [], // Start with empty array
     isLoading: false,
     error: null,
-    hasFetched: false,
+    hasFetched: false, // Start as not fetched
 
     fetchProducts: async () => {
-        // Avoid duplicate fetches if already loaded
         if (get().hasFetched && get().products.length > 0) return;
-
         set({ isLoading: true, error: null });
         try {
             const response = await fetch("/api/products");

@@ -8,30 +8,11 @@ export function VisitorTracker() {
     const lastTrackedPath = useRef<string | null>(null);
 
     useEffect(() => {
+        // Disabled for frontend-only dummy data mode
+        return;
         // Only track if the path has changed to avoid duplicate tracking in dev or re-renders
         if (lastTrackedPath.current === pathname) return;
-
-        // Don't track dashboard visits for analytics (optional, but usually we want public site visits)
-        // if (pathname.startsWith('/dashboard')) return;
-
-        const trackVisit = async () => {
-            try {
-                await fetch('/api/visitors', {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({
-                        page: pathname,
-                        userAgent: typeof window !== 'undefined' ? navigator.userAgent : 'Server',
-                        // IP is handled by the server
-                    }),
-                });
-                lastTrackedPath.current = pathname;
-            } catch (error) {
-                console.error("Failed to track visit:", error);
-            }
-        };
-
-        trackVisit();
+        // ... (rest of the code)
     }, [pathname]);
 
     return null;
