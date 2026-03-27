@@ -72,6 +72,9 @@ export const metadata: Metadata = {
   },
   verification: {
     google: "your-google-verification-code",
+    other: {
+      "google-adsense-account": "ca-pub-5144148071107084",
+    },
   },
   category: "furniture",
   referrer: "origin-when-cross-origin",
